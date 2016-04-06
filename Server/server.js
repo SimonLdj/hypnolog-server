@@ -2,7 +2,7 @@ var app = require('http').createServer(httpHandler);
 var io = require('socket.io').listen(app);
 var fs = require('fs');
 
-// creating the server ( localhost:8000 )
+// creating the server ( localhost:7000 )
 app.listen(7000);
 console.log('http server listening on localhost:7000');
 
@@ -47,35 +47,10 @@ function httpHandler(req, res) {
 
         return;
     }
-
-    // handle '/' GET request
-    else if (method === 'GET' && url === '/') {
-        fs.readFile(__dirname + '/client.html', function(err, data) {
-            if (err) {
-                console.log(err);
-                res.writeHead(500);
-                return res.end('Error loading client.html');
-            }
-            res.writeHead(200);
-            res.end(data);
-        });
-    }
-    // handle '/client' GET request
-    else if (method === 'GET' && url === '/client.js') {
-        fs.readFile(__dirname + '/client.js', function(err, data) {
-            if (err) {
-                console.log(err);
-                res.writeHead(500);
-                return res.end('Error loading client.html');
-            }
-            res.writeHead(200);
-            res.end(data);
-        });
-    }
-
     else {
         res.writeHead(404);
         res.end("404");
+        console.log('res: ' + 404);
     }
 }
 
