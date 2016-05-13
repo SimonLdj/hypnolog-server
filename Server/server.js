@@ -1,10 +1,13 @@
-var app = require('http').createServer(httpHandler);
-var io = require('socket.io').listen(app);
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var fs = require('fs');
 
-// creating the server ( localhost:7000 )
-app.listen(7000);
-console.log('http server listening on localhost:7000');
+
+ //creating the server ( localhost:7000 )
+server.listen(7000, function () {
+    console.log('http server listening on localhost:7000');
+});
 
 // hold display clients
 var displayClients = [];
@@ -20,15 +23,7 @@ function sendDataToDisplayClients(data){
 
 }
 
-// handle Http requests
-function httpHandler(req, res) {
-    console.log('server handling request: ' + req.url + ' [' + req.method + ']');
-
-    var method = req.method;
-    var url = req.url;
-
-    // handle '/in' POST request
-    if (method === 'POST' && url === '/in') {
+app.post('/in', function (req, res) {
         console.log('* incoming data *');
 
         var data = [];
@@ -46,13 +41,7 @@ function httpHandler(req, res) {
         res.end("200");
 
         return;
-    }
-    else {
-        res.writeHead(404);
-        res.end("404");
-        console.log('res: ' + 404);
-    }
-}
+});
 
 // creating a new websocket to keep the content updated without any AJAX request
 io.sockets.on('connection', function(socket) {
