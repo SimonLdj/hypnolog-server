@@ -32,8 +32,15 @@ function addData(data){
 
     mainOutput.find('time').html('Last Update:' + new Date());
 
-    data = JSON.parse(data);
-    mainContent.append("<pre>" + JSON.stringify(data,null,"\t") + "</pre>");
+    try {
+        data = JSON.parse(data);
+    }
+    catch (ex){
+        console.log("couldn't parse data: " + data);
+    }
+
+    var htmlData = JSON.stringify(data,null,"\t");
+    mainContent.append("<pre>" + htmlData + "</pre>");
 
     if (data.type === "array"){
         var gData = convertArrayToGraph(data.array);
