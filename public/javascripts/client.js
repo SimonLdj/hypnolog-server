@@ -11,7 +11,7 @@ initialize();
 
 function connect(){
     // creating a new websocket
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://localhost:7000');
 
     // on every message received we print the new data inside the #container div
     socket.on('notification', function (data) {

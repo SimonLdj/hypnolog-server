@@ -1,7 +1,7 @@
 {
-  "name": "VDebug-Server",
+  "name": "vdebug-server",
   "version": "0.1.0",
-  "description": "Server for VDebug",
+  "description": "Vdebug Server",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
