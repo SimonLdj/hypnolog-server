@@ -1,5 +1,3 @@
-console.log("start");
-
 var mainOutput = $('#output');
 var mainContent = $('#output').find('#content');
 
@@ -15,14 +13,11 @@ function connect(){
 
     // on every message received we print the new data inside the #container div
     socket.on('notification', function (data) {
-        console.log("new data from socket: " + data);
-
-        // convert the json string into a valid javascript object
-        //var _data = JSON.parse(data);
-
-        //$('#container').html(_data.test.sample);
+        console.log("new data from socket");
         addData(data);
     });
+
+    // TODO: check connection successfully created, log and display to user.
 
 };
 connect();
@@ -30,14 +25,20 @@ connect();
 // add data to the DOM
 function addData(data){
 
-    mainOutput.find('time').html('Last Update:' + new Date());
+    // TODO: Expect incoming data not only to be an object, but to be a valid vdebug-log object
 
-    try {
-        data = JSON.parse(data);
+    // Expect incoming data to be object
+    if (typeof data !== "object") {
+        console.error("received data is not an Object");
+        data = {
+            type : "vdebug-error",
+            error: "Vdebug error: Data received in display client is not an Object",
+            receivedData : data,
+        }
     }
-    catch (ex){
-        console.log("couldn't parse data: " + data);
-    }
+
+    // update time in DOM
+    mainOutput.find('time').html('Last Update:' + new Date());
 
     var htmlData = JSON.stringify(data,null,"\t");
     mainContent.append("<pre>" + htmlData + "</pre>");

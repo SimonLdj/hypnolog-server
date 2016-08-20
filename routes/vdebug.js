@@ -18,6 +18,11 @@ function sendDataToDisplayClients(data){
 router.post('/in', function(req, res, next) {
         console.log('* incoming data *');
 
+        // TODO: Do not assume received data is JSON
+        // now we assume data sent with 'Content-Type': 'application/json'
+        // and then body-parser pars the data to an Object.
+        // This behavior fails when received data is string ('Content-Type': 'text')
+
         sendDataToDisplayClients(req.body);
 
         res.writeHead(200);
