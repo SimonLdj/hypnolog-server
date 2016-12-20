@@ -12,8 +12,13 @@ function sendDataToDisplayClients(data){
         console.log('sending data to browser');
         b.volatile.emit('notification', data);
     }
-
 }
+
+router.get('/status', function(req, res){
+	//res.send("string");
+	res.writeHead(200);
+    res.end("200");
+});
 
 router.post('/in', function(req, res, next) {
         console.log('* incoming data *');
