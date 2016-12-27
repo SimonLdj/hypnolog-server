@@ -1,3 +1,8 @@
+body {
+    font-size: 1.0rem;
+}
+
+
 pre {
     background-color: antiquewhite;
     max-height: 20%;
@@ -6,5 +11,41 @@ pre {
     margin-top:15px;
     resize:both;
 }
+pre.array {
+    float: left;
+    max-width: 50%;
+}
+
+p.simpleTypeData {
+    font-family: "Menlo", monospace;
+}
+
+span.variableType {
+    color: rgb(43,145,175);
+    margin-right:3px;
+    font-family: "Menlo", monospace;
+}
+span.variableName {
+    color: #7C7C7C;
+    margin-right:3px;
+    font-family: "Menlo", monospace;
+}
 
 
+div.complexType pre {
+    margin-top: 3px; 
+
+}
+
+
+div.complexType {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+h3.newSession {
+    background-color: #C9C9C9;
+}
+time.lastUpdateTime {
+    font-size: 0.8rem;
+}

@@ -37,16 +37,56 @@ function addData(data){
         }
     }
 
-    // update time in DOM
+    // update "last update time" in DOM
     mainOutput.find('time').html('Last Update:' + new Date());
 
-    var htmlData = JSON.stringify(data,null,"\t");
-    mainContent.append("<pre>" + htmlData + "</pre>");
+    // Add data to DOM
 
-    if (data.type === "array"){
-        var gData = convertArrayToGraph(data.array);
+    // New session data
+    // TODO: do some better design then checking any data type
+    if (data.type === "newSession"){
+        mainContent.append("<hr>");
+        mainContent.append("<h3> Session " + data.value + "</h3>");
+    }
+    // Simple Type data
+    // TODO: check all simple types in some normal way
+    else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
+
+        // TODO: display name (if given) for all types, not only simple
+        var nameElement = "";
+        if (data.name)
+            nameElement = "<span class='variableName'>" + data.name + ":</span>";
+
+        mainContent.append("<p class='simpleTypeData'>" + nameElement + data.value + "</p>");
+    }
+    // Numbers array data
+    else if (data.type === "numbersArray"){
+        // TODO: display type for array
+
+        var gData = convertArrayToGraph(data.value);
         displayGraph(gData,
                      ( data.name && data.name.length) > 0 ? data.name : "Unnamed");
+
+        var htmlData = JSON.stringify(data.value,null,"\t");
+        mainContent.append("<pre>" + htmlData + "</pre>");
+
+    }
+    // Object data
+    else if (data.type === "object"){
+        var typeElement = "<span class='variableType'>" + data.customType + "</span>";
+
+        // TODO: display name (if given) for all types, not only simple
+        var nameElement = "";
+        if (data.name)
+            nameElement = "<span class='variableName'>" + data.name + ":</span>";
+
+        var htmlData = JSON.stringify(data.value,null,"\t");
+        mainContent.append("<div class='complexType'> " + typeElement + nameElement+ "<pre>" + htmlData + "</pre></div>");
+    }
+    // Other
+    else {
+        var htmlData = JSON.stringify(data,null,"\t");
+        mainContent.append("<pre>" + htmlData + "</pre>");
     }
 }
 
