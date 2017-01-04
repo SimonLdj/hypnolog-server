@@ -58,67 +58,35 @@ let GraphVisualizer = (function() {
 
     // private functions: 
 
-    // Convert simple array of objects to array of {key, value} objects.
-    // Key is just the index, value is object.
+    // Convert simple array of objects to array of {index, value} objects.
+    // index is the index of the object in the original array, value is the object.
     function convertArrayToGraphData(arr){
 
         let d = [];
         for (let i = 0; i < arr.length; i++){
-            d.push({"key" : i, "value" : arr[i]});
+            d.push({"index" : i, "value" : arr[i]});
         }
 
         return d;
     }
 
     function createGraphElement(data, title){
+
         let newElement = document.createElement("div");
         newElement.classList.add("graph");
+
         MG.data_graphic({
             title: title,
             data: data,
+            interpolate: d3.curveLinear,
             width: 650,
             height: 350,
             target: newElement,
-            x_accessor: 'key',
+            x_accessor: 'index',
             y_accessor: 'value',
-        })
-        return newElement;
-    }
-
-    // Note: not in use, here for later use.
-    function createBarGraph(data, title){
-
-        let newElement = document.createElement("div");
-        MG.data_graphic({
-            title: title,
-            data: data,
-            width: 650,
-            height: 350,
-            target: newElement,
-            x_accessor: 'key',
-            y_accessor: 'value',
-            chart_type: 'bar',
-            //bar_orientation: 'vertical',
-        })
-        return newElement;
-    }
-
-    // Note: not in use, here for later use.
-    function createHistogram(data){
-        let newElement = document.createElement("div");
-        MG.data_graphic({
-            title: "Histogram",
-            data: data,
-            width: 650,
-            height: 350,
-            target: newElement,
-            x_accessor: 'key',
-            y_accessor: 'value',
-            chart_type: 'histogram',
-            //bar_margin: 0,
-            bins: data.length,
-            //right: 10,
-        })
+            x_label: 'index',
+            y_label: 'value',
+        });
         return newElement;
     }
 

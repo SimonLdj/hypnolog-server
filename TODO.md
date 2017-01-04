@@ -10,6 +10,7 @@ Visualizers:
 - In visualizers: avoid repeat on code such: adding tags class, append tags
   elements, append variable name, ... 
 - Load visualizers dynamically form folder
+- let user apply custom CSS for his visualizers
 
 windows:
 - support mutli-window logging.
