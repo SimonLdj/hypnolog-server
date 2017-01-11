@@ -2,7 +2,6 @@ body {
     font-size: 1.0rem;
 }
 
-
 pre {
     background-color: antiquewhite;
     max-height: 20%;
@@ -15,6 +14,7 @@ pre.array {
     float: left;
     max-width: 50%;
 }
+
 
 p.simpleTypeData {
     font-family: "Menlo", monospace;
@@ -31,12 +31,14 @@ span.variableName {
     font-family: "Menlo", monospace;
 }
 
+div.watchWindow{
+    color : blue;
+}
 
 div.complexType pre {
     margin-top: 3px; 
 
 }
-
 
 div.complexType {
     margin-top: 15px;
@@ -48,4 +50,9 @@ h3.newSession {
 }
 time.lastUpdateTime {
     font-size: 0.8rem;
+}
+
+#watchContent{
+    background-color: honeydew;
+    font-weight: bold;
 }

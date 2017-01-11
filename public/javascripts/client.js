@@ -1,5 +1,7 @@
 var mainOutput = $('#output');
 var mainContent = document.getElementById("content");
+var watchContent = document.getElementById("watchContent");
+
 var allRecivedData = [];
 
 function initialize(){
@@ -46,6 +48,17 @@ function addData(data){
     // TODO: do some better design then checking any data type
     if (data.type === "newSession") {
         addNewSession(data.value);
+    }
+    else if(data.debugOption == "watch"){
+        //TODO: check if data.value is a json.
+        var attribute = document.createAttribute("id");
+        attribute.value = data.name;
+        //TODO: parse the data.value.
+        htmlData = JSON.stringify(data.value,null,"\t");
+        var pre = document.createElement("pre");
+        pre.setAttributeNode(attribute);
+        pre.innerHTML = htmlData;
+        replaceWatchContent(watchContent, pre);
     }
     // Simple Type data
     // TODO: check all simple types in some normal way
@@ -117,8 +130,25 @@ function creatJSONElement(data) {
     return pre;
 }
 
-function displayGraph(data, title){
+function replaceWatchContent(element, newData){
+    if(element.hasChildNodes()){
+        var children = element.childNodes;
+        if(children.length > 1){
+            for(var i = 0; i < children.length; i++){
+                if(children[i].id == newData.id)
+                    element.removeChild(element.childNodes[i]);
+            }
+        }
+    }
+    else{
+        var header = document.createElement("h2");
+        header.innerHTML = "Watch Section";
+        element.appendChild(header);
+    }
+    element.appendChild(newData);
+}
 
+function displayGraph(data, title){
     var newElement = document.createElement("div");
     mainContent.appendChild(newElement);
     MG.data_graphic({
