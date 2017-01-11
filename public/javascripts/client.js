@@ -1,5 +1,6 @@
 var mainOutput = $('#output');
-var mainContent = $('#output').find('#content');
+var mainContent = document.getElementById("content");
+var allRecivedData = [];
 
 function initialize(){
     mainOutput.find('time').html('Last Update: never');
@@ -36,28 +37,28 @@ function addData(data){
             receivedData : data,
         }
     }
+    // TODO: push only valid data
+    allRecivedData.push(data);
 
     // update "last update time" in DOM
     mainOutput.find('time').html('Last Update:' + new Date());
-
-    // Add data to DOM
-
     // New session data
     // TODO: do some better design then checking any data type
-    if (data.type === "newSession"){
-        mainContent.append("<hr>");
-        mainContent.append("<h3> Session " + data.value + "</h3>");
+    if (data.type === "newSession") {
+        addNewSession(data.value);
     }
     // Simple Type data
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-
+        var para = document.createElement("p");
+        var attribute = document.createAttribute("class");
+        attribute.value = "simpleTypeData";
         // TODO: display name (if given) for all types, not only simple
-        var nameElement = "";
-        if (data.name)
-            nameElement = "<span class='variableName'>" + data.name + ":</span>";
-
-        mainContent.append("<p class='simpleTypeData'>" + nameElement + data.value + "</p>");
+        if (data.name) {
+            para.appendChild(creatNameElement(data.name));
+        }
+        para.appendChild(document.createTextNode(data.value));
+        mainContent.appendChild(para);
     }
     // Numbers array data
     else if (data.type === "numbersArray"){
@@ -66,34 +67,60 @@ function addData(data){
         var gData = convertArrayToGraph(data.value);
         displayGraph(gData,
                      ( data.name && data.name.length) > 0 ? data.name : "Unnamed");
-
-        var htmlData = JSON.stringify(data.value,null,"\t");
-        mainContent.append("<pre>" + htmlData + "</pre>");
+        mainContent.appendChild(creatJSONElement(data.value));
 
     }
     // Object data
-    else if (data.type === "object"){
-        var typeElement = "<span class='variableType'>" + data.customType + "</span>";
-
+    else if (data.type === "object") {
+        var typeElement = document.createElement("span");
+        var attribute = document.createAttribute("class");
+        attribute.value = "variableType";
+        typeElement.setAttributeNode(attribute);
+        typeElement.innerHTML = data.customType;
+        var divAttribute = document.createAttribute("class");
+        divAttribute.value = "complexType";
+        var div = creatNameElement("div");
+        div.setAttributeNode(divAttribute);
+        div.appendChild(typeElement);
         // TODO: display name (if given) for all types, not only simple
-        var nameElement = "";
         if (data.name)
-            nameElement = "<span class='variableName'>" + data.name + ":</span>";
-
-        var htmlData = JSON.stringify(data.value,null,"\t");
-        mainContent.append("<div class='complexType'> " + typeElement + nameElement+ "<pre>" + htmlData + "</pre></div>");
+            div.appendChild(creatNameElement(data.name));
+        mainContent.appendChild(creatJSONElement(data.value));
     }
     // Other
     else {
-        var htmlData = JSON.stringify(data,null,"\t");
-        mainContent.append("<pre>" + htmlData + "</pre>");
+        mainContent.appendChild(creatJSONElement(data));
     }
+}
+
+function addNewSession(value) {
+    var header = document.createElement("h3");
+    header.innerHTML = "Section " + value;
+    var hr = document.createElement("hr");
+    mainContent.appendChild(hr);
+    mainContent.appendChild(header);
+}
+
+function creatNameElement(name) {
+    var nameElement = document.createElement("span");
+    var attribute = document.createAttribute("class");
+    attribute.value = "variableName";
+    nameElement.setAttributeNode(attribute);
+    nameElement.innerHTML = name + " :";
+    return nameElement;
+}
+
+function creatJSONElement(data) {
+    var htmlData = JSON.stringify(data, null, "\t");
+    var pre = document.createElement("pre");
+    pre.innerHTML = htmlData;
+    return pre;
 }
 
 function displayGraph(data, title){
 
-    var newElement = $('<div>')[0];
-    mainContent.append(newElement);
+    var newElement = document.createElement("div");
+    mainContent.appendChild(newElement);
     MG.data_graphic({
         title: title,
         data: data,
@@ -107,8 +134,8 @@ function displayGraph(data, title){
 
 function displayBarGraph(data, title){
 
-    var newElement = $('<div>')[0];
-    mainContent.append(newElement);
+    var newElement = document.createElement("div");
+    mainContent.appendChild(newElement);
     MG.data_graphic({
         title: title,
         data: data,
@@ -124,8 +151,8 @@ function displayBarGraph(data, title){
 
 function displayHistogram(data){
 
-    var newElement = $('<div>')[0];
-    mainContent.append(newElement);
+    var newElement = document.createElement("div");
+    mainContent.appendChild(newElement);
     MG.data_graphic({
         title: "Histogram",
         data: data,
