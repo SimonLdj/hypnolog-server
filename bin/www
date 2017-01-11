@@ -106,11 +106,17 @@ io.sockets.on('connection', function(socket) {
 
   // add it to display client list
   displayClients.push(socket);
+  console.log("number of displayClients: " + displayClients.length);
 
   // TODO: send welcome message to new client
 
   // send the new data to the client
-  var data = "00001";
-  socket.volatile.emit('notification', data);
+    // remove disconnected client
+    socket.on('disconnect', function() {
+        var i = displayClients.indexOf(socket);
+        displayClients.splice(i,1);
+        console.log("socket disconnect");
+        console.log("number of displayClients: " + displayClients.length);
+    })
 });
 
