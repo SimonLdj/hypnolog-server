@@ -10,7 +10,7 @@ function sendDataToDisplayClients(data){
     for (var i in displayClients) {
         var b = displayClients[i];
         console.log('sending data to browser');
-        b.volatile.emit('notification', data);
+        b.emit('notification', data);
     }
 }
 
@@ -21,8 +21,6 @@ router.get('/status', function(req, res){
 });
 
 router.post('/in', function(req, res, next) {
-        console.log('* incoming data *');
-
         // TODO: Do not assume received data is JSON
         // now we assume data sent with 'Content-Type': 'application/json'
         // and then body-parser pars the data to an Object.
