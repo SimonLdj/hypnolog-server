@@ -51,21 +51,15 @@ function addData(data){
     }
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
-        var attribute = document.createAttribute("id");
-        attribute.value = data.name;
+        var para = createCustomElement("p", { "id": data.fullName }, creatNameElement(data.name));
         //TODO: parse the data.value.
-        htmlData = JSON.stringify(data.value,null,"\t");
-        var pre = document.createElement("pre");
-        pre.setAttributeNode(attribute);
-        pre.innerHTML = htmlData;
-        replaceWatchContent(watchContent, pre);
+        para.appendChild(creatJSONElement(data.value));
+        replaceWatchContent(watchContent, para);
     }
     // Simple Type data
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-        var para = document.createElement("p");
-        var attribute = document.createAttribute("class");
-        attribute.value = "simpleTypeData";
+        var para = createCustomElement("p", { "class": "simpleTypeData" }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name) {
             para.appendChild(creatNameElement(data.name));
@@ -85,16 +79,9 @@ function addData(data){
     }
     // Object data
     else if (data.type === "object") {
-        var typeElement = document.createElement("span");
-        var attribute = document.createAttribute("class");
-        attribute.value = "variableType";
-        typeElement.setAttributeNode(attribute);
+        var typeElement = createCustomElement("span", { "class": "complexType" }, null);
         typeElement.innerHTML = data.customType;
-        var divAttribute = document.createAttribute("class");
-        divAttribute.value = "complexType";
-        var div = creatNameElement("div");
-        div.setAttributeNode(divAttribute);
-        div.appendChild(typeElement);
+        var div = createCustomElement("div", { "class": "complexType" }, typeElement);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
             div.appendChild(creatNameElement(data.name));
@@ -106,12 +93,35 @@ function addData(data){
     }
 }
 
+function createCustomElement(elementType, attributesDic, content) {
+    var element = document.createElement(elementType);
+    for (var attribute in attributesDic) {
+        var attributeNode = document.createAttribute(attribute);
+        attributeNode.value = attributesDic[attribute];
+        element.setAttributeNode(attributeNode);
+    }
+    if (content)
+        element.appendChild(content);
+    return element;
+}
+
 function addNewSession(value) {
     var header = document.createElement("h3");
     header.innerHTML = "Section " + value;
     var hr = document.createElement("hr");
     mainContent.appendChild(hr);
     mainContent.appendChild(header);
+    //TODO: Do we want to clear the watched data?
+    clearWatchSection();
+}
+
+function clearWatchSection() {
+    if(watchContent.hasChildNodes()){
+        var children = element.childNodes;
+        for (var i = 0; i < children.length; i++) {
+            element.removeChild(element.childNodes[i]);
+        }
+    }
 }
 
 function creatNameElement(name) {
