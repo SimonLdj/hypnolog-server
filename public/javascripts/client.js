@@ -1,6 +1,8 @@
 var mainOutput = $('#output');
 var mainContent = document.getElementById("content");
 var watchContent = document.getElementById("watchContent");
+var checkBoxFilters = document.getElementById("checkBoxFilters");
+var selectAll = document.getElementById("selectAll");
 
 var allRecivedData = [];
 
@@ -46,6 +48,23 @@ function addData(data){
     mainOutput.find('time').html('Last Update:' + new Date());
     // New session data
     // TODO: do some better design then checking any data type
+    if (data.tags) {
+        var tags = data.tags;
+        for (var tag in tags) {
+            var tagName = tags[tag];
+            if (allTags.indexOf(tagName) == -1) {
+                allTags.push(tagName);
+                var checkBox = createCustomElement("input",
+                    { "type": "checkbox", "id": tagName, "onclick": "filterDisplay(this);"}, null);
+                checkBox.checked = true;
+                checkedTags.push(tagName);
+                var label = createCustomElement("label", { "for": tagName, "class": "checkBoxLabel" },
+                    document.createTextNode(tagName));
+                checkBoxFilters.appendChild(checkBox);
+                checkBoxFilters.appendChild(label);
+            }
+        }
+    }
     if (data.type === "newSession") {
         addNewSession(data.value);
     }
