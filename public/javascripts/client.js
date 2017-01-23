@@ -123,6 +123,7 @@ function createClassName(stringArray) {
     }
     return null;
 }
+
 function createCustomElement(elementType, attributesDic, content) {
     var element = document.createElement(elementType);
     for (var attribute in attributesDic) {
@@ -187,6 +188,64 @@ function replaceWatchContent(element, newData){
     }
     element.appendChild(newData);
 }
+//Invoke when the 'All' checkbox checked
+function showAll() {
+    if (selectAll.checked) {
+        var allCheckboxs = checkBoxFilters.childNodes;
+        for (var i in allCheckboxs) {
+            allCheckboxs[i].checked = true;
+        }
+        //Update the checkedTags array
+        checkedTags = [];
+        for (i in allTags) {
+            checkedTags.push(allTags[i]);
+        }
+        for (var i = 0; i < mainContent.childNodes.length; i++) {
+            mainContent.childNodes[i].style.display = 'block';
+        }
+    }
+}
+//Invoke when a checkbox checked or unchecked
+function filterDisplay(checkbox) {
+    selectAll.checked = false;
+    if (checkbox.checked) {
+        diaplayByTag(checkbox.id);
+    }
+    else {
+        hideByTag(checkbox.id);
+    }
+}
+
+function hideByTag(tag) {
+    var index = checkedTags.indexOf(tag);
+    //Update the checkedTags array
+    if (index > -1)
+        checkedTags.splice(index, 1);
+    //Hide all the Nodes, the last update should show the element
+    for (var i = 0; i < mainContent.childNodes.length; i++) {
+        //Always diaplay the header
+        if (mainContent.childNodes[i].nodeName != "HR" && mainContent.childNodes[i].id != "sectionHeader")
+            mainContent.childNodes[i].style.display = 'none';
+    }
+    for (var i in checkedTags) {
+        var children = mainContent.getElementsByClassName(checkedTags[i]);
+        for (var i = 0; i < children.length; i++) {
+            children[i].style.display = 'block';
+        }
+    }
+}
+
+function diaplayByTag(tag) {
+    //Update the checkedTags array
+    if (checkedTags.indexOf(tag) == -1)
+        checkedTags.push(tag);
+    var children = mainContent.getElementsByClassName(tag);
+    //Show the elements with the current checked tag
+    for (var i = 0; i < children.length; i++) {
+        children[i].style.display = 'block';
+    }
+}
+
 
 function displayGraph(data, title){
     var newElement = document.createElement("div");
