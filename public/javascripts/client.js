@@ -5,6 +5,8 @@ var checkBoxFilters = document.getElementById("checkBoxFilters");
 var selectAll = document.getElementById("selectAll");
 
 var allRecivedData = [];
+var allTags = [];
+var checkedTags = [];
 
 function initialize(){
     mainOutput.find('time').html('Last Update: never');
@@ -72,13 +74,13 @@ function addData(data){
         //TODO: check if data.value is a json.
         var para = createCustomElement("p", { "id": data.fullName }, creatNameElement(data.name));
         //TODO: parse the data.value.
-        para.appendChild(creatJSONElement(data.value));
+        para.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
         replaceWatchContent(watchContent, para);
     }
     // Simple Type data
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-        var para = createCustomElement("p", { "class": "simpleTypeData" }, null);
+        var para = createCustomElement("p", { "class": createClassName(["simpleTypeData", data.tags]) }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name) {
             para.appendChild(creatNameElement(data.name));
@@ -93,25 +95,34 @@ function addData(data){
         var gData = convertArrayToGraph(data.value);
         displayGraph(gData,
                      ( data.name && data.name.length) > 0 ? data.name : "Unnamed");
-        mainContent.appendChild(creatJSONElement(data.value));
+        mainContent.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
 
     }
     // Object data
     else if (data.type === "object") {
         var typeElement = createCustomElement("span", { "class": "complexType" }, null);
         typeElement.innerHTML = data.customType;
-        var div = createCustomElement("div", { "class": "complexType" }, typeElement);
+        var div = createCustomElement("div", { "class": "complexType" }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
             div.appendChild(creatNameElement(data.name));
-        mainContent.appendChild(creatJSONElement(data.value));
+        div.appendChild(typeElement);
+        div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
+        mainContent.appendChild(div);
     }
     // Other
     else {
-        mainContent.appendChild(creatJSONElement(data));
+        mainContent.appendChild(creatJSONElement(data, createClassName(data.tags)));
     }
 }
 
+function createClassName(stringArray) {
+    if (stringArray) {
+        var name = stringArray.toString();
+        return name.replace(/\,/g, " ");
+    }
+    return null;
+}
 function createCustomElement(elementType, attributesDic, content) {
     var element = document.createElement(elementType);
     for (var attribute in attributesDic) {
@@ -125,7 +136,7 @@ function createCustomElement(elementType, attributesDic, content) {
 }
 
 function addNewSession(value) {
-    var header = document.createElement("h3");
+    var header = createCustomElement("h3", { "id": "sectionHeader" }, null);
     header.innerHTML = "Section " + value;
     var hr = document.createElement("hr");
     mainContent.appendChild(hr);
@@ -144,17 +155,17 @@ function clearWatchSection() {
 }
 
 function creatNameElement(name) {
-    var nameElement = document.createElement("span");
-    var attribute = document.createAttribute("class");
-    attribute.value = "variableName";
-    nameElement.setAttributeNode(attribute);
+    var nameElement = createCustomElement("span", { "class": "variableName" }, null);
     nameElement.innerHTML = name + " :";
     return nameElement;
 }
 
-function creatJSONElement(data) {
+function creatJSONElement(data, tagsValue) {
     var htmlData = JSON.stringify(data, null, "\t");
     var pre = document.createElement("pre");
+    var attributeNode = document.createAttribute("class");
+    attributeNode.value = tagsValue;
+    pre.setAttributeNode(attributeNode);
     pre.innerHTML = htmlData;
     return pre;
 }
