@@ -204,6 +204,8 @@ function showAll() {
             mainContent.childNodes[i].style.display = 'block';
         }
     }
+    else
+        hideByTag(null);
 }
 //Invoke when a checkbox checked or unchecked
 function filterDisplay(checkbox) {
@@ -219,7 +221,7 @@ function filterDisplay(checkbox) {
 function hideByTag(tag) {
     var index = checkedTags.indexOf(tag);
     //Update the checkedTags array
-    if (index > -1)
+    if (tag && index > -1)
         checkedTags.splice(index, 1);
     //Hide all the Nodes, the last update should show the element
     for (var i = 0; i < mainContent.childNodes.length; i++) {
