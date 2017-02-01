@@ -57,10 +57,10 @@ function addData(data){
             if (allTags.indexOf(tagName) == -1) {
                 allTags.push(tagName);
                 var checkBox = createCustomElement("input",
-                    { "type": "checkbox", "id": tagName, "onclick": "filterDisplay(this);"}, null);
+                    { "class":"checkbox", "type": "checkbox", "id": tagName, "onclick": "filterDisplay(this);"}, null);
                 checkBox.checked = true;
                 checkedTags.push(tagName);
-                var label = createCustomElement("label", { "for": tagName, "class": "checkBoxLabel" },
+                var label = createCustomElement("label", { "for": tagName, "class": "checkbox" },
                     document.createTextNode(tagName));
                 checkBoxFilters.appendChild(checkBox);
                 checkBoxFilters.appendChild(label);
@@ -98,14 +98,16 @@ function addData(data){
         // TODO: display type for array
 
         var gData = convertArrayToGraph(data.value);
-        displayGraph(gData,
-                     ( data.name && data.name.length) > 0 ? data.name : "Unnamed");
-        mainContent.appendChild(creatJSONElement(data.value, createClassName(["line",data.tags])));
+        var element = displayGraph(gData,
+                     (data.name && data.name.length) > 0 ? data.name : "Unnamed");
+        var div = createCustomElement("div", { "class": "line" }, element);
+        div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
+        mainContent.appendChild(div);
 
     }
     // Object data
     else if (data.type === "object") {
-        var typeElement = createCustomElement("span", { "class": "complexType " + " line" }, null);
+        var typeElement = createCustomElement("span", { "class": "complexType"}, null);
         typeElement.innerHTML = data.customType;
         var div = createCustomElement("div", { "class": "complexType " + " line" }, null);
         // TODO: display name (if given) for all types, not only simple
@@ -117,7 +119,7 @@ function addData(data){
     }
     // Other
     else {
-        mainContent.appendChild(creatJSONElement(data, createClassName(data.tags)));
+        mainContent.appendChild(creatJSONElement(data, createClassName(["line",data.tags])));
     }
 }
 
@@ -126,7 +128,7 @@ function createClassName(stringArray) {
         var name = stringArray.toString();
         return name.replace(/\,/g, " user-tag_") + " line";
     }
-    return "line";
+    return null;
 }
 
 function createCustomElement(elementType, attributesDic, content) {
@@ -152,11 +154,8 @@ function addNewSession(value) {
 }
 
 function clearWatchSection() {
-    if(watchContent.hasChildNodes()){
-        var children = element.childNodes;
-        for (var i = 0; i < children.length; i++) {
-            element.removeChild(element.childNodes[i]);
-        }
+    while (watchContent.firstChild) {
+        watchContent.removeChild(watchContent.firstChild);
     }
 }
 
@@ -254,8 +253,8 @@ function createClass(name, rule) {
 
 
 function displayGraph(data, title){
-    var newElement = createCustomElement("div", { "class": "line" }, null);
-    mainContent.appendChild(newElement);
+    var newElement = document.createElement("div");
+    //mainContent.appendChild(newElement);
     MG.data_graphic({
         title: title,
         data: data,
@@ -265,11 +264,12 @@ function displayGraph(data, title){
         x_accessor: 'key',
         y_accessor: 'value',
     })
+    return newElement;
 }
 
 function displayBarGraph(data, title){
 
-    var newElement = createCustomElement("div", { "class": "line" }, null);
+    var newElement = document.createElement("div");
     mainContent.appendChild(newElement);
     MG.data_graphic({
         title: title,
