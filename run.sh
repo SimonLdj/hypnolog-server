@@ -1,2 +1,2 @@
-echo "Starting VDebug server"
+echo "Starting HypnoLog server"
 node ./bin/www
