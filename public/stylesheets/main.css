@@ -1,3 +1,21 @@
+h1{
+    color: #1656b0;
+    font-family: cursive;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 58px;
+    margin: 0 0 12px;
+}
+
+h2{
+    color: #696565;
+    font-family: sans-serif;
+    font-size: 30px;
+    font-weight: normal;
+    line-height: 35px;
+    margin: 0;
+}
+
 body {
     font-size: 1.0rem;
 }
@@ -55,4 +73,12 @@ time.lastUpdateTime {
 #watchContent{
     background-color: honeydew;
     font-weight: bold;
+}
+
+.line{
+    border-left: 5px solid #ffffff;
+}
+
+.line:hover{
+    border-left: 5px solid rgb(57, 74, 207);
 }

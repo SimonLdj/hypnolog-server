@@ -1,8 +1,12 @@
 var mainOutput = $('#output');
 var mainContent = document.getElementById("content");
 var watchContent = document.getElementById("watchContent");
+var checkBoxFilters = document.getElementById("checkBoxFilters");
+var selectAll = document.getElementById("selectAll");
 
 var allRecivedData = [];
+var allTags = ["default_untaged"];
+var checkedTags = ["default_untaged"];
 
 function initialize(){
     mainOutput.find('time').html('Last Update: never');
@@ -18,6 +22,7 @@ function connect(){
     socket.on('notification', function (data) {
         console.log("new data from socket");
         addData(data);
+        $('body').scrollTop(mainOutput.height());
     });
 
     // TODO: check connection successfully created, log and display to user.
@@ -46,26 +51,42 @@ function addData(data){
     mainOutput.find('time').html('Last Update:' + new Date());
     // New session data
     // TODO: do some better design then checking any data type
+    if (data.tags) {
+        var tags = data.tags;
+        for (var tag in tags) {
+            var tagName = tags[tag];
+            if (allTags.indexOf(tagName) == -1) {
+                allTags.push(tagName);
+                var checkBox = createCustomElement("input",
+                    { "class":"checkbox", "type": "checkbox", "id": tagName, "onclick": "filterDisplay(this);"}, null);
+                checkBox.checked = true;
+                checkedTags.push(tagName);
+                var label = createCustomElement("label", { "for": tagName, "class": "checkbox" },
+                    document.createTextNode("#" + tagName));
+                checkBoxFilters.appendChild(checkBox);
+                checkBoxFilters.appendChild(label);
+            }
+        }
+    }
     if (data.type === "newSession") {
         addNewSession(data.value);
     }
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
-        var attribute = document.createAttribute("id");
-        attribute.value = data.name;
+        var para = createCustomElement("p", { "id": data.fullName }, creatNameElement(data.name));
         //TODO: parse the data.value.
-        htmlData = JSON.stringify(data.value,null,"\t");
-        var pre = document.createElement("pre");
-        pre.setAttributeNode(attribute);
-        pre.innerHTML = htmlData;
-        replaceWatchContent(watchContent, pre);
+        para.appendChild(creatJSONElement(data.value));
+        replaceWatchContent(watchContent, para);
     }
     // Simple Type data
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-        var para = document.createElement("p");
-        var attribute = document.createAttribute("class");
-        attribute.value = "simpleTypeData";
+        var classNames = "";
+        if (data.tags)
+            classNames += createClassName(["simpleTypeData", data.tags]);
+        else
+            classNames += createClassName(["simpleTypeData", "default_untaged"]);
+        var para = createCustomElement("p", { "class": classNames }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name) {
             para.appendChild(creatNameElement(data.name));
@@ -78,54 +99,87 @@ function addData(data){
         // TODO: display type for array
 
         var gData = convertArrayToGraph(data.value);
-        displayGraph(gData,
-                     ( data.name && data.name.length) > 0 ? data.name : "Unnamed");
-        mainContent.appendChild(creatJSONElement(data.value));
+        var element = displayGraph(gData,
+                     (data.name && data.name.length) > 0 ? data.name : "Unnamed");
+        var div = createCustomElement("div", { "class": "line user-tag_default_untaged" }, element);
+        div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
+        mainContent.appendChild(div);
 
     }
     // Object data
     else if (data.type === "object") {
-        var typeElement = document.createElement("span");
-        var attribute = document.createAttribute("class");
-        attribute.value = "variableType";
-        typeElement.setAttributeNode(attribute);
+        var typeElement = createCustomElement("span", { "class": "complexType"}, null);
         typeElement.innerHTML = data.customType;
-        var divAttribute = document.createAttribute("class");
-        divAttribute.value = "complexType";
-        var div = creatNameElement("div");
-        div.setAttributeNode(divAttribute);
-        div.appendChild(typeElement);
+        if(data.tags)
+            var div = createCustomElement("div", { "class": "complexType " + createClassName(data.tags) }, null);
+        else
+            var div = createCustomElement("div", { "class": "complexType line user-tag_default_untaged" }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
             div.appendChild(creatNameElement(data.name));
-        mainContent.appendChild(creatJSONElement(data.value));
+        div.appendChild(typeElement);
+        div.appendChild(creatJSONElement(data.value, null));
+        mainContent.appendChild(div);
     }
     // Other
     else {
-        mainContent.appendChild(creatJSONElement(data));
+        if (data.tags)
+            mainContent.appendChild(creatJSONElement(data, createClassName(data.tags)));
+        else
+            mainContent.appendChild(creatJSONElement(data, createClassName(["default_untaged"])));
     }
 }
 
+function createClassName(stringArray) {
+    if (stringArray) {
+        if (stringArray.length == 1)
+            return "line user-tag_" + stringArray.toString();
+        var name = stringArray.toString();
+        return name.replace(/\,/g, " user-tag_") + " line";
+    }
+    return null;
+}
+
+function createCustomElement(elementType, attributesDic, content) {
+    var element = document.createElement(elementType);
+    for (var attribute in attributesDic) {
+        var attributeNode = document.createAttribute(attribute);
+        attributeNode.value = attributesDic[attribute];
+        element.setAttributeNode(attributeNode);
+    }
+    if (content)
+        element.appendChild(content);
+    return element;
+}
+
 function addNewSession(value) {
-    var header = document.createElement("h3");
+    var header = createCustomElement("h3", { "id": "sectionHeader" }, null);
     header.innerHTML = "Section " + value;
     var hr = document.createElement("hr");
     mainContent.appendChild(hr);
     mainContent.appendChild(header);
+    //TODO: Do we want to clear the watched data?
+    clearWatchSection();
+}
+
+function clearWatchSection() {
+    while (watchContent.firstChild) {
+        watchContent.removeChild(watchContent.firstChild);
+    }
 }
 
 function creatNameElement(name) {
-    var nameElement = document.createElement("span");
-    var attribute = document.createAttribute("class");
-    attribute.value = "variableName";
-    nameElement.setAttributeNode(attribute);
+    var nameElement = createCustomElement("span", { "class": "variableName" }, null);
     nameElement.innerHTML = name + " :";
     return nameElement;
 }
 
-function creatJSONElement(data) {
+function creatJSONElement(data, tagsValue) {
     var htmlData = JSON.stringify(data, null, "\t");
     var pre = document.createElement("pre");
+    var attributeNode = document.createAttribute("class");
+    attributeNode.value = tagsValue;
+    pre.setAttributeNode(attributeNode);
     pre.innerHTML = htmlData;
     return pre;
 }
@@ -147,10 +201,71 @@ function replaceWatchContent(element, newData){
     }
     element.appendChild(newData);
 }
+//Invoke when the 'All' checkbox checked
+function showAll() {
+    if (selectAll.checked) {
+        var allCheckboxs = checkBoxFilters.childNodes;
+        for (var i in allCheckboxs) {
+            allCheckboxs[i].checked = true;
+        }
+        //Update the checkedTags array
+        checkedTags = [];
+        for (i in allTags) {
+            checkedTags.push(allTags[i]);
+        }
+        createClass(".line", "display: block;");
+    }
+    else
+        hideByTag(null);
+}
+//Invoke when a checkbox checked or unchecked
+function filterDisplay(checkbox) {
+    selectAll.checked = false;
+    if (checkbox.checked) {
+        diaplayByTag(checkbox.id);
+    }
+    else {
+        hideByTag(checkbox.id);
+    }
+}
+
+function hideByTag(tag) {
+    var index = checkedTags.indexOf(tag);
+    //Update the checkedTags array
+    if (tag && index > -1)
+        checkedTags.splice(index, 1);
+    //Hide all the Nodes, the last update should show the element
+    createClass(".line", "display: none;");
+    for (var i in checkedTags) {
+        createClass(".user-tag_" + checkedTags[i], "display: block;");
+    }
+}
+
+function diaplayByTag(tag) {
+    //Update the checkedTags array
+    if (checkedTags.indexOf(tag) == -1)
+        checkedTags.push(tag);
+    var children = mainContent.getElementsByClassName("user-tag_" + tag);
+    //Show the elements with the current checked tag
+    createClass(".user-tag_" + tag, "display: block;");
+    if(checkedTags.length == allTags.length)
+        selectAll.checked = true;
+}
+
+function createClass(name, rule) {
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    if (!(style.sheet || {}).insertRule)
+        (style.styleSheet || style.sheet).addRule(name, rule);
+    else
+        style.sheet.insertRule(name + "{" + rule + "}", 0);
+}
+
 
 function displayGraph(data, title){
     var newElement = document.createElement("div");
-    mainContent.appendChild(newElement);
+    //mainContent.appendChild(newElement);
     MG.data_graphic({
         title: title,
         data: data,
@@ -160,6 +275,7 @@ function displayGraph(data, title){
         x_accessor: 'key',
         y_accessor: 'value',
     })
+    return newElement;
 }
 
 function displayBarGraph(data, title){
