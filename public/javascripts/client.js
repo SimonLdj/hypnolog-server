@@ -5,8 +5,8 @@ var checkBoxFilters = document.getElementById("checkBoxFilters");
 var selectAll = document.getElementById("selectAll");
 
 var allRecivedData = [];
-var allTags = [];
-var checkedTags = [];
+var allTags = ["default_untaged"];
+var checkedTags = ["default_untaged"];
 
 function initialize(){
     mainOutput.find('time').html('Last Update: never');
@@ -62,7 +62,7 @@ function addData(data){
                 checkBox.checked = true;
                 checkedTags.push(tagName);
                 var label = createCustomElement("label", { "for": tagName, "class": "checkbox" },
-                    document.createTextNode(tagName));
+                    document.createTextNode("#" + tagName));
                 checkBoxFilters.appendChild(checkBox);
                 checkBoxFilters.appendChild(label);
             }
@@ -81,11 +81,11 @@ function addData(data){
     // Simple Type data
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-        var classNames = "line";
+        var classNames = "";
         if (data.tags)
-            classNames += " " + createClassName(["simpleTypeData", data.tags]);
+            classNames += createClassName(["simpleTypeData", data.tags]);
         else
-            classNames += " simpleTypeData";
+            classNames += createClassName(["simpleTypeData", "default_untaged"]);
         var para = createCustomElement("p", { "class": classNames }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name) {
@@ -101,7 +101,7 @@ function addData(data){
         var gData = convertArrayToGraph(data.value);
         var element = displayGraph(gData,
                      (data.name && data.name.length) > 0 ? data.name : "Unnamed");
-        var div = createCustomElement("div", { "class": "line" }, element);
+        var div = createCustomElement("div", { "class": "line user-tag_default_untaged" }, element);
         div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
         mainContent.appendChild(div);
 
@@ -110,22 +110,30 @@ function addData(data){
     else if (data.type === "object") {
         var typeElement = createCustomElement("span", { "class": "complexType"}, null);
         typeElement.innerHTML = data.customType;
-        var div = createCustomElement("div", { "class": "complexType " + " line" }, null);
+        if(data.tags)
+            var div = createCustomElement("div", { "class": "complexType " + createClassName(data.tags) }, null);
+        else
+            var div = createCustomElement("div", { "class": "complexType line user-tag_default_untaged" }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
             div.appendChild(creatNameElement(data.name));
         div.appendChild(typeElement);
-        div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
+        div.appendChild(creatJSONElement(data.value, null));
         mainContent.appendChild(div);
     }
     // Other
     else {
-        mainContent.appendChild(creatJSONElement(data, createClassName(["line",data.tags])));
+        if (data.tags)
+            mainContent.appendChild(creatJSONElement(data, createClassName(data.tags)));
+        else
+            mainContent.appendChild(creatJSONElement(data, createClassName(["default_untaged"])));
     }
 }
 
 function createClassName(stringArray) {
     if (stringArray) {
+        if (stringArray.length == 1)
+            return "line user-tag_" + stringArray.toString();
         var name = stringArray.toString();
         return name.replace(/\,/g, " user-tag_") + " line";
     }
@@ -240,6 +248,8 @@ function diaplayByTag(tag) {
     var children = mainContent.getElementsByClassName("user-tag_" + tag);
     //Show the elements with the current checked tag
     createClass(".user-tag_" + tag, "display: block;");
+    if(checkedTags.length == allTags.length)
+        selectAll.checked = true;
 }
 
 function createClass(name, rule) {
