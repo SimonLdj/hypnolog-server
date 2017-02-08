@@ -28,14 +28,14 @@ connect();
 // add data to the DOM
 function addData(data){
 
-    // TODO: Expect incoming data not only to be an object, but to be a valid vdebug-log object
+    // TODO: Expect incoming data not only to be an object, but to be a valid HypnoLog-log object
 
     // Expect incoming data to be object
     if (typeof data !== "object") {
         console.error("received data is not an Object");
         data = {
-            type : "vdebug-error",
-            error: "Vdebug error: Data received in display client is not an Object",
+            type : "HypnoLog-error",
+            error: "HypnoLog error: Data received in display client is not an Object",
             receivedData : data,
         }
     }
