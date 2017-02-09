@@ -49,8 +49,10 @@ function addData(data){
 
     // update "last update time" in DOM
     mainOutput.find('time').html('Last Update:' + new Date());
-    // New session data
+
     // TODO: do some better design then checking any data type
+
+    // TODO: document what you do here
     if (data.tags) {
         var tags = data.tags;
         for (var tag in tags) {
@@ -68,6 +70,8 @@ function addData(data){
             }
         }
     }
+
+    // New session data
     if (data.type === "newSession") {
         addNewSession(data.value);
     }
@@ -83,10 +87,10 @@ function addData(data){
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
         var classNames = "";
         if (data.tags)
-            classNames += createClassName(["simpleTypeData", data.tags]);
+            classNames += createClassName(["simple-type", data.tags]);
         else
-            classNames += createClassName(["simpleTypeData", "default_untaged"]);
-        var para = createCustomElement("p", { "class": classNames }, null);
+            classNames += createClassName(["simple-type", "default_untaged"]);
+        var para = createCustomElement("pre", { "class": classNames }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name) {
             para.appendChild(creatNameElement(data.name));
@@ -97,23 +101,24 @@ function addData(data){
     // Numbers array data
     else if (data.type === "numbersArray"){
         // TODO: display type for array
+        // TODO: number array should have tags as well
 
         var gData = convertArrayToGraph(data.value);
         var element = displayGraph(gData,
                      (data.name && data.name.length) > 0 ? data.name : "Unnamed");
-        var div = createCustomElement("div", { "class": "line user-tag_default_untaged" }, element);
+        var div = createCustomElement("div", { "class": "line numbers-array user-tag_default_untaged" }, element);
         div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
         mainContent.appendChild(div);
 
     }
     // Object data
     else if (data.type === "object") {
-        var typeElement = createCustomElement("span", { "class": "complexType"}, null);
+        var typeElement = createCustomElement("span", { "class": "variable-type"}, null);
         typeElement.innerHTML = data.customType;
         if(data.tags)
-            var div = createCustomElement("div", { "class": "complexType " + createClassName(data.tags) }, null);
+            var div = createCustomElement("div", { "class": "line object-type " + createClassName(data.tags) }, null);
         else
-            var div = createCustomElement("div", { "class": "complexType line user-tag_default_untaged" }, null);
+            var div = createCustomElement("div", { "class": "line object-type user-tag_default_untaged" }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
             div.appendChild(creatNameElement(data.name));
@@ -124,18 +129,21 @@ function addData(data){
     // Other
     else {
         if (data.tags)
-            mainContent.appendChild(creatJSONElement(data, createClassName(data.tags)));
+            mainContent.appendChild(creatJSONElement(data, createClassName(data.tags) + " unknown-type"));
         else
-            mainContent.appendChild(creatJSONElement(data, createClassName(["default_untaged"])));
+            mainContent.appendChild(creatJSONElement(data, createClassName(["default_untaged"]) + " unknown-type"));
     }
+
 }
 
+// TODO: this convert string array to simple string, that not what the name indicates
+// also, this adds 'line' call, this is also not clear from the name
 function createClassName(stringArray) {
     if (stringArray) {
         if (stringArray.length == 1)
             return "line user-tag_" + stringArray.toString();
         var name = stringArray.toString();
-        return name.replace(/\,/g, " user-tag_") + " line";
+        return "line " + name.replace(/\,/g, " user-tag_");
     }
     return null;
 }
@@ -153,6 +161,7 @@ function createCustomElement(elementType, attributesDic, content) {
 }
 
 function addNewSession(value) {
+    // TODO: decide, is new-session info is also a line in a window
     var header = createCustomElement("h3", { "id": "sectionHeader" }, null);
     header.innerHTML = "Section " + value;
     var hr = document.createElement("hr");
@@ -169,7 +178,7 @@ function clearWatchSection() {
 }
 
 function creatNameElement(name) {
-    var nameElement = createCustomElement("span", { "class": "variableName" }, null);
+    var nameElement = createCustomElement("span", { "class": "variable-name" }, null);
     nameElement.innerHTML = name + " :";
     return nameElement;
 }

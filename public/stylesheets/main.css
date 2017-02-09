@@ -1,9 +1,8 @@
+/* main.css */
 h1{
     color: #1656b0;
     font-family: cursive;
-    font-size: 36px;
     font-weight: 400;
-    line-height: 58px;
     margin: 0 0 12px;
 }
 
@@ -21,51 +20,18 @@ body {
 }
 
 pre {
-    background-color: antiquewhite;
+    background-color: #F1F1F1;
     max-height: 20%;
-    width: 70%;
     max-width: 95%;
-    margin-top:15px;
+    margin: 0;
     resize:both;
-}
-pre.array {
-    float: left;
-    max-width: 50%;
-}
-
-
-p.simpleTypeData {
-    font-family: "Menlo", monospace;
-}
-
-span.variableType {
-    color: rgb(43,145,175);
-    margin-right:3px;
-    font-family: "Menlo", monospace;
-}
-span.variableName {
-    color: #7C7C7C;
-    margin-right:3px;
-    font-family: "Menlo", monospace;
+    padding: 2px;
 }
 
 div.watchWindow{
     color : blue;
 }
 
-div.complexType pre {
-    margin-top: 3px; 
-
-}
-
-div.complexType {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-h3.newSession {
-    background-color: #C9C9C9;
-}
 time.lastUpdateTime {
     font-size: 0.8rem;
 }
@@ -75,10 +41,6 @@ time.lastUpdateTime {
     font-weight: bold;
 }
 
-.line{
-    border-left: 5px solid #ffffff;
-}
-
-.line:hover{
-    border-left: 5px solid rgb(57, 74, 207);
+/*Log window*/
+.window {
 }
