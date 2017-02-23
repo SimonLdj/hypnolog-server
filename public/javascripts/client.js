@@ -22,7 +22,7 @@ function connect(){
     socket.on('notification', function (data) {
         console.log("new data from socket");
         addData(data);
-        $('body').scrollTop(mainOutput.height());
+        mainContent.scrollTop = mainContent.scrollHeight;
     });
 
     // TODO: check connection successfully created, log and display to user.

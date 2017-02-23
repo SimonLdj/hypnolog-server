@@ -28,8 +28,14 @@ pre {
     padding: 2px;
 }
 
+div.window{
+    max-height:75vh;
+    overflow-y:scroll;
+}
+
 div.watchWindow{
     color : blue;
+    max-height:20vh;
 }
 
 time.lastUpdateTime {
@@ -41,6 +47,7 @@ time.lastUpdateTime {
     font-weight: bold;
 }
 
-/*Log window*/
-.window {
+
+.line{
+    border-left: 5px solid #ffffff;
 }
