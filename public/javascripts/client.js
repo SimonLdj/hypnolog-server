@@ -52,6 +52,9 @@ function addData(data){
 
     // TODO: do some better design then checking any data type
 
+    // Represent the tags of the data
+    var tagElement = createCustomElement("div", { "class": "tagElement" }, document.createTextNode(addHashtag(data.tags)));
+
     // TODO: document what you do here
     if (data.tags) {
         var tags = data.tags;
@@ -96,6 +99,7 @@ function addData(data){
             para.appendChild(creatNameElement(data.name));
         }
         para.appendChild(document.createTextNode(data.value));
+        para.appendChild(tagElement);
         mainContent.appendChild(para);
     }
     // Numbers array data
@@ -116,9 +120,10 @@ function addData(data){
         var typeElement = createCustomElement("span", { "class": "variable-type"}, null);
         typeElement.innerHTML = data.customType;
         if(data.tags)
-            var div = createCustomElement("div", { "class": "line object-type " + createClassName(data.tags) }, null);
+            var div = createCustomElement("div", { "class": "object-type " + createClassName(data.tags) }, null);
         else
             var div = createCustomElement("div", { "class": "line object-type user-tag_default_untaged" }, null);
+        div.appendChild(tagElement);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
             div.appendChild(creatNameElement(data.name));
@@ -128,12 +133,24 @@ function addData(data){
     }
     // Other
     else {
+        var div;
         if (data.tags)
-            mainContent.appendChild(creatJSONElement(data, createClassName(data.tags) + " unknown-type"));
+            div = createCustomElement("div", { "class": createClassName(data.tags) }, creatJSONElement(data, "unknown-type"));
         else
-            mainContent.appendChild(creatJSONElement(data, createClassName(["default_untaged"]) + " unknown-type"));
+            div = createCustomElement("div", { "class": createClassName(["default_untaged"]) }, creatJSONElement(data, "unknown-type"));
+        div.appendChild(tagElement);
+        mainContent.appendChild(div);
     }
 
+}
+
+function addHashtag(stringArray) {
+    if (stringArray) {
+        var string = stringArray.toString();
+        return "#" + string.replace(/\,/g, "#");
+    }
+    else
+        return "untaged";
 }
 
 // TODO: this convert string array to simple string, that not what the name indicates

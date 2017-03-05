@@ -29,13 +29,15 @@ pre {
 }
 
 div.window{
-    max-height:75vh;
+    max-height:90%;
+    max-width: 70%;
     overflow-y:scroll;
 }
 
 div.watchWindow{
     color : blue;
-    max-height:20vh;
+    width: 30vh;
+    padding-left: 50px;
 }
 
 time.lastUpdateTime {
@@ -45,9 +47,25 @@ time.lastUpdateTime {
 #watchContent{
     background-color: honeydew;
     font-weight: bold;
+    float:right;
 }
 
+.checkbox{
+    font-size: 14px;
+    font-family: cursive;
+}
 
 .line{
     border-left: 5px solid #ffffff;
+    max-width:90vh;
+}
+
+.tagElement{
+    float: right;
+    color: ghostwhite;
+    font-size: 1.2rem;
+    font-family: "menlo", monospace;
+}
+.unknown-type{
+    max-width:70%;
 }
