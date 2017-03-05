@@ -1,7 +1,7 @@
 var mainOutput = $('#output');
 var mainContent = document.getElementById("content");
 var watchContent = document.getElementById("watchContent");
-var checkBoxFilters = document.getElementById("checkBoxFilters");
+var checkBoxFilters = document.getElementById("filter");
 var selectAll = document.getElementById("selectAll");
 
 var allRecivedData = [];

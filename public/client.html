@@ -16,14 +16,18 @@
 
 	</head>
 	<body>
-        <div id="output">
-            <h1>HypnoLog Output</h1>
-            <time></time>
-            <div id="checkBoxFilters" class="filters">
+        <nav>
+            <h1>HypnoLog</h1>
+            <time id="lastUpdateTime"></time>
+            <div id="filter">
+                <span>Filter by tags: </span>
                 <input type="checkbox" name="default" onclick="showAll();" id="selectAll" checked>
-                <label for="selectAll" class="checkbox">All</label>
+                <label for="selectAll">All</label>
                 <input type="checkbox" name="default" onclick="filterDisplay(this);" id="default_untaged" checked>
-                <label for="default_untaged" class="checkbox">Untaged</label></div>
+                <label for="default_untaged">Untaged</label>
+            </div>
+        </nav>
+        <div id="output">
             <div id = "watchContent" class="watchWindow"></div>
             <div id="content" class="window"></div>
         </div>

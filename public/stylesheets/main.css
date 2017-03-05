@@ -1,9 +1,15 @@
 /* main.css */
+
+* {
+    font-family: sans-serif, serif;
+}
+
+body {
+    font-size: 1.0rem;
+    margin: 0;
+}
+
 h1{
-    color: #1656b0;
-    font-family: cursive;
-    font-weight: 400;
-    margin: 0 0 12px;
 }
 
 h2{
@@ -13,10 +19,6 @@ h2{
     font-weight: normal;
     line-height: 35px;
     margin: 0;
-}
-
-body {
-    font-size: 1.0rem;
 }
 
 pre {
@@ -29,7 +31,7 @@ pre {
 }
 
 div.window{
-    max-height:90%;
+    max-height: 90%;
     max-width: 70%;
     overflow-y:scroll;
 }
@@ -40,20 +42,45 @@ div.watchWindow{
     padding-left: 50px;
 }
 
-time.lastUpdateTime {
-    font-size: 0.8rem;
-}
-
 #watchContent{
     background-color: honeydew;
     font-weight: bold;
     float:right;
 }
 
-.checkbox{
-    font-size: 14px;
-    font-family: cursive;
+nav {
+    padding: 8px;
+    background-color: #dcd0dc;
 }
+    nav * {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    nav h1 {
+        color: #055349;
+        font-weight: bolder;
+        margin: 0 15 0 0px;
+    }
+    nav #lastUpdateTime {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 0.8rem;
+    }
+
+    nav #filter {
+        display: inline-block;
+        margin-top: 5px;
+    }
+        nav #filter * {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 1.0rem;
+            line-height: normal;
+        }
+        nav #filter label {
+            font-family: monospace;
+        }
 
 .line{
     border-left: 5px solid #ffffff;
