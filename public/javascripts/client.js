@@ -3,13 +3,14 @@ var mainContent = document.getElementById("content");
 var watchContent = document.getElementById("watchContent");
 var checkBoxFilters = document.getElementById("filter");
 var selectAll = document.getElementById("selectAll");
+var lastUpdateTimeElement = $("#lastUpdateTimeValue");
 
 var allRecivedData = [];
 var allTags = ["default_untaged"];
 var checkedTags = ["default_untaged"];
 
 function initialize(){
-    mainOutput.find('time').html('Last Update: never');
+    initializeLastUpdateTime();
 }
 initialize();
 
@@ -22,7 +23,6 @@ function connect(){
     socket.on('notification', function (data) {
         console.log("new data from socket");
         addData(data);
-        mainContent.scrollTop = mainContent.scrollHeight;
     });
 
     // TODO: check connection successfully created, log and display to user.
@@ -47,8 +47,8 @@ function addData(data){
     // TODO: push only valid data
     allRecivedData.push(data);
 
-    // update "last update time" in DOM
-    mainOutput.find('time').html('Last Update:' + new Date());
+    // update "last update time" in DOM to now
+    setLastUpdateTimeNow();
 
     // TODO: do some better design then checking any data type
 
@@ -142,6 +142,7 @@ function addData(data){
         mainContent.appendChild(div);
     }
 
+    mainContent.scrollTop = mainContent.scrollHeight;
 }
 
 function addHashtag(stringArray) {
@@ -180,7 +181,7 @@ function createCustomElement(elementType, attributesDic, content) {
 function addNewSession(value) {
     // TODO: decide, is new-session info is also a line in a window
     var header = createCustomElement("h3", { "id": "sectionHeader" }, null);
-    header.innerHTML = "Section " + value;
+    header.innerHTML = "Session " + value;
     var hr = document.createElement("hr");
     mainContent.appendChild(hr);
     mainContent.appendChild(header);
@@ -351,6 +352,44 @@ function convertArrayToGraph(arr){
     return d;
 }
 
+// ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]
+// TODO: move all last-update-time logic to some module/class/file
+
+var lastUpdateTime;
+
+function initializeLastUpdateTime(){
+    lastUpdateTime = new Date();
+    updateLastUpdateTimeDisplay();
+    window.setInterval(updateLastUpdateTimeDisplay, 5000);
+}
+// Set last update time as now
+function setLastUpdateTimeNow(){
+    lastUpdateTime = new Date();
+    updateLastUpdateTimeDisplay();
+}
+
+// update "last update time" in DOM (top nav bar)
+function updateLastUpdateTimeDisplay(){
+    lastUpdateTimeElement.html(timeSince(lastUpdateTime));
+}
+
+// For a given date, return a string represent same date as time since
+// for example "10 seconds ago" for a date represent time 10 seconds ago
+function timeSince(date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var minutes = (seconds / 60);
+
+    if (minutes >= 1) {
+        return Math.floor(minutes) + " minutes ago";
+    }
+
+    if (seconds >= 5) {
+        return Math.floor(seconds) + " seconds ago";
+    }
+
+    return "just now";
+}
+// ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [end]
 
 // -----
 // temp

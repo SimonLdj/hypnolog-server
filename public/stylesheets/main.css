@@ -61,12 +61,16 @@ nav {
         font-weight: bolder;
         margin: 0 15 0 0px;
     }
-    nav #lastUpdateTime {
+    nav #lastUpdateTimeLabel {
         position: absolute;
         top: 8px;
         right: 8px;
         font-size: 0.8rem;
     }
+        nav #lastUpdateTimeLabel #lastUpdateTimeValue {
+            font-family: monospace;
+            margin-left:3px;
+        }
 
     nav #filter {
         display: inline-block;
