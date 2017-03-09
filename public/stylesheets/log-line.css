@@ -1,16 +1,57 @@
 /* log-line.css */
 
-.window .line{
-    border-left: 5px solid #ffffff;
-    padding-left: 5px;
-    margin: 2px 0px 0px 0px;
+
+/* rules for all windows */
+/*TODO: move to other css file (?)*/
+.window, .watch-window{
+    display: inline-block;
+    width: 49%;
+    height: 90%;
+    padding: 5px;
 }
+    .window span.variable-name,
+    .watch-window span.variable-name {
+        color: #7C7C7C;
+        margin-right:3px;
+        font-family: "Menlo", monospace;
+        font-size: 1.0rem;
+    }
+
+/*watch window*/
+.watch-window{
+    width: 27%;
+    overflow-y:scroll;
+}
+    .watch-window p {
+        border-left: 5px solid #ffffff;
+        padding-left: 5px;
+        margin: 2px 0px 0px 0px;
+    }
+
+/*normal output window*/
+.window{
+    width: 70%;
+    overflow-y:scroll;
+}
+    .window .line{
+        border-left: 5px solid #ffffff;
+        padding-left: 5px;
+        margin: 2px 0px 0px 0px;
+        /*max-width:89vw;*/
+    }
     .window .line:hover{
         border-left: 5px solid rgb(201, 206, 243);
     }
 
-    .window .line:hover .tagElement{
-        color: gray;
+        .window .line:hover .tagElement{
+             color: gray;
+        }
+
+    .window .line .tagElement{
+        float: right;
+        color: #bbbbbb;
+        font-size: 0.8rem;
+        font-family: "menlo", monospace;
     }
 
     .window .line span.variable-type {
@@ -19,16 +60,15 @@
         font-family: "Menlo", monospace;
     }
 
-    .window .line span.variable-name {
-        color: #7C7C7C;
-        margin-right:3px;
-        font-family: "Menlo", monospace;
-    }
-
 /* === Rules by data type == */
 
 /*Unkwon type*/
-.window pre.line.unknown-type {
+.window .line pre.unknown-type {
+    max-height: 20%;
+    width: 70%;
+    max-width: 95%;
+    resize:both;
+    border: none;
 }
 
 /* Simple type */
@@ -58,7 +98,6 @@
 }
     .window .line.numbers-array div{
         display: inline-block;
-        max-width: 50%;
     }
     .window .line.numbers-array pre {
         float: right;

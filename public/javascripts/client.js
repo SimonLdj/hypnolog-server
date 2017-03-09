@@ -1,6 +1,6 @@
 var mainOutput = $('#output');
-var mainContent = document.getElementById("content");
-var watchContent = document.getElementById("watchContent");
+var mainContent = document.getElementById("mainOutput");
+var watchContent = document.getElementById("watchWindow");
 var checkBoxFilters = document.getElementById("filter");
 var selectAll = document.getElementById("selectAll");
 var lastUpdateTimeElement = $("#lastUpdateTimeValue");
@@ -53,7 +53,7 @@ function addData(data){
     // TODO: do some better design then checking any data type
 
     // Represent the tags of the data
-    var tagElement = createCustomElement("div", { "class": "tagElement" }, document.createTextNode(addHashtag(data.tags)));
+    var tagElement = createCustomElement("div", { "class": "tagElement" }, document.createTextNode(converTagsArrayToString(data.tags || [])));
 
     // TODO: document what you do here
     if (data.tags) {
@@ -80,7 +80,7 @@ function addData(data){
     }
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
-        var para = createCustomElement("p", { "id": data.fullName }, creatNameElement(data.name));
+        var para = createCustomElement("p", { "id": data.fullName }, creatNameElement(data.fullName));
         //TODO: parse the data.value.
         para.appendChild(creatJSONElement(data.value));
         replaceWatchContent(watchContent, para);
@@ -96,6 +96,7 @@ function addData(data){
         var para = createCustomElement("pre", { "class": classNames }, null);
         // TODO: display name (if given) for all types, not only simple
         if (data.name) {
+            // TODO: name element (span) should be outside of pre elemnt, otherwise multi-string content display incorrect
             para.appendChild(creatNameElement(data.name));
         }
         para.appendChild(document.createTextNode(data.value));
@@ -105,13 +106,13 @@ function addData(data){
     // Numbers array data
     else if (data.type === "numbersArray"){
         // TODO: display type for array
-        // TODO: number array should have tags as well
-
         var gData = convertArrayToGraph(data.value);
+
         var element = displayGraph(gData,
                      (data.name && data.name.length) > 0 ? data.name : "Unnamed");
         var div = createCustomElement("div", { "class": "line numbers-array user-tag_default_untaged" }, element);
         div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
+        div.appendChild(tagElement);
         mainContent.appendChild(div);
 
     }
@@ -135,23 +136,22 @@ function addData(data){
     else {
         var div;
         if (data.tags)
-            div = createCustomElement("div", { "class": createClassName(data.tags) }, creatJSONElement(data, "unknown-type"));
+            div = createCustomElement("div", { "class": createClassName(data.tags) });
         else
-            div = createCustomElement("div", { "class": createClassName(["default_untaged"]) }, creatJSONElement(data, "unknown-type"));
+            div = createCustomElement("div", { "class": createClassName(["default_untaged"]) });
         div.appendChild(tagElement);
+        div.appendChild(creatJSONElement(data, "unknown-type"));
         mainContent.appendChild(div);
     }
 
     mainContent.scrollTop = mainContent.scrollHeight;
 }
 
-function addHashtag(stringArray) {
-    if (stringArray) {
-        var string = stringArray.toString();
-        return "#" + string.replace(/\,/g, "#");
-    }
-    else
-        return "untaged";
+function converTagsArrayToString(tagsArray) {
+    if (!tagsArray || tagsArray.length < 1)
+        return "";
+
+    return "#" + tagsArray.join(" #");
 }
 
 // TODO: this convert string array to simple string, that not what the name indicates

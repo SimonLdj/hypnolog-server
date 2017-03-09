@@ -1,5 +1,6 @@
 /* main.css */
 
+/* general stuff */
 * {
     font-family: sans-serif, serif;
 }
@@ -15,7 +16,6 @@ h1{
 h2{
     color: #696565;
     font-family: sans-serif;
-    font-size: 30px;
     font-weight: normal;
     line-height: 35px;
     margin: 0;
@@ -30,24 +30,11 @@ pre {
     padding: 2px;
 }
 
-div.window{
-    max-height: 90%;
-    max-width: 70%;
-    overflow-y:scroll;
+p {
+    font-size: 1.0rem;
 }
 
-div.watchWindow{
-    color : blue;
-    width: 30vh;
-    padding-left: 50px;
-}
-
-#watchContent{
-    background-color: honeydew;
-    font-weight: bold;
-    float:right;
-}
-
+/* Top navigaton bar */
 nav {
     padding: 8px;
     background-color: #dcd0dc;
@@ -85,18 +72,3 @@ nav {
         nav #filter label {
             font-family: monospace;
         }
-
-.line{
-    border-left: 5px solid #ffffff;
-    max-width:90vh;
-}
-
-.tagElement{
-    float: right;
-    color: ghostwhite;
-    font-size: 1.2rem;
-    font-family: "menlo", monospace;
-}
-.unknown-type{
-    max-width:70%;
-}
