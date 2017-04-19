@@ -88,32 +88,13 @@ function addData(data){
     // Simple Type data
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-        var classNames = "";
-        if (data.tags)
-            classNames += createClassName(["simple-type", data.tags]);
-        else
-            classNames += createClassName(["simple-type", "default_untaged"]);
-        var para = createCustomElement("pre", { "class": classNames }, null);
-        // TODO: display name (if given) for all types, not only simple
-        if (data.name) {
-            // TODO: name element (span) should be outside of pre elemnt, otherwise multi-string content display incorrect
-            para.appendChild(creatNameElement(data.name));
-        }
-        para.appendChild(document.createTextNode(data.value));
-        para.appendChild(tagElement);
-        mainContent.appendChild(para);
+
+        DefaultVisualizer.display(data, mainContent);
     }
     // Numbers array data
     else if (data.type === "numbersArray"){
-        // TODO: display type for array
-        var gData = convertArrayToGraph(data.value);
 
-        var element = displayGraph(gData,
-                     (data.name && data.name.length) > 0 ? data.name : "Unnamed");
-        var div = createCustomElement("div", { "class": "line numbers-array user-tag_default_untaged" }, element);
-        div.appendChild(creatJSONElement(data.value, createClassName(data.tags)));
-        div.appendChild(tagElement);
-        mainContent.appendChild(div);
+        GraphVisualizer.display(data, mainContent);
 
     }
     // Object data
@@ -290,68 +271,6 @@ function createClass(name, rule) {
 }
 
 
-function displayGraph(data, title){
-    var newElement = document.createElement("div");
-    //mainContent.appendChild(newElement);
-    MG.data_graphic({
-        title: title,
-        data: data,
-        width: 650,
-        height: 350,
-        target: newElement,
-        x_accessor: 'key',
-        y_accessor: 'value',
-    })
-    return newElement;
-}
-
-function displayBarGraph(data, title){
-
-    var newElement = document.createElement("div");
-    mainContent.appendChild(newElement);
-    MG.data_graphic({
-        title: title,
-        data: data,
-        width: 650,
-        height: 350,
-        target: newElement,
-        x_accessor: 'key',
-        y_accessor: 'value',
-        chart_type: 'bar',
-        //bar_orientation: 'vertical',
-    })
-}
-
-function displayHistogram(data){
-
-    var newElement = document.createElement("div");
-    mainContent.appendChild(newElement);
-    MG.data_graphic({
-        title: "Histogram",
-        data: data,
-        width: 650,
-        height: 350,
-        target: newElement,
-        x_accessor: 'key',
-        y_accessor: 'value',
-        chart_type: 'histogram',
-        //bar_margin: 0,
-        bins: data.length,
-        //right: 10,
-    })
-}
-
-
-function convertArrayToGraph(arr){
-
-    var d = [];
-    for (var i = 0; i < arr.length; i++){
-        d.push({"key" : i, "value" : arr[i]});
-    }
-
-    return d;
-}
-
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]
 // TODO: move all last-update-time logic to some module/class/file
 
@@ -390,27 +309,4 @@ function timeSince(date) {
     return "just now";
 }
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [end]
-
-// -----
-// temp
-
-////var t = [1,2,3,4,5,6,7,8,9,10];
-//var t = [253,167.0,157.0,178.0,165.0,204.0,181.0,170.0,162.0,134.0,120.0,105.0,116.0,90.0,68.0,46.0,50.0,52.0,42.0,55.0,60.0,61.0,37.0,53.0,61.0,62.0,65.0,87.0,118.0,143.0,189.0,242.0,193.0,163.0,115.0,82.0,73.0,59.0,37.0,27.0,32.0,25.0,13.0,15.0,9.0,12.0,8.0,8.0,6.0,2.0,3.0,7.0,9.0,7.0,6.0,2.0,3.0,5.0,2.0,2.0,2.0,1.0,0.0,4.0,3.0,2.0,2.0,5.0,2.0,2.0,3.0,1.0,0.0,3.0,0.0,0.0,2.0,3.0,4.0,2.0,3.0,5.0,4.0,3.0,2.0,4.0,5.0,3.0,3.0,6.0,7.0,8.0,3.0,1.0,7.0,2.0,6.0,3.0,2.0,2.0,5.0,11.0,5.0,13.0,6.0,6.0,8.0,9.0,21.0,15.0,19.0,7.0,12.0,23.0,25.0,18.0,28.0,32.0,51.0,57.0,89.0,184.0,328.0,175.0,69.0,51.0,50.0,30.0,51.0,29.0,58.0,61.0,34.0,39.0,26.0,24.0,24.0,19.0,14.0,21.0,22.0,25.0,15.0,14.0,6.0,7.0,9.0,6.0,5.0,3.0,2.0,2.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,253];
-////t.reverse();
-//d = convertArrayToGraph(t);
-//displayGraph(d);
-
-//d3.json('data1.json', function(data) {
-    //console.dir(data);
-    //MG.data_graphic({
-        //title: "Blue Histogram",
-        //data: data,
-        //width: 650,
-        //height: 350,
-        //target: '#temp',
-        //x_accessor: 'key',
-        //y_accessor: 'value',
-    //})
-//})
-
 
