@@ -20,18 +20,18 @@ let GraphVisualizer = (function() {
         if (!exports.canDisplay(obj))
             return false;
 
-        let tagElement = createCustomElement("div", { "class": "tagElement" },
-            document.createTextNode(converTagsArrayToString(obj.tags || [])));
+        let tagElement = HL.createCustomElement("div", { "class": "tagElement" },
+            document.createTextNode(HL.converTagsArrayToString(obj.tags || [])));
 
         // TODO: display type for array
         let gData = convertArrayToGraph(obj.value);
 
         let graphElement = displayGraph(gData,
                      (obj.name && obj.name.length) > 0 ? obj.name : "Unnamed");
-        let div = createCustomElement("div",
+        let div = HL.createCustomElement("div",
             { "class": "line numbers-array user-tag_default_untaged" },
             graphElement);
-        div.appendChild(creatJSONElement(obj.value, createClassName(obj.tags)));
+        div.appendChild(creatJSONElement(obj.value, HL.createClassName(obj.tags)));
         div.appendChild(tagElement);
         parent.appendChild(div);
 
@@ -39,9 +39,6 @@ let GraphVisualizer = (function() {
     }
 
     // private functions: 
-    // TODO: re-write methods such as createCustomElement, converTagsArrayToString
-    //       use some Utils for tags displaying as this should be shared code for Visualizers
-    //       Also delete some uneeded prviate methods
 
     function convertArrayToGraph(arr){
 
@@ -104,26 +101,6 @@ let GraphVisualizer = (function() {
             //right: 10,
         })
     }
-
-    function createCustomElement(elementType, attributesDic, content) {
-        var element = document.createElement(elementType);
-        for (var attribute in attributesDic) {
-            var attributeNode = document.createAttribute(attribute);
-            attributeNode.value = attributesDic[attribute];
-            element.setAttributeNode(attributeNode);
-        }
-        if (content)
-            element.appendChild(content);
-        return element;
-    }
-
-    function converTagsArrayToString(tagsArray) {
-        if (!tagsArray || tagsArray.length < 1)
-            return "";
-
-        return "#" + tagsArray.join(" #");
-    }
-
 
     return exports;
 

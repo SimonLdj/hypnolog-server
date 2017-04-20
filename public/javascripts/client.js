@@ -53,7 +53,7 @@ function addData(data){
     // TODO: do some better design then checking any data type
 
     // Represent the tags of the data
-    var tagElement = createCustomElement("div", { "class": "tagElement" }, document.createTextNode(converTagsArrayToString(data.tags || [])));
+    var tagElement = HL.createCustomElement("div", { "class": "tagElement" }, document.createTextNode(HL.converTagsArrayToString(data.tags || [])));
 
     // TODO: document what you do here
     if (data.tags) {
@@ -62,11 +62,11 @@ function addData(data){
             var tagName = tags[tag];
             if (allTags.indexOf(tagName) == -1) {
                 allTags.push(tagName);
-                var checkBox = createCustomElement("input",
+                var checkBox = HL.createCustomElement("input",
                     { "class":"checkbox", "type": "checkbox", "id": tagName, "onclick": "filterDisplay(this);"}, null);
                 checkBox.checked = true;
                 checkedTags.push(tagName);
-                var label = createCustomElement("label", { "for": tagName, "class": "checkbox" },
+                var label = HL.createCustomElement("label", { "for": tagName, "class": "checkbox" },
                     document.createTextNode("#" + tagName));
                 checkBoxFilters.appendChild(checkBox);
                 checkBoxFilters.appendChild(label);
@@ -80,7 +80,7 @@ function addData(data){
     }
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
-        var para = createCustomElement("p", { "id": data.fullName }, creatNameElement(data.fullName));
+        var para = HL.createCustomElement("p", { "id": data.fullName }, HL.creatNameElement(data.fullName));
         //TODO: parse the data.value.
         para.appendChild(creatJSONElement(data.value));
         replaceWatchContent(watchContent, para);
@@ -99,16 +99,16 @@ function addData(data){
     }
     // Object data
     else if (data.type === "object") {
-        var typeElement = createCustomElement("span", { "class": "variable-type"}, null);
+        var typeElement = HL.createCustomElement("span", { "class": "variable-type"}, null);
         typeElement.innerHTML = data.customType;
         if(data.tags)
-            var div = createCustomElement("div", { "class": "object-type " + createClassName(data.tags) }, null);
+            var div = HL.createCustomElement("div", { "class": "object-type " + HL.createClassName(data.tags) }, null);
         else
-            var div = createCustomElement("div", { "class": "line object-type user-tag_default_untaged" }, null);
+            var div = HL.createCustomElement("div", { "class": "line object-type user-tag_default_untaged" }, null);
         div.appendChild(tagElement);
         // TODO: display name (if given) for all types, not only simple
         if (data.name)
-            div.appendChild(creatNameElement(data.name));
+            div.appendChild(HL.creatNameElement(data.name));
         div.appendChild(typeElement);
         div.appendChild(creatJSONElement(data.value, null));
         mainContent.appendChild(div);
@@ -117,9 +117,9 @@ function addData(data){
     else {
         var div;
         if (data.tags)
-            div = createCustomElement("div", { "class": createClassName(data.tags) });
+            div = HL.createCustomElement("div", { "class": HL.createClassName(data.tags) });
         else
-            div = createCustomElement("div", { "class": createClassName(["default_untaged"]) });
+            div = HL.createCustomElement("div", { "class": HL.createClassName(["default_untaged"]) });
         div.appendChild(tagElement);
         div.appendChild(creatJSONElement(data, "unknown-type"));
         mainContent.appendChild(div);
@@ -128,40 +128,9 @@ function addData(data){
     mainContent.scrollTop = mainContent.scrollHeight;
 }
 
-function converTagsArrayToString(tagsArray) {
-    if (!tagsArray || tagsArray.length < 1)
-        return "";
-
-    return "#" + tagsArray.join(" #");
-}
-
-// TODO: this convert string array to simple string, that not what the name indicates
-// also, this adds 'line' call, this is also not clear from the name
-function createClassName(stringArray) {
-    if (stringArray) {
-        if (stringArray.length == 1)
-            return "line user-tag_" + stringArray.toString();
-        var name = stringArray.toString();
-        return "line " + name.replace(/\,/g, " user-tag_");
-    }
-    return null;
-}
-
-function createCustomElement(elementType, attributesDic, content) {
-    var element = document.createElement(elementType);
-    for (var attribute in attributesDic) {
-        var attributeNode = document.createAttribute(attribute);
-        attributeNode.value = attributesDic[attribute];
-        element.setAttributeNode(attributeNode);
-    }
-    if (content)
-        element.appendChild(content);
-    return element;
-}
-
 function addNewSession(value) {
     // TODO: decide, is new-session info is also a line in a window
-    var header = createCustomElement("h3", { "id": "sectionHeader" }, null);
+    var header = HL.createCustomElement("h3", { "id": "sectionHeader" }, null);
     header.innerHTML = "Session " + value;
     var hr = document.createElement("hr");
     mainContent.appendChild(hr);
@@ -174,12 +143,6 @@ function clearWatchSection() {
     while (watchContent.firstChild) {
         watchContent.removeChild(watchContent.firstChild);
     }
-}
-
-function creatNameElement(name) {
-    var nameElement = createCustomElement("span", { "class": "variable-name" }, null);
-    nameElement.innerHTML = name + " :";
-    return nameElement;
 }
 
 function creatJSONElement(data, tagsValue) {
@@ -221,7 +184,7 @@ function showAll() {
         for (i in allTags) {
             checkedTags.push(allTags[i]);
         }
-        createClass(".line", "display: block;");
+        HL.createClass(".line", "display: block;");
     }
     else
         hideByTag(null);
@@ -243,9 +206,9 @@ function hideByTag(tag) {
     if (tag && index > -1)
         checkedTags.splice(index, 1);
     //Hide all the Nodes, the last update should show the element
-    createClass(".line", "display: none;");
+    HL.createClass(".line", "display: none;");
     for (var i in checkedTags) {
-        createClass(".user-tag_" + checkedTags[i], "display: block;");
+        HL.createClass(".user-tag_" + checkedTags[i], "display: block;");
     }
 }
 
@@ -255,20 +218,11 @@ function diaplayByTag(tag) {
         checkedTags.push(tag);
     var children = mainContent.getElementsByClassName("user-tag_" + tag);
     //Show the elements with the current checked tag
-    createClass(".user-tag_" + tag, "display: block;");
+    HL.createClass(".user-tag_" + tag, "display: block;");
     if(checkedTags.length == allTags.length)
         selectAll.checked = true;
 }
 
-function createClass(name, rule) {
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    document.getElementsByTagName('head')[0].appendChild(style);
-    if (!(style.sheet || {}).insertRule)
-        (style.styleSheet || style.sheet).addRule(name, rule);
-    else
-        style.sheet.insertRule(name + "{" + rule + "}", 0);
-}
 
 
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]
