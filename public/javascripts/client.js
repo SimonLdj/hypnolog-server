@@ -89,7 +89,7 @@ function addData(data){
     // TODO: check all simple types in some normal way
     else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
 
-        DefaultVisualizer.display(data, mainContent);
+        SimpleTypeVisualizer.display(data, mainContent);
     }
     // Numbers array data
     else if (data.type === "numbersArray"){

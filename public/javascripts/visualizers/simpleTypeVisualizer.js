@@ -1,6 +1,7 @@
-// Default Visualizer - The default visualize given by HypnoLog
+// Simple Type Visualizer - Visualizer for simple data types (string, number)
+// will display the data as simple text
 'use strict';
-let DefaultVisualizer = (function() {
+let SimpleTypeVisualizer = (function() {
 
     let exports = {};
 
