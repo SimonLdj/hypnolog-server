@@ -19,12 +19,20 @@ let DefaultVisualizer = (function() {
         // create <pre> DOM elements
         let element = document.createElement("pre");
         element.classList.add("line","unknown-type");
+
+        // append variable name element, if name was given
+        let nameElement = HL.createVariableNameElement(obj);
+        if (nameElement) element.appendChild(nameElement);
+
         // show value as text
         let textElement = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
         element.appendChild(textElement);
+
+        // append tags element, if given
+        let tagsElement = HL.createTagsElement(obj);
+        if (tagsElement) element.appendChild(tagsElement);
+
         // TODO: add class accordign to tags
-        // TODO: add tags element to display the tags
-        // TODO: add variable name if given
         parent.appendChild(element);
 
         // return true, as yes, we can visualize the object

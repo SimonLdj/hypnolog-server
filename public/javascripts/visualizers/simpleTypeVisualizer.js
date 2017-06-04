@@ -29,10 +29,15 @@ let SimpleTypeVisualizer = (function() {
         // create <pre> DOM elements
         let element = document.createElement("pre");
         element.classList.add("line","simple-type");
+        // append variable name element, if name was given
+        let nameElement = HL.createVariableNameElement(obj);
+        if (nameElement) element.appendChild(nameElement);
+        // append value as simple text node
         element.appendChild(document.createTextNode(obj.value));
+        // append tags element, if given
+        let tagsElement = HL.createTagsElement(obj);
+        if (tagsElement) element.appendChild(tagsElement);
         // TODO: add class accordign to tags
-        // TODO: add tags element to display the tags
-        // TODO: add variable name if given
         parent.appendChild(element);
 
         // return true, as yes, we can visualize the object

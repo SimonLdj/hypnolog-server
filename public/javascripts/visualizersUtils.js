@@ -6,6 +6,23 @@ let HL = (function() {
 
     // public functions:
 
+    // For given HypnoLog data object create <div> element with
+    // objects tags as string (formated as hash tags, to be displayed near the data)
+    // If data has no tags, null will be returned
+    exports.createTagsElement = function(data){
+        if (!data.tags)
+            return null;
+
+        let tagsString = HL.converTagsArrayToString(data.tags || []);
+        let element = document.createElement("div");
+        element.classList.add("tagElement");
+        element.appendChild(document.createTextNode(tagsString));
+        return element;
+    }
+
+    // Convert given array of string to single string
+    // formated as hash tags: "#tagA #tagB"
+    // TODO: make private (?)
     exports.converTagsArrayToString = function(tagsArray) {
         if (!tagsArray || tagsArray.length < 1)
             return "";
@@ -13,6 +30,22 @@ let HL = (function() {
         return "#" + tagsArray.join(" #");
     }
 
+    // For given HypnoLog data object create <span> element with
+    // objects name (to be displayed before the data)
+    // If data has no variable name, null will be returned.
+    exports.createVariableNameElement = function(data) {
+        // TODO: use full name if short name is ambiguous, or not given
+        if (!data.name)
+            return;
+
+        let element = document.createElement("span");
+        element.classList.add("variable-name");
+        element.appendChild(document.createTextNode(data.name + ":"));
+        return element;
+    }
+
+
+    // TODO: rewrite/delete this method
     // TODO: this convert string array to simple string, that not what the name indicates
     // also, this adds 'line' call, this is also not clear from the name
     exports.createClassName = function(stringArray) {
@@ -25,6 +58,7 @@ let HL = (function() {
         return null;
     }
 
+    // TODO: rewrite/delete this method
     exports.createCustomElement = function(elementType, attributesDic, content) {
         let element = document.createElement(elementType);
         for (let attribute in attributesDic) {
@@ -36,23 +70,6 @@ let HL = (function() {
             element.appendChild(content);
         return element;
     }
-
-    exports.creatNameElement = function(name) {
-        let nameElement = exports.createCustomElement("span", { "class": "variable-name" }, null);
-        nameElement.innerHTML = name + " :";
-        return nameElement;
-    }
-
-    exports.createClass = function(name, rule) {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-        document.getElementsByTagName('head')[0].appendChild(style);
-        if (!(style.sheet || {}).insertRule)
-            (style.styleSheet || style.sheet).addRule(name, rule);
-        else
-            style.sheet.insertRule(name + "{" + rule + "}", 0);
-    }
-
 
     // private functions:
     // none

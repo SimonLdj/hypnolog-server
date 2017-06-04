@@ -90,7 +90,7 @@ function addData(data){
     // disply watch data with some window/visualizers logic
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
-        var para = HL.createCustomElement("p", { "id": data.fullName }, HL.creatNameElement(data.fullName));
+        var para = HL.createCustomElement("p", { "id": data.fullName }, HL.createVariableNameElement(data.fullName));
         //TODO: parse the data.value.
         para.appendChild(creatJSONElement(data.value));
         replaceWatchContent(watchContent, para);
