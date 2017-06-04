@@ -11,6 +11,13 @@ var checkedTags = ["default_untaged"];
 
 function initialize(){
     initializeLastUpdateTime();
+
+    // Set visualizers to use
+    HL.visualizersDispatcher.add(NewSessionVisualizer);
+    HL.visualizersDispatcher.add(GraphVisualizer);
+    HL.visualizersDispatcher.add(SimpleTypeVisualizer);
+    HL.visualizersDispatcher.add(DefaultVisualizer);
+
 }
 initialize();
 
@@ -50,10 +57,7 @@ function addData(data){
     // update "last update time" in DOM to now
     setLastUpdateTimeNow();
 
-    // TODO: do some better design then checking any data type
-
     // Represent the tags of the data
-    var tagElement = HL.createCustomElement("div", { "class": "tagElement" }, document.createTextNode(HL.converTagsArrayToString(data.tags || [])));
 
     // TODO: document what you do here
     if (data.tags) {
@@ -74,16 +78,16 @@ function addData(data){
         }
     }
 
-    // TODO: use visualizers genericly to display data
+    // display data using visualizers
+    HL.visualizersDispatcher.visualize(data, mainContent);
 
     // New session data
     if (data.type === "newSession") {
-
-        NewSessionVisualizer.display(data, mainContent);
-
+        // clean watch section when new session begines (Note, this i sgood only for synched sessions)
         //TODO: Do we want to clear the watched data?
         clearWatchSection();
     }
+    // disply watch data with some window/visualizers logic
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
         var para = HL.createCustomElement("p", { "id": data.fullName }, HL.creatNameElement(data.fullName));
@@ -93,26 +97,9 @@ function addData(data){
     }
     // Simple Type data
     // TODO: check all simple types in some normal way
-    else if (data.type === "String" || data.type === "Int32" || data.type === "Double"){
-
-        SimpleTypeVisualizer.display(data, mainContent);
-    }
     // Numbers array data
-    else if (data.type === "numbersArray"){
-
-        GraphVisualizer.display(data, mainContent);
-
-    }
     // Object data
-    else if (data.type === "object") {
-
-        DefaultVisualizer.display(data, mainContent);
-    }
     // Other
-    else {
-
-        DefaultVisualizer.display(data, mainContent);
-    }
 
     mainContent.scrollTop = mainContent.scrollHeight;
 }
