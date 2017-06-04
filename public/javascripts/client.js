@@ -74,9 +74,15 @@ function addData(data){
         }
     }
 
+    // TODO: use visualizers genericly to display data
+
     // New session data
     if (data.type === "newSession") {
-        addNewSession(data.value);
+
+        NewSessionVisualizer.display(data, mainContent);
+
+        //TODO: Do we want to clear the watched data?
+        clearWatchSection();
     }
     else if(data.debugOption == "watch"){
         //TODO: check if data.value is a json.
@@ -99,44 +105,16 @@ function addData(data){
     }
     // Object data
     else if (data.type === "object") {
-        var typeElement = HL.createCustomElement("span", { "class": "variable-type"}, null);
-        typeElement.innerHTML = data.customType;
-        if(data.tags)
-            var div = HL.createCustomElement("div", { "class": "object-type " + HL.createClassName(data.tags) }, null);
-        else
-            var div = HL.createCustomElement("div", { "class": "line object-type user-tag_default_untaged" }, null);
-        div.appendChild(tagElement);
-        // TODO: display name (if given) for all types, not only simple
-        if (data.name)
-            div.appendChild(HL.creatNameElement(data.name));
-        div.appendChild(typeElement);
-        div.appendChild(creatJSONElement(data.value, null));
-        mainContent.appendChild(div);
+
+        DefaultVisualizer.display(data, mainContent);
     }
     // Other
     else {
-        var div;
-        if (data.tags)
-            div = HL.createCustomElement("div", { "class": HL.createClassName(data.tags) });
-        else
-            div = HL.createCustomElement("div", { "class": HL.createClassName(["default_untaged"]) });
-        div.appendChild(tagElement);
-        div.appendChild(creatJSONElement(data, "unknown-type"));
-        mainContent.appendChild(div);
+
+        DefaultVisualizer.display(data, mainContent);
     }
 
     mainContent.scrollTop = mainContent.scrollHeight;
-}
-
-function addNewSession(value) {
-    // TODO: decide, is new-session info is also a line in a window
-    var header = HL.createCustomElement("h3", { "id": "sectionHeader" }, null);
-    header.innerHTML = "Session " + value;
-    var hr = document.createElement("hr");
-    mainContent.appendChild(hr);
-    mainContent.appendChild(header);
-    //TODO: Do we want to clear the watched data?
-    clearWatchSection();
 }
 
 function clearWatchSection() {
