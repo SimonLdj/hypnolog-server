@@ -1,7 +1,7 @@
 // Visualize data as graphs
 // Using metricsgraphics.js library
 //
-// Will Visualize onlt data type "numbersArray"
+// Will Visualize only data type "numbersArray"
 'use strict';
 let GraphVisualizer = (function() {
 
@@ -16,31 +16,51 @@ let GraphVisualizer = (function() {
     }
 
     exports.display = function(obj, parent){
-
+        // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
 
-        let tagElement = HL.createCustomElement("div", { "class": "tagElement" },
-            document.createTextNode(HL.converTagsArrayToString(obj.tags || [])));
+        // TODO: display type of array (also when we'll support not only numbers array)
+        // TODO: display variable name if given (now displaying variable name as graph title if given?)
 
-        // TODO: display type for array
-        let gData = convertArrayToGraph(obj.value);
+        // create <div> DOM element (to contain graph and text elements)
+        let element = document.createElement("div");
+        element.classList.add("line","numbers-array");
 
-        let graphElement = displayGraph(gData,
-                     (obj.name && obj.name.length) > 0 ? obj.name : "Unnamed");
-        let div = HL.createCustomElement("div",
-            { "class": "line numbers-array user-tag_default_untaged" },
-            graphElement);
-        div.appendChild(creatJSONElement(obj.value, HL.createClassName(obj.tags)));
-        div.appendChild(tagElement);
-        parent.appendChild(div);
+        // create graph DOM element
+        let gData = convertArrayToGraphData(obj.value);
+        let graphEl = createGraphElement(gData,
+                     (obj.name && obj.name.length) > 0 ? obj.name : "");
+        element.appendChild(graphEl);
 
+        // create <pre> DOM element to display values as text
+        var preEl = document.createElement("pre");
+        let textEl = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
+        preEl.appendChild(textEl);
+        element.appendChild(preEl);
+
+        // Add class to element according to given tags.
+        // This is to allow log filtering.
+        // (We filter elements by class, so each class represent tag)
+        let userTagsClass = HL.createTagsClass(obj);
+        if (userTagsClass.length > 0) element.classList.add(...userTagsClass);
+
+        // append tags element, if given
+        let tagsElement = HL.createTagsElement(obj);
+        if (tagsElement) element.appendChild(tagsElement);
+
+        // append created DOM element to given parent
+        parent.appendChild(element);
+
+        // return true, as yes, we can visualize the object
         return true;
     }
 
     // private functions: 
 
-    function convertArrayToGraph(arr){
+    // Convert simple array of objects to array of {key, value} objects.
+    // Key is just the index, value is object.
+    function convertArrayToGraphData(arr){
 
         let d = [];
         for (let i = 0; i < arr.length; i++){
@@ -50,9 +70,9 @@ let GraphVisualizer = (function() {
         return d;
     }
 
-    function displayGraph(data, title){
+    function createGraphElement(data, title){
         let newElement = document.createElement("div");
-        //mainContent.appendChild(newElement);
+        newElement.classList.add("graph");
         MG.data_graphic({
             title: title,
             data: data,
@@ -65,11 +85,10 @@ let GraphVisualizer = (function() {
         return newElement;
     }
 
-
-    function displayBarGraph(data, title){
+    // Note: not in use, here for later use.
+    function createBarGraph(data, title){
 
         let newElement = document.createElement("div");
-        mainContent.appendChild(newElement);
         MG.data_graphic({
             title: title,
             data: data,
@@ -81,12 +100,12 @@ let GraphVisualizer = (function() {
             chart_type: 'bar',
             //bar_orientation: 'vertical',
         })
+        return newElement;
     }
 
-    function displayHistogram(data){
-
+    // Note: not in use, here for later use.
+    function createHistogram(data){
         let newElement = document.createElement("div");
-        mainContent.appendChild(newElement);
         MG.data_graphic({
             title: "Histogram",
             data: data,
@@ -100,6 +119,7 @@ let GraphVisualizer = (function() {
             bins: data.length,
             //right: 10,
         })
+        return newElement;
     }
 
     return exports;
