@@ -13,21 +13,11 @@ let HL = (function() {
         if (!data.tags)
             return null;
 
-        let tagsString = HL.converTagsArrayToString(data.tags || []);
+        let tagsString = convertTagsArrayToHashTagString(data.tags || []);
         let element = document.createElement("div");
         element.classList.add("tagElement");
         element.appendChild(document.createTextNode(tagsString));
         return element;
-    }
-
-    // Convert given array of string to single string
-    // formated as hash tags: "#tagA #tagB"
-    // TODO: make private (?)
-    exports.converTagsArrayToString = function(tagsArray) {
-        if (!tagsArray || tagsArray.length < 1)
-            return "";
-
-        return "#" + tagsArray.join(" #");
     }
 
     // For given HypnoLog data object create <span> element with
@@ -44,6 +34,17 @@ let HL = (function() {
         return element;
     }
 
+    // For given HypnoLog data object create array of string,
+    // each string is class name represent user tag, which should be applied on the element.
+    // For empty tag list, return default 'untaged' class.
+    // This is to allow log filtering.
+    // (We filter elements by class, so each class represent tag)
+    exports.createTagsClass = function(data) {
+        if (!data.tags || data.tags.length < 1)
+            return ["user-tag_untaged"];
+
+        return Array.from(data.tags, x => "user-tag_"+x);
+    }
 
     // TODO: rewrite/delete this method
     // TODO: this convert string array to simple string, that not what the name indicates
@@ -72,8 +73,16 @@ let HL = (function() {
     }
 
     // private functions:
-    // none
-    
+
+    // Convert given array of string to single string
+    // formated as hash tags: "#tagA #tagB"
+    function convertTagsArrayToHashTagString (tagsArray) {
+        if (!tagsArray || tagsArray.length < 1)
+            return "";
+
+        return "#" + tagsArray.join(" #");
+    }
+
     return exports;
 
 })();

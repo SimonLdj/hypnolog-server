@@ -12,7 +12,7 @@ let DefaultVisualizer = (function() {
     }
 
     exports.display = function(obj, parent){
-        // return true if we can not visualize the object
+        // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
 
@@ -28,11 +28,17 @@ let DefaultVisualizer = (function() {
         let textElement = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
         element.appendChild(textElement);
 
+        // Add class to element according to given tags.
+        // This is to allow log filtering.
+        // (We filter elements by class, so each class represent tag)
+        let userTagsClass = HL.createTagsClass(obj);
+        if (userTagsClass.length > 0) element.classList.add(...userTagsClass);
+
         // append tags element, if given
         let tagsElement = HL.createTagsElement(obj);
         if (tagsElement) element.appendChild(tagsElement);
 
-        // TODO: add class accordign to tags
+        // append created DOM element to given parent
         parent.appendChild(element);
 
         // return true, as yes, we can visualize the object
