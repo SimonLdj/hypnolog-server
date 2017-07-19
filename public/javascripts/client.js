@@ -1,13 +1,10 @@
 var mainOutput = $('#output');
 var mainContent = document.getElementById("mainOutput");
 var watchContent = document.getElementById("watchWindow");
-var checkBoxFilters = document.getElementById("filter");
 var selectAll = document.getElementById("selectAll");
 var lastUpdateTimeElement = $("#lastUpdateTimeValue");
 
 var allRecivedData = [];
-var allTags = ["default_untaged"];
-var checkedTags = ["default_untaged"];
 
 function initialize(){
     initializeLastUpdateTime();
@@ -17,6 +14,9 @@ function initialize(){
     HL.visualizersDispatcher.add(GraphVisualizer);
     HL.visualizersDispatcher.add(SimpleTypeVisualizer);
     HL.visualizersDispatcher.add(DefaultVisualizer);
+
+    // initilialze window filter
+    WindowFilter.initialize();
 
 }
 initialize();
@@ -29,6 +29,7 @@ function connect(){
     // on every message received we print the new data inside the #container div
     socket.on('notification', function (data) {
         console.log("new data from socket");
+        //console.log(data);
         addData(data);
     });
 
@@ -57,31 +58,15 @@ function addData(data){
     // update "last update time" in DOM to now
     setLastUpdateTimeNow();
 
-    // Represent the tags of the data
-
-    // TODO: document what you do here
-    if (data.tags) {
-        var tags = data.tags;
-        for (var tag in tags) {
-            var tagName = tags[tag];
-            if (allTags.indexOf(tagName) == -1) {
-                allTags.push(tagName);
-                var checkBox = HL.createCustomElement("input",
-                    { "class":"checkbox", "type": "checkbox", "id": tagName, "onclick": "filterDisplay(this);"}, null);
-                checkBox.checked = true;
-                checkedTags.push(tagName);
-                var label = HL.createCustomElement("label", { "for": tagName, "class": "checkbox" },
-                    document.createTextNode("#" + tagName));
-                checkBoxFilters.appendChild(checkBox);
-                checkBoxFilters.appendChild(label);
-            }
-        }
-    }
+    // Add tags to window filter
+    if (data.tags && data.tags.length > 0)
+        WindowFilter.addTags(data.tags);
 
     // display data using visualizers
     HL.visualizersDispatcher.visualize(data, mainContent);
 
-    // New session data
+    // Watch section logic
+    // TODO: handle watch section logic in better designed code
     if (data.type === "newSession") {
         // clean watch section when new session begines (Note, this i sgood only for synched sessions)
         //TODO: Do we want to clear the watched data?
@@ -95,14 +80,12 @@ function addData(data){
         para.appendChild(creatJSONElement(data.value));
         replaceWatchContent(watchContent, para);
     }
-    // Simple Type data
-    // TODO: check all simple types in some normal way
-    // Numbers array data
-    // Object data
-    // Other
 
     mainContent.scrollTop = mainContent.scrollHeight;
 }
+
+// ~~~~~~~~~~~~ Watch section logic ~~~~~~~~~ [start]
+// TODO: move all watch-section logic to some module/class/file
 
 function clearWatchSection() {
     while (watchContent.firstChild) {
@@ -137,59 +120,8 @@ function replaceWatchContent(element, newData){
     }
     element.appendChild(newData);
 }
-//Invoke when the 'All' checkbox checked
-function showAll() {
-    if (selectAll.checked) {
-        var allCheckboxs = checkBoxFilters.childNodes;
-        for (var i in allCheckboxs) {
-            allCheckboxs[i].checked = true;
-        }
-        //Update the checkedTags array
-        checkedTags = [];
-        for (i in allTags) {
-            checkedTags.push(allTags[i]);
-        }
-        HL.createClass(".line", "display: block;");
-    }
-    else
-        hideByTag(null);
-}
-//Invoke when a checkbox checked or unchecked
-function filterDisplay(checkbox) {
-    selectAll.checked = false;
-    if (checkbox.checked) {
-        diaplayByTag(checkbox.id);
-    }
-    else {
-        hideByTag(checkbox.id);
-    }
-}
 
-function hideByTag(tag) {
-    var index = checkedTags.indexOf(tag);
-    //Update the checkedTags array
-    if (tag && index > -1)
-        checkedTags.splice(index, 1);
-    //Hide all the Nodes, the last update should show the element
-    HL.createClass(".line", "display: none;");
-    for (var i in checkedTags) {
-        HL.createClass(".user-tag_" + checkedTags[i], "display: block;");
-    }
-}
-
-function diaplayByTag(tag) {
-    //Update the checkedTags array
-    if (checkedTags.indexOf(tag) == -1)
-        checkedTags.push(tag);
-    var children = mainContent.getElementsByClassName("user-tag_" + tag);
-    //Show the elements with the current checked tag
-    HL.createClass(".user-tag_" + tag, "display: block;");
-    if(checkedTags.length == allTags.length)
-        selectAll.checked = true;
-}
-
-
-
+// ~~~~~~~~~~~~ Watch section logic ~~~~~~~~~ [end]
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]
 // TODO: move all last-update-time logic to some module/class/file
 

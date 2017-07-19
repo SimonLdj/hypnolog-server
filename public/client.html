@@ -21,10 +21,10 @@
             <span id="lastUpdateTimeLabel">Last Update Time:<time id="lastUpdateTimeValue">None</time></span>
             <div id="filter">
                 <span>Filter by tags: </span>
-                <input type="checkbox" name="default" onclick="showAll();" id="selectAll" checked>
-                <label for="selectAll">All</label>
-                <input type="checkbox" name="default" onclick="filterDisplay(this);" id="default_untaged" checked>
-                <label for="default_untaged">Untaged</label>
+                <input type="checkbox" name="*" id="filterOption-all" checked >
+                <label for="filterOption-all">All</label>
+                <input type="checkbox" name="untaged" id="filterOption-untaged" checked >
+                <label for="filterOption-untaged">Untaged</label>
             </div>
         </nav>
         <div id="output">
@@ -46,6 +46,7 @@
         <! -- TODO: use require.js or somehthing -->
         <script src="javascripts/visualizersUtils.js"></script>
         <script src="javascripts/visualizersDispatcher.js"></script>
+        <script src="javascripts/windowFilter.js"></script>
         <script src="javascripts/client.js"></script>
 	</body>
 </html>
