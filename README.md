@@ -15,7 +15,8 @@ debug and understand your application.
 Install `NodeJS` on you machine.
 
 ### Usage ###
-- Run `run.sh`
+- If it is the first time, run `npm install`
+- Run `npm start`
 - Open [`http://127.0.0.1:7000/client.html`](http://127.0.0.1:7000/client.html) in your browser
 - Log from your application
 
