@@ -22,15 +22,14 @@ function initialize(){
 initialize();
 
 
+// Connect to servers websocket
 function connect(){
     // creating a new websocket
     var socket = io.connect('http://localhost:7000');
 
     // on every message received we print the new data inside the #container div
     socket.on('notification', function (data) {
-        console.log("new data from socket");
-        //console.log(data);
-        addData(data);
+        handleNewData(data);
     });
 
     // TODO: check connection successfully created, log and display to user.
@@ -38,8 +37,9 @@ function connect(){
 };
 connect();
 
-// add data to the DOM
-function addData(data){
+// Handle new data received,
+// add data to the DOM using visualizers
+function handleNewData(data){
 
     // TODO: Expect incoming data not only to be an object, but to be a valid HypnoLog-log object
 
@@ -52,7 +52,9 @@ function addData(data){
             receivedData : data,
         }
     }
+
     // TODO: push only valid data
+    // TODO: use this variable to allow users filter/modify the received data
     allRecivedData.push(data);
 
     // update "last update time" in DOM to now
@@ -68,17 +70,13 @@ function addData(data){
     // Watch section logic
     // TODO: handle watch section logic in better designed code
     if (data.type === "newSession") {
-        // clean watch section when new session begines (Note, this i sgood only for synched sessions)
+        // clean watch section when new session begines (Note, this is good only for synched sessions)
         //TODO: Do we want to clear the watched data?
         clearWatchSection();
     }
-    // disply watch data with some window/visualizers logic
     else if(data.debugOption == "watch"){
-        //TODO: check if data.value is a json.
-        var para = HL.createCustomElement("p", { "id": data.fullName }, HL.createVariableNameElement(data.fullName));
-        //TODO: parse the data.value.
-        para.appendChild(creatJSONElement(data.value));
-        replaceWatchContent(watchContent, para);
+        var element = creatWatchElement(data);
+        replaceWatchContent(watchContent, element);
     }
 
     mainContent.scrollTop = mainContent.scrollHeight;
@@ -93,32 +91,42 @@ function clearWatchSection() {
     }
 }
 
-function creatJSONElement(data, tagsValue) {
-    var htmlData = JSON.stringify(data, null, "\t");
-    var pre = document.createElement("pre");
-    var attributeNode = document.createAttribute("class");
-    attributeNode.value = tagsValue;
-    pre.setAttributeNode(attributeNode);
-    pre.innerHTML = htmlData;
-    return pre;
+function creatWatchElement(data) {
+
+    // TODO: parse the data.value (using visualizers? watch-specific visualizers?)
+    // TODO: display watch data with some window/visualizers logic
+
+    // Create <p> with variable name and <pre> with data value
+    var pElement = document.createElement("p");
+    pElement.appendChild(HL.createVariableNameElement(data));
+    pElement.setAttribute("id", "watchElement_"+data.fullName);
+
+    var preEl = document.createElement("pre");
+    var textEl = document.createTextNode(JSON.stringify(data.value, null, "\t"));
+    preEl.appendChild(textEl);
+
+    pElement.appendChild(preEl);
+
+    return pElement;
 }
 
-function replaceWatchContent(element, newData){
-    if(element.hasChildNodes()){
-        var children = element.childNodes;
+function replaceWatchContent(watchSectionEl, newData){
+    if(watchSectionEl.hasChildNodes()){
+        var children = watchSectionEl.childNodes;
         if(children.length > 1){
             for(var i = 0; i < children.length; i++){
-                if(children[i].id == newData.id)
-                    element.removeChild(element.childNodes[i]);
+                if(children[i].id == newData.id){
+                    watchSectionEl.removeChild(watchSectionEl.childNodes[i]);
+                }
             }
         }
     }
     else{
         var header = document.createElement("h2");
         header.innerHTML = "Watch Section";
-        element.appendChild(header);
+        watchSectionEl.appendChild(header);
     }
-    element.appendChild(newData);
+    watchSectionEl.appendChild(newData);
 }
 
 // ~~~~~~~~~~~~ Watch section logic ~~~~~~~~~ [end]

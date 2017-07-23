@@ -19,11 +19,12 @@ let NewSessionVisualizer = (function() {
             return false;
 
         // TODO: decide, is new-session info is also a line in a window
-        var header = HL.createCustomElement("h3", { "id": "sectionHeader" }, null);
-        header.innerHTML = "Session " + obj.value;
-        var hr = document.createElement("hr");
-        parent.appendChild(hr);
-        parent.appendChild(header);
+        var headerEl = document.createElement("h3");
+        headerEl.appendChild(document.createTextNode("Session " + obj.value));
+        parent.appendChild(headerEl);
+
+        var hrEl = document.createElement("hr");
+        parent.appendChild(hrEl);
 
         // return true, as yes, we can visualize the object
         return true;

@@ -46,32 +46,6 @@ let HL = (function() {
         return Array.from(data.tags, x => "user-tag_"+x);
     }
 
-    // TODO: rewrite/delete this method
-    // TODO: this convert string array to simple string, that not what the name indicates
-    // also, this adds 'line' call, this is also not clear from the name
-    exports.createClassName = function(stringArray) {
-        if (stringArray) {
-            if (stringArray.length == 1)
-                return "line user-tag_" + stringArray.toString();
-            let name = stringArray.toString();
-            return "line " + name.replace(/\,/g, " user-tag_");
-        }
-        return null;
-    }
-
-    // TODO: rewrite/delete this method
-    exports.createCustomElement = function(elementType, attributesDic, content) {
-        let element = document.createElement(elementType);
-        for (let attribute in attributesDic) {
-            let attributeNode = document.createAttribute(attribute);
-            attributeNode.value = attributesDic[attribute];
-            element.setAttributeNode(attributeNode);
-        }
-        if (content)
-            element.appendChild(content);
-        return element;
-    }
-
     // private functions:
 
     // Convert given array of string to single string
