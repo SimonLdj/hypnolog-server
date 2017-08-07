@@ -64,7 +64,6 @@
 
 /* Unknown type */
 .window .line.unknown-type {
-    max-height: 20%;
     resize:both;
 }
 
