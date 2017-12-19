@@ -11,7 +11,7 @@ let DefaultVisualizer = (function() {
         return true;
     }
 
-    exports.display = function(obj, parent){
+    exports.display = function(obj, callback){
         // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
@@ -38,10 +38,10 @@ let DefaultVisualizer = (function() {
         let tagsElement = HL.createTagsElement(obj);
         if (tagsElement) element.appendChild(tagsElement);
 
-        // append created DOM element to given parent
-        parent.appendChild(element);
+        // pass the new element to the callback
+        callback(element);
 
-        // return true, as yes, we can visualize the object
+        // return true, as yes, visualization was done successfully
         return true;
     }
 

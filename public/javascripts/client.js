@@ -65,7 +65,9 @@ function handleNewData(data){
         WindowFilter.addTags(data.tags);
 
     // display data using visualizers
-    HL.visualizersDispatcher.visualize(data, mainContent);
+    HL.visualizersDispatcher.visualize(data, function(element) {
+        mainContent.appendChild(element);
+    });
 
     // Watch section logic
     // TODO: handle watch section logic in better designed code

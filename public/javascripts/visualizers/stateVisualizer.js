@@ -21,7 +21,7 @@ let StateVisualizer = (function() {
         return false;
     }
 
-    exports.display = function(obj, parent){
+    exports.display = function(obj, callback){
         // return true if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
@@ -33,9 +33,11 @@ let StateVisualizer = (function() {
         addToSum(parseFloat(obj.value));
         let element = document.createElement("pre");
         element.appendChild(document.createTextNode("Sum: " + sum));
-        parent.appendChild(element);
 
-        // return true, as yes, we can visualize the object
+        // pass the new element to callback
+        callback(element);
+
+        // return true, as yes, visualization was done successfully
         return true;
     }
 

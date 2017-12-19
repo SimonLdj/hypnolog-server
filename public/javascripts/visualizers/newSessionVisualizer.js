@@ -13,20 +13,29 @@ let NewSessionVisualizer = (function() {
         return false;
     }
 
-    exports.display = function(obj, parent){
+    exports.display = function(obj, callback){
         // return true if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
 
         // TODO: decide, is new-session info is also a line in a window
+        // if so, add the .line CSS class.
+        // note: adding this will make the element to be effected by tag filter,
+        // meaning if all tags are hidden, this will be hidden as well (not
+        // sure we want to do this).
+        let element = document.createElement("div");
+
         var headerEl = document.createElement("h3");
         headerEl.appendChild(document.createTextNode("Session " + obj.value));
-        parent.appendChild(headerEl);
+        element.appendChild(headerEl);
 
         var hrEl = document.createElement("hr");
-        parent.appendChild(hrEl);
+        element.appendChild(hrEl);
 
-        // return true, as yes, we can visualize the object
+        // pass the new element to callback
+        callback(element);
+
+        // return true, as yes, visualization was done successfully
         return true;
     }
 

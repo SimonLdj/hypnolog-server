@@ -8,18 +8,16 @@
 // Data Visualizer must implement those methods:
 //
 // canDisplay(obj) : boolean
+//  return true if can visualize the given object, otherwise return false.
 //  obj - HypnoLog object to visualize
-//  return true if can visualize the given object, otherwise return false.
 //
-// display(obj, parent) : boolean
+// display(obj, callback) : boolean
+//  Visualize the given HypnoLog-object. Return True if visualization was
+//  done successfully.
 //  obj - HypnoLog object to visualize.
-//  parent - parent DOM element in which visualize should add it's own DOM elements.
-//  return true if can visualize the given object, otherwise return false.
-//
-// TODO: Visualizer receiving parent DOM element to add new DOM elements is probably not a good design.
-//       Maybe Visualizer should receive callback to which it will pass new DOM element,
-//       then the caller (lets say the window) will receive the new element and will
-//       do its own appending logic.
+//  callback - function which will be called when visualization is ready. First
+//  parameter is the newly created DOM element which visualize the data. This
+//  function is the place to add the new element to the DOM.
 //
 'use strict';
 let TemplateVisualizer = (function() {
@@ -36,7 +34,7 @@ let TemplateVisualizer = (function() {
         return false;
     }
 
-    exports.display = function(obj, parent){
+    exports.display = function(obj, callback){
         // return true if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
@@ -47,7 +45,10 @@ let TemplateVisualizer = (function() {
         element.appendChild(document.createTextNode(obj.value));
         parent.appendChild(element);
 
-        // return true, as yes, we can visualize the object
+        // pass the new element to the callback
+        callback(element);
+
+        // return true, as yes, visualization was done successfully
         return true;
     }
 
