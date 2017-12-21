@@ -1,5 +1,4 @@
 var mainOutput = $('#output');
-var mainContent = document.getElementById("mainOutput");
 var watchContent = document.getElementById("watchWindow");
 var selectAll = document.getElementById("selectAll");
 var lastUpdateTimeElement = $("#lastUpdateTimeValue");
@@ -9,15 +8,7 @@ var allRecivedData = [];
 function initialize(){
     initializeLastUpdateTime();
 
-    // Set visualizers to use
-    HL.visualizersDispatcher.add(NewSessionVisualizer);
-    HL.visualizersDispatcher.add(GraphVisualizer);
-    HL.visualizersDispatcher.add(SimpleTypeVisualizer);
-    HL.visualizersDispatcher.add(DefaultVisualizer);
-
-    // initilialze window filter
-    WindowFilter.initialize();
-
+    HL.WindowsDispatcher.add(DefaultWindow);
 }
 initialize();
 
@@ -60,14 +51,8 @@ function handleNewData(data){
     // update "last update time" in DOM to now
     setLastUpdateTimeNow();
 
-    // Add tags to window filter
-    if (data.tags && data.tags.length > 0)
-        WindowFilter.addTags(data.tags);
-
-    // display data using visualizers
-    HL.visualizersDispatcher.visualize(data, function(element) {
-        mainContent.appendChild(element);
-    });
+    // let WindowsDispatcher pass the received data to all the windows
+    HL.WindowsDispatcher.display(data);
 
     // Watch section logic
     // TODO: handle watch section logic in better designed code
@@ -80,8 +65,6 @@ function handleNewData(data){
         var element = creatWatchElement(data);
         replaceWatchContent(watchContent, element);
     }
-
-    mainContent.scrollTop = mainContent.scrollHeight;
 }
 
 // ~~~~~~~~~~~~ Watch section logic ~~~~~~~~~ [start]

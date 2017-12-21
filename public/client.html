@@ -33,16 +33,24 @@
         <script src="javascripts/lib/metricsgraphics-2.11.0.min.js"></script>
 
         <!-- TODO: load all visualizers dynamicly -->
+        <!--load all visualizers-->
         <script src="javascripts/visualizers/defaultVisualizer.js"></script>
         <script src="javascripts/visualizers/simpleTypeVisualizer.js"></script>
         <script src="javascripts/visualizers/graphVisualizer.js"></script>
         <script src="javascripts/visualizers/newSessionVisualizer.js"></script>
-
-        <! -- core files -->
-        <! -- TODO: use require.js or somehthing -->
+        <!--load visualizers framework files-->
         <script src="javascripts/visualizersUtils.js"></script>
         <script src="javascripts/visualizersDispatcher.js"></script>
+
+        <!-- TODO: load all windows dynamicly -->
+        <!--load all windows-->
         <script src="javascripts/windowFilter.js"></script>
+        <script src="javascripts/windows/defaultWindow.js"></script>
+        <!--load windows framework files-->
+        <script src="javascripts/windowsDispatcher.js"></script>
+
+        <! -- core files -->
+        <! -- TODO: use require.js or somehthing to load all script files -->
         <script src="javascripts/client.js"></script>
 	</body>
 </html>
