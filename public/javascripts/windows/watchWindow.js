@@ -5,10 +5,21 @@ let WatchWindow = (function() {
 
     let exports = {};
 
-    // TODO: don't assume DOM exist for this window
-    let watchContent = document.getElementById("watchWindow");
+    // DOM element which will hold all other elements
+    // Will be created when createWindowElement method called
+    let mainContainerEl = null;
 
     // public functions:
+
+    exports.createWindowElement = function(callback) {
+        // create <div class="watch-window"></div>
+        // set it as main container
+        mainContainerEl = document.createElement("div");
+        mainContainerEl.classList.add("watch-window");
+
+        // pass the new DOM element to one who called us
+        callback(mainContainerEl);
+    }
 
     exports.display = function(data, callback){
 
@@ -20,15 +31,15 @@ let WatchWindow = (function() {
         }
         else if(data.debugOption == "watch"){
             var element = creatWatchElement(data);
-            replaceWatchContent(watchContent, element);
+            replaceWatchContent(mainContainerEl, element);
         }
     }
 
     // private functions:
 
     function clearWatchSection() {
-        while (watchContent.firstChild) {
-            watchContent.removeChild(watchContent.firstChild);
+        while (mainContainerEl.firstChild) {
+            mainContainerEl.removeChild(mainContainerEl.firstChild);
         }
     }
 
@@ -51,6 +62,7 @@ let WatchWindow = (function() {
         return pElement;
     }
 
+    // TODO: rewrite replaceWatchContent method
     function replaceWatchContent(watchSectionEl, newData){
         if(watchSectionEl.hasChildNodes()){
             var children = watchSectionEl.childNodes;

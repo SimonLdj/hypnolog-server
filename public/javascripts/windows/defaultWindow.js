@@ -1,4 +1,5 @@
 // TODO: Document
+// TODO: create template window
 //
 'use strict';
 let DefaultWindow = (function() {
@@ -18,10 +19,19 @@ let DefaultWindow = (function() {
     HL.visualizersDispatcher.add(SimpleTypeVisualizer);
     HL.visualizersDispatcher.add(DefaultVisualizer);
 
-    // TODO: don't assume DOM exist for this window
-    let mainContent = document.getElementById("mainOutput");
+    let mainContainerEl = null;
 
     // public functions:
+
+    exports.createWindowElement = function(callback) {
+        // create <div class="window"></div>
+        // set it as main container
+        mainContainerEl = document.createElement("div");
+        mainContainerEl.classList.add("window");
+
+        // pass the new DOM element to one who called us
+        callback(mainContainerEl);
+    }
 
     exports.display = function(data, callback){
 
@@ -29,12 +39,14 @@ let DefaultWindow = (function() {
         if (data.tags && data.tags.length > 0)
             WindowFilter.addTags(data.tags);
 
-        // display data using visualizers
+        // find visualizer to create DOM element to visualize the data
         HL.visualizersDispatcher.visualize(data, function(element) {
-            mainContent.appendChild(element);
+            // append the newly created element to main container
+            mainContainerEl.appendChild(element);
         });
 
-        mainContent.scrollTop = mainContent.scrollHeight;
+        // scroll container to bottom (to simulate console scrolling)
+        mainContainerEl.scrollTop = mainContainerEl.scrollHeight;
     }
 
     return exports;

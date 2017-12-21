@@ -1,4 +1,3 @@
-var mainOutput = $('#output');
 var lastUpdateTimeElement = $("#lastUpdateTimeValue");
 
 var allRecivedData = [];
@@ -6,6 +5,7 @@ var allRecivedData = [];
 function initialize(){
     initializeLastUpdateTime();
 
+    HL.WindowsDispatcher.setContainer(document.getElementById("windowsContainer"));
     HL.WindowsDispatcher.add(DefaultWindow);
     HL.WindowsDispatcher.add(WatchWindow);
 }
