@@ -1,6 +1,4 @@
 var mainOutput = $('#output');
-var watchContent = document.getElementById("watchWindow");
-var selectAll = document.getElementById("selectAll");
 var lastUpdateTimeElement = $("#lastUpdateTimeValue");
 
 var allRecivedData = [];
@@ -9,6 +7,7 @@ function initialize(){
     initializeLastUpdateTime();
 
     HL.WindowsDispatcher.add(DefaultWindow);
+    HL.WindowsDispatcher.add(WatchWindow);
 }
 initialize();
 
@@ -53,68 +52,8 @@ function handleNewData(data){
 
     // let WindowsDispatcher pass the received data to all the windows
     HL.WindowsDispatcher.display(data);
-
-    // Watch section logic
-    // TODO: handle watch section logic in better designed code
-    if (data.type === "newSession") {
-        // clean watch section when new session begines (Note, this is good only for synched sessions)
-        //TODO: Do we want to clear the watched data?
-        clearWatchSection();
-    }
-    else if(data.debugOption == "watch"){
-        var element = creatWatchElement(data);
-        replaceWatchContent(watchContent, element);
-    }
 }
 
-// ~~~~~~~~~~~~ Watch section logic ~~~~~~~~~ [start]
-// TODO: move all watch-section logic to some module/class/file
-
-function clearWatchSection() {
-    while (watchContent.firstChild) {
-        watchContent.removeChild(watchContent.firstChild);
-    }
-}
-
-function creatWatchElement(data) {
-
-    // TODO: parse the data.value (using visualizers? watch-specific visualizers?)
-    // TODO: display watch data with some window/visualizers logic
-
-    // Create <p> with variable name and <pre> with data value
-    var pElement = document.createElement("p");
-    pElement.appendChild(HL.createVariableNameElement(data));
-    pElement.setAttribute("id", "watchElement_"+data.fullName);
-
-    var preEl = document.createElement("pre");
-    var textEl = document.createTextNode(JSON.stringify(data.value, null, "\t"));
-    preEl.appendChild(textEl);
-
-    pElement.appendChild(preEl);
-
-    return pElement;
-}
-
-function replaceWatchContent(watchSectionEl, newData){
-    if(watchSectionEl.hasChildNodes()){
-        var children = watchSectionEl.childNodes;
-        if(children.length > 1){
-            for(var i = 0; i < children.length; i++){
-                if(children[i].id == newData.id){
-                    watchSectionEl.removeChild(watchSectionEl.childNodes[i]);
-                }
-            }
-        }
-    }
-    else{
-        var header = document.createElement("h2");
-        header.innerHTML = "Watch Section";
-        watchSectionEl.appendChild(header);
-    }
-    watchSectionEl.appendChild(newData);
-}
-
-// ~~~~~~~~~~~~ Watch section logic ~~~~~~~~~ [end]
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]
 // TODO: move all last-update-time logic to some module/class/file
 
