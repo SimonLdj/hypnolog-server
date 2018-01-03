@@ -5,7 +5,11 @@ var allRecivedData = [];
 function initialize(){
     initializeLastUpdateTime();
 
+    // TODO: refactor WindowsDispatcher to be object which you create (new)
+    // then pass container element to constructor
     HL.WindowsDispatcher.setContainer(document.getElementById("windowsContainer"));
+    // TODO: refactor windows to be objects which you create
+    // For example in case we want to use same windows twice
     HL.WindowsDispatcher.add(DefaultWindow);
     HL.WindowsDispatcher.add(WatchWindow);
 }
@@ -50,7 +54,7 @@ function handleNewData(data){
     // update "last update time" in DOM to now
     setLastUpdateTimeNow();
 
-    // let WindowsDispatcher pass the received data to all the windows
+    // let WindowsDispatcher pass the received data to all its windows
     HL.WindowsDispatcher.display(data);
 }
 

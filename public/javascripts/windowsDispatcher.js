@@ -1,7 +1,6 @@
-// TODO: Document WindowsDispatcher
-// WindowsDispatcher pass the given Hypnolog data object to all active windows
+// WindowsDispatcher responsible for distributing the logged data to all its windows.
 //
-// WindowsDispatcher should get collection of windows to use,
+// WindowsDispatcher hold a collection of windows which are in use and pass the logger data to ALL of the windows.
 //
 // TODO: Refactor WindowsDispatcher to be one you can create, as like new WindowsDispatcher(..)
 //       Then pass the container DOM element in constructor - this will avoid by design calling
@@ -25,12 +24,13 @@ HL.WindowsDispatcher = (function() {
 
     // public functions:
 
-    // TODO: document
+    // Set the DOM element which should contain all of the windows 
+    // TODO: refactor WindowsDispatcher to receive container element from constructor
     exports.setContainer = function(element) {
         containerElement = element;
     }
 
-    // Add the given Window
+    // Add the given Window to windows collection
     exports.add = function(w) {
         // TODO: verify somehow w is a `window` object
 
@@ -44,6 +44,8 @@ HL.WindowsDispatcher = (function() {
         });
     }
 
+    // Display the given data using the windows.
+    // Will pass the given data to all of the windows to display the data.
     // data - Hypnolog data object to display
     exports.display = function(data) {
         // pass the data object to all windows

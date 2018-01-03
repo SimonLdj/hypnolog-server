@@ -1,11 +1,15 @@
-// TODO: Document
-// TODO: create template window
+// DefaultWindow is the default window to display data in Hypnolog.
+// It acts like a console displaying each logged data line after line,
+// scrolling down to the latest logged line.
+// It use few visualizers to display the data: NewSessionVisualizer,
+// GraphVisualizer, SimpleTypeVisualizer, DefaultVisualizer.
+// It has a tags filter which can filter logged lines by the attached tag.
 //
+
 'use strict';
 let DefaultWindow = (function() {
 
     let exports = {};
-
 
     // TODO: better design for WindowFilter - not global, create instance. Call it TagsFilter?
     // initialize window filter
@@ -19,6 +23,8 @@ let DefaultWindow = (function() {
     HL.visualizersDispatcher.add(SimpleTypeVisualizer);
     HL.visualizersDispatcher.add(DefaultVisualizer);
 
+    // DOM element which will hold all other elements.
+    // Will be created when createWindowElement method called
     let mainContainerEl = null;
 
     // public functions:
@@ -33,7 +39,7 @@ let DefaultWindow = (function() {
         callback(mainContainerEl);
     }
 
-    exports.display = function(data, callback){
+    exports.display = function(data) {
 
         // Add tags to window filter
         if (data.tags && data.tags.length > 0)

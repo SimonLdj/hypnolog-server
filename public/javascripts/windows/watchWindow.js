@@ -1,4 +1,17 @@
-// TODO: Document
+// Watch window act like watch window in popular IDEs (like VS).
+// It will display the last logged value of a variable.
+// Not exactly, read full description.
+// 
+// NOTE: This is not a well designed feature, and it might be refactored or deleted.
+// some of the problems are:
+// - Clear API is not set for when to watch a variable (and not only log it)
+//   Now data.debugOption == "watch" is used.
+// - How to keep track about same variable (use it's full name - not only local name),
+//   also display the full name to avoid 2 variables with same name.
+// - How to make the watched variable always up-to-date, now it is updated only when user log it.
+//   This is more like "Last value window" and not actually "Watch window" as known from IDEs.
+//
+// TODO: refactor Watch Window
 //
 'use strict';
 let WatchWindow = (function() {
@@ -21,7 +34,7 @@ let WatchWindow = (function() {
         callback(mainContainerEl);
     }
 
-    exports.display = function(data, callback){
+    exports.display = function(data) {
 
         // Watch section logic
         // TODO: handle watch section logic in better designed code

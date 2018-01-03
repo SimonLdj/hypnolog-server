@@ -18,6 +18,7 @@ HL.visualizersDispatcher = (function() {
 
     // Add the given DataVisualizer to the visualizers collection to use
     exports.add = function(visualizer) {
+        // TODO: verify somehow the given object is a visualizer
         visualizers.push(visualizer);
     }
 
@@ -27,6 +28,8 @@ HL.visualizersDispatcher = (function() {
         visualizers = newVisualizers;
     }
 
+    // TODO: rename VisualizersDispatcher.visualize to "display" to match all other naming
+    // Call VisualizersDispatcher.visualize 'display' to match all other functions
     // Visualize given HypnoLog data object using the collection of visualizers
     // data - Hypnolog data object to visualize
     //  callback - function which will be called when visualization is ready. First

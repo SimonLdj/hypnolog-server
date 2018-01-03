@@ -1,23 +1,24 @@
 // This is a template for Data Visualizer
 //
-// Data Visualizer job is to receive HypnoLog data object and visualize it
-// in the DOM.
-// Data Visualizer do not have to visualize all data and can define which
-// data it will visualize.
+// DataVisualizer job is to create DOM element which represent single
+// HypnoLog-data object.  This is on other words to visualize an object.  A
+// specific DataVisualizer do not have to visualize all data and can define
+// which data it will visualize (for example by checking data type).
 // 
 // Data Visualizer must implement those methods:
 //
 // canDisplay(obj) : boolean
 //  return true if can visualize the given object, otherwise return false.
-//  obj - HypnoLog object to visualize
+//  obj - HypnoLog-data object to visualize
 //
+// TODO: rename display to createElement, as that's what it actually do.
 // display(obj, callback) : boolean
-//  Visualize the given HypnoLog-object. Return True if visualization was
-//  done successfully.
-//  obj - HypnoLog object to visualize.
-//  callback - function which will be called when visualization is ready. First
-//  parameter is the newly created DOM element which visualize the data. This
-//  function is the place to add the new element to the DOM.
+//  Create a DOM element representing the given HypnoLog-data object. Return
+//  `true` if visualization was done successfully.
+//  obj - HypnoLog-data object to visualize.
+//  callback - function which will be called when DOM element visualizing the
+//  HypnoLog-data object is ready. First parameter is the newly created DOM
+//  element.  This function can be the place to add the new element to the DOM.
 //
 'use strict';
 let TemplateVisualizer = (function() {
