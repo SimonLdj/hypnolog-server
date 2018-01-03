@@ -9,14 +9,13 @@ Visualizers:
   other, pass element to callback and then reuse the element and modify it,...?
 - In visualizers: avoid repeat on code such: adding tags class, append tags
   elements, append variable name, ... 
-- Load visualizers dynamically form folder
+- Load visualizers dynamically form folder (json config file?)
 - let user apply custom CSS for his visualizers
 
-windows:
-- support mutli-window logging.
-- support async session logging.
+Windows:
+- Load visualizers dynamically form folder (json config file?)
 - refactor WindowFilter: design wise, see TODOs in code. Rename to Tag filter (?)
-- refactor everything related to watch section (separate module)
+- create template window
 
 Design:
 - use Require.js or something similar to handle all those JS file
@@ -31,5 +30,9 @@ UI:
 
 Other:
 - Treat tags case-insensitive way ("Service" and "service" should be the same) (but think about CamelCase tags)
+- Reorganize project folders. Create folder for user configs, windows,
+  visualizer,...
+- support async session logging. Support easy way to debug few running
+  programmes at the same time.
 
 

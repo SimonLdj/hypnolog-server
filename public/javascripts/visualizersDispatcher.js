@@ -18,6 +18,7 @@ HL.visualizersDispatcher = (function() {
 
     // Add the given DataVisualizer to the visualizers collection to use
     exports.add = function(visualizer) {
+        // TODO: verify somehow the given object is a visualizer
         visualizers.push(visualizer);
     }
 
@@ -27,16 +28,27 @@ HL.visualizersDispatcher = (function() {
         visualizers = newVisualizers;
     }
 
+    // TODO: rename VisualizersDispatcher.visualize to "display" to match all other naming
+    // Call VisualizersDispatcher.visualize 'display' to match all other functions
     // Visualize given HypnoLog data object using the collection of visualizers
     // data - Hypnolog data object to visualize
     //  callback - function which will be called when visualization is ready. First
     //  parameter is the newly created DOM element which visualize the data. This
     //  function is the place to add the new element to the DOM.
     exports.visualize = function(data, callback) {
+
         // find the first visualizer which can display the data
-        visualizers.some(function(visualizer) {
+        // remember if some visualizer which can display the data was found
+        let foundSome = visualizers.some(function(visualizer) {
             return visualizer.display(data, callback);
         });
+
+        if (foundSome == false) {
+            // warn the user in case no visualizer which can display the data was found
+            console.warn("VisualizersDispatcher couldn't find even one visualizer to display the data. Use `VisualizersDispatcher.add` to add visualizers.");
+            console.dir(data);
+        }
+
     }
 
     // private functions:
