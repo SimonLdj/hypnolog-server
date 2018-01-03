@@ -36,10 +36,19 @@ HL.visualizersDispatcher = (function() {
     //  parameter is the newly created DOM element which visualize the data. This
     //  function is the place to add the new element to the DOM.
     exports.visualize = function(data, callback) {
+
         // find the first visualizer which can display the data
-        visualizers.some(function(visualizer) {
+        // remember if some visualizer which can display the data was found
+        let foundSome = visualizers.some(function(visualizer) {
             return visualizer.display(data, callback);
         });
+
+        if (foundSome == false) {
+            // warn the user in case no visualizer which can display the data was found
+            console.warn("VisualizersDispatcher couldn't find even one visualizer to display the data. Use `VisualizersDispatcher.add` to add visualizers.");
+            console.dir(data);
+        }
+
     }
 
     // private functions:

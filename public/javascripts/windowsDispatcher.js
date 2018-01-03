@@ -48,10 +48,21 @@ HL.WindowsDispatcher = (function() {
     // Will pass the given data to all of the windows to display the data.
     // data - Hypnolog data object to display
     exports.display = function(data) {
+
+        // remember if at least one window was found to display the data
+        let atLeastOne = false;
+
         // pass the data object to all windows
         windows.forEach(function(w) {
-            return w.display(data);
+            atLeastOne = true;
+            w.display(data);
         });
+
+        if (atLeastOne == false) {
+            // warn user in case no windows to display data were found
+            console.warn("WindowsDispatcher couldn't find even one window to display the data. Use `WindowsDispatcher.add` to add windows.");
+            console.dir(data);
+        }
     }
 
     // private functions:
