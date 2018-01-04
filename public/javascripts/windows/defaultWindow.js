@@ -20,6 +20,7 @@ let DefaultWindow = (function() {
     // Set visualizers to use
     HL.visualizersDispatcher.add(NewSessionVisualizer);
     HL.visualizersDispatcher.add(GraphVisualizer);
+    HL.visualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
     HL.visualizersDispatcher.add(SimpleTypeVisualizer);
     HL.visualizersDispatcher.add(DefaultVisualizer);
 
