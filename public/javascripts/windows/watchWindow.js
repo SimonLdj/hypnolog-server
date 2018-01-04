@@ -30,6 +30,10 @@ let WatchWindow = (function() {
         mainContainerEl = document.createElement("div");
         mainContainerEl.classList.add("watch-window");
 
+        var header = document.createElement("h2");
+        header.innerHTML = "Watch Section";
+        mainContainerEl.appendChild(header);
+
         // pass the new DOM element to one who called us
         callback(mainContainerEl);
     }

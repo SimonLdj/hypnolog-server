@@ -11,7 +11,6 @@ function initialize(){
     // TODO: refactor windows to be objects which you create
     // For example in case we want to use same windows twice
     HL.WindowsDispatcher.add(DefaultWindow);
-    HL.WindowsDispatcher.add(WatchWindow);
 }
 initialize();
 

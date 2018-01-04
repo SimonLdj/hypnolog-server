@@ -12,6 +12,7 @@
 //  obj - HypnoLog-data object to visualize
 //
 // TODO: rename display to createElement, as that's what it actually do.
+// TODO: consider refactor display return the newly created element, or null (instead of calling callback)
 // display(obj, callback) : boolean
 //  Create a DOM element representing the given HypnoLog-data object. Return
 //  `true` if visualization was done successfully.
@@ -44,7 +45,6 @@ let TemplateVisualizer = (function() {
         // some display logic, such as creating new <pre> DOM elements
         let element = document.createElement("pre");
         element.appendChild(document.createTextNode(obj.value));
-        parent.appendChild(element);
 
         // pass the new element to the callback
         callback(element);

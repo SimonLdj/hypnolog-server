@@ -13,9 +13,10 @@ Visualizers:
 - let user apply custom CSS for his visualizers
 
 Windows:
-- Load visualizers dynamically form folder (json config file?)
+- Load windows dynamically form folder (json config file?)
 - refactor WindowFilter: design wise, see TODOs in code. Rename to Tag filter (?)
-- create template window
+- refactor WindowFilter: think a way tags menu UI will no be depended on DOM
+- add simple console text window (and simple text visualizer?) (?)
 
 Design:
 - use Require.js or something similar to handle all those JS file
@@ -25,11 +26,10 @@ CSS bugs:
 
 UI:
 - Display warning when pressing F5 "Are you sure? you will lose your log data"
-- Support offline work (don't load css files from the web)
 - Dark theme (and theme selection button)
 
 Other:
-- Treat tags case-insensitive way ("Service" and "service" should be the same) (but think about CamelCase tags)
+- TagsFIlter: Treat tags case-insensitive way ("Service" and "service" should be the same) (but think about CamelCase tags)
 - Reorganize project folders. Create folder for user configs, windows,
   visualizer,...
 - support async session logging. Support easy way to debug few running
