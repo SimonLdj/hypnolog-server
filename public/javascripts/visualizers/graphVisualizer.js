@@ -10,7 +10,7 @@ let GraphVisualizer = (function() {
     // public functions:
 
     exports.canDisplay = function(obj){
-        if (obj.type === "numbersArray")
+        if (obj.type.toLocaleLowerCase() === "numbersarray")
             return true;
         return false;
     }
@@ -32,11 +32,11 @@ let GraphVisualizer = (function() {
                      (obj.name && obj.name.length) > 0 ? obj.name : "Numbers Array");
         element.appendChild(graphEl);
 
-        // create <pre> DOM element to display values as text
-        var preEl = document.createElement("pre");
-        let textEl = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
-        preEl.appendChild(textEl);
-        element.appendChild(preEl);
+        //// create <pre> DOM element to display values as text
+        //var preEl = document.createElement("pre");
+        //let textEl = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
+        //preEl.appendChild(textEl);
+        //element.appendChild(preEl);
 
         // pass the new element to callback
         callback(element);
