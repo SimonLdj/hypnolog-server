@@ -31,6 +31,14 @@
         <script src="javascripts/lib/d3-4.4.0.min.js" charset="utf-8"></script>
         <script src="javascripts/lib/metricsgraphics-2.11.0.min.js"></script>
 
+
+        <!-- TODO: use require.js or somehthing to load all script files -->
+        <!-- then we can avoid declearing some global variable as HL -->
+        <script type="text/javascript">
+            'use strict';
+            let HL = {};
+        </script>
+
         <!-- TODO: load all visualizers dynamicly -->
         <!--load all visualizers-->
         <script src="javascripts/visualizers/defaultVisualizer.js"></script>
@@ -40,7 +48,6 @@
         <script src="javascripts\visualizers\plotly\plotly-v1.31.2.min.js"></script>
         <script src="javascripts\visualizers\plotly\plotly2dHeatmapsVisualizer.js"></script>
         <!--load visualizers framework files-->
-        <script src="javascripts/visualizersUtils.js"></script>
         <script src="javascripts/visualizersDispatcher.js"></script>
 
         <!-- TODO: load all windows dynamicly -->
@@ -52,7 +59,6 @@
         <script src="javascripts/windowsDispatcher.js"></script>
 
         <! -- core files -->
-        <! -- TODO: use require.js or somehthing to load all script files -->
         <script src="javascripts/client.js"></script>
 	</body>
 </html>
