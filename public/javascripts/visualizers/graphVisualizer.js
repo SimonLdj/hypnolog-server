@@ -21,16 +21,15 @@ let GraphVisualizer = (function() {
             return false;
 
         // TODO: display type of array (also when we'll support not only numbers array)
-        // TODO: display variable name if given (now displaying variable name as graph title if given?)
 
         // create <div> DOM element (to contain graph and text elements)
         let element = document.createElement("div");
-        element.classList.add("line","numbers-array");
+        element.classList.add("numbers-array");
 
         // create graph DOM element
         let gData = convertArrayToGraphData(obj.value);
         let graphEl = createGraphElement(gData,
-                     (obj.name && obj.name.length) > 0 ? obj.name : "");
+                     (obj.name && obj.name.length) > 0 ? obj.name : "Numbers Array");
         element.appendChild(graphEl);
 
         // create <pre> DOM element to display values as text
@@ -38,16 +37,6 @@ let GraphVisualizer = (function() {
         let textEl = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
         preEl.appendChild(textEl);
         element.appendChild(preEl);
-
-        // Add class to element according to given tags.
-        // This is to allow log filtering.
-        // (We filter elements by class, so each class represent tag)
-        let userTagsClass = HL.createTagsClass(obj);
-        if (userTagsClass.length > 0) element.classList.add(...userTagsClass);
-
-        // append tags element, if given
-        let tagsElement = HL.createTagsElement(obj);
-        if (tagsElement) element.appendChild(tagsElement);
 
         // pass the new element to callback
         callback(element);

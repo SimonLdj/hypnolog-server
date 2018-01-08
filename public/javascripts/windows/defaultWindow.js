@@ -48,7 +48,33 @@ let DefaultWindow = (function() {
 
         // find visualizer to create DOM element to visualize the data
         HL.visualizersDispatcher.visualize(data, function(element) {
-            // append the newly created element to main container
+
+            // If data was logged with variable name:
+            // append variable name element, if name was given
+            let nameElement = HL.createVariableNameElement(data);
+            if (nameElement) element.prepend(nameElement);
+
+            // For Tag filtering: add "line" CSS class to all elements in Default window
+            // This will make the Tag filter (WindowFilter) effect the element when filtering
+            // TODO: decide, is new-session info is also a line in a window
+            // Note: "new-session" element are not also filtered by the tag-filtering mechanism.
+            // If we want to avoid it, we should not add the "line" CSS class to them,
+            // or re-think how the tag filter should work.
+            element.classList.add("line");
+
+            // If data was logged with tags:
+            // Add CSS class to element according to given tags.
+            // This is to allow log filtering with Window filter
+            // (We filter elements by CSS class, so each class represent tag)
+            let userTagsClass = HL.createTagsClass(data);
+            if (userTagsClass.length > 0)
+                element.classList.add(...userTagsClass);
+            // append tags element, if given
+            let tagsElement = HL.createTagsElement(data);
+            if (tagsElement)
+                element.appendChild(tagsElement);
+
+            // append the newly created element window's to main container
             mainContainerEl.appendChild(element);
         });
 

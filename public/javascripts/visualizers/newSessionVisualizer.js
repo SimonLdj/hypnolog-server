@@ -18,11 +18,6 @@ let NewSessionVisualizer = (function() {
         if (!exports.canDisplay(obj))
             return false;
 
-        // TODO: decide, is new-session info is also a line in a window
-        // if so, add the .line CSS class.
-        // note: adding this will make the element to be effected by tag filter,
-        // meaning if all tags are hidden, this will be hidden as well (not
-        // sure we want to do this).
         let element = document.createElement("div");
 
         var headerEl = document.createElement("h3");

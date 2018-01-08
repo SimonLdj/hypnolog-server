@@ -18,25 +18,11 @@ let DefaultVisualizer = (function() {
 
         // create <pre> DOM elements
         let element = document.createElement("pre");
-        element.classList.add("line","unknown-type");
-
-        // append variable name element, if name was given
-        let nameElement = HL.createVariableNameElement(obj);
-        if (nameElement) element.appendChild(nameElement);
+        element.classList.add("unknown-type");
 
         // show value as text
         let textElement = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
         element.appendChild(textElement);
-
-        // Add class to element according to given tags.
-        // This is to allow log filtering.
-        // (We filter elements by class, so each class represent tag)
-        let userTagsClass = HL.createTagsClass(obj);
-        if (userTagsClass.length > 0) element.classList.add(...userTagsClass);
-
-        // append tags element, if given
-        let tagsElement = HL.createTagsElement(obj);
-        if (tagsElement) element.appendChild(tagsElement);
 
         // pass the new element to the callback
         callback(element);

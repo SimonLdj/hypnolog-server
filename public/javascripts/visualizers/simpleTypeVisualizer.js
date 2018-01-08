@@ -28,24 +28,10 @@ let SimpleTypeVisualizer = (function() {
 
         // create <pre> DOM elements
         let element = document.createElement("pre");
-        element.classList.add("line","simple-type");
-
-        // append variable name element, if name was given
-        let nameElement = HL.createVariableNameElement(obj);
-        if (nameElement) element.appendChild(nameElement);
+        element.classList.add("simple-type");
 
         // append value as simple text node
         element.appendChild(document.createTextNode(obj.value));
-
-        // Add class to element according to given tags.
-        // This is to allow log filtering.
-        // (We filter elements by class, so each class represent tag)
-        let userTagsClass = HL.createTagsClass(obj);
-        if (userTagsClass.length > 0) element.classList.add(...userTagsClass);
-
-        // append tags element, if given
-        let tagsElement = HL.createTagsElement(obj);
-        if (tagsElement) element.appendChild(tagsElement);
 
         // pass the new element to callback
         callback(element);
