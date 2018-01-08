@@ -22,6 +22,7 @@ let DefaultWindow = (function() {
     HL.visualizersDispatcher.add(GraphVisualizer);
     HL.visualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
     HL.visualizersDispatcher.add(SimpleTypeVisualizer);
+    HL.visualizersDispatcher.add(GoogleChartsMapVisualizer);
     HL.visualizersDispatcher.add(DefaultVisualizer);
 
     // DOM element which will hold all other elements.
