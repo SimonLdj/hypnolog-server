@@ -1,8 +1,6 @@
 HypnoLog server TODO list
 ================================
 
-- Validate JSON requests
-
 API:
 - Consider adding tags and variable name as part of the API
 - Add session opening message (given name, api version, some other data as application name...) (multi-session debug?)
