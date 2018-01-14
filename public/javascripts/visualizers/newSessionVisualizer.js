@@ -21,7 +21,7 @@ let NewSessionVisualizer = (function() {
         let element = document.createElement("div");
 
         var headerEl = document.createElement("h3");
-        headerEl.appendChild(document.createTextNode("Session " + obj.value));
+        headerEl.appendChild(document.createTextNode("Session " + obj.data));
         element.appendChild(headerEl);
 
         var hrEl = document.createElement("hr");

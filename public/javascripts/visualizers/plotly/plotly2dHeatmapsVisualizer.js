@@ -30,7 +30,7 @@ let Plotly2dHeatmapsVisualizer = (function() {
         // prepare the data for Plotly
         var plotlyData = [
             {
-                z: obj.value,
+                z: obj.data,
                 type: 'heatmap'
             }
         ];

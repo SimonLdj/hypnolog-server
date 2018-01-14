@@ -12,6 +12,8 @@ Visualizers:
   elements, append variable name, ... 
 - Load visualizers dynamically form folder (json config file?)
 - let user apply custom CSS for his visualizers
+- handle visualizers errors
+- consider should display() return bool
 
 Windows:
 - Load windows dynamically form folder (json config file?)

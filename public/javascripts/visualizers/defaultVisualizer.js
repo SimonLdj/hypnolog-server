@@ -20,8 +20,8 @@ let DefaultVisualizer = (function() {
         let element = document.createElement("pre");
         element.classList.add("unknown-type");
 
-        // show value as text
-        let textElement = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
+        // show data as text
+        let textElement = document.createTextNode(JSON.stringify(obj.data, null, "\t"));
         element.appendChild(textElement);
 
         // pass the new element to the callback

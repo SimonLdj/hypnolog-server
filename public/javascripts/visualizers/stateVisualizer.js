@@ -28,9 +28,9 @@ let StateVisualizer = (function() {
 
         // TODO: replace this with your own visualization logic
 
-        // Add each objects value to the sum
+        // Add each objects data, as a number to the sum
         // and add <pre> DOM element displaying the sum
-        addToSum(parseFloat(obj.value));
+        addToSum(parseFloat(obj.data));
         let element = document.createElement("pre");
         element.appendChild(document.createTextNode("Sum: " + sum));
 
