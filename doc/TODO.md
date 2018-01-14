@@ -1,8 +1,11 @@
 HypnoLog server TODO list
 ================================
 
-- Write API documentation (JSON Schema?)
 - Validate JSON requests
+
+API:
+- Consider adding tags and variable name as part of the API
+- Add session opening message (given name, api version, some other data as application name...) (multi-session debug?)
 
 Visualizers:
 - Let visualizers reuse code: override, call base, inheritance, contain each
