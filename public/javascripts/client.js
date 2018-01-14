@@ -2,6 +2,9 @@ var lastUpdateTimeElement = $("#lastUpdateTimeValue");
 
 var allRecivedData = [];
 
+// will hold validation function for object coming from the server
+var hypnologObjValidator = null;
+
 function initialize(){
     initializeLastUpdateTime();
 
@@ -11,6 +14,31 @@ function initialize(){
     // TODO: refactor windows to be objects which you create
     // For example in case we want to use same windows twice
     HL.WindowsDispatcher.add(DefaultWindow);
+
+
+    // TODO: load schema dynamically, the same one from /doc folder
+    var schema = {
+        //"$schema": "http://json-schema.org/draft-06/schema#",
+        "title": "HypnoLog Data Object",
+        "description": "A Data which is logged using HypnoLog. HypnoLog server should receive this Object via HTTP API",
+        "type" : "object",
+        "properties" : {
+            "data" : {
+                "description": "The data which is logged",
+            },
+            "type" : {
+                "description": "Type of the data",
+                "type": "string"
+            },
+        },
+        "required": ["data", "type"],
+    }
+    // TODO: make suer we using Ajv with draft-06 if needed,
+    // "To use Ajv with draft-06 schemas you need to explicitly add the meta-schema to the validator instance"
+    var ajv = new Ajv();
+    // Create validation function to validate data coming from the server
+    hypnologObjValidator = ajv.compile(schema);
+
 }
 initialize();
 
@@ -30,23 +58,28 @@ function connect(){
 };
 connect();
 
-// Handle new data received,
-// add data to the DOM using visualizers
+// Handle new data received from the server
 function handleNewData(data){
 
-    // TODO: Expect incoming data not only to be an object, but to be a valid HypnoLog-log object
+    // Validate incoming data to be valid HypnoLog-data object according to the schema
+    var valid = hypnologObjValidator(data);
+    if (!valid) {
+        console.error("Received invalid data from the Server: It is not a valid HypnoLog-data object. Please make sure the logged object valid according to the schema. See server API documentation.");
+        console.error(hypnologObjValidator.errors)
 
-    // Expect incoming data to be object
-    if (typeof data !== "object") {
-        console.error("received data is not an Object");
-        data = {
-            type : "HypnoLog-error",
-            error: "HypnoLog error: Data received in display client is not an Object",
-            receivedData : data,
+        // Change data to error instead of the original data,
+        // this will display error message to the user
+        // TODO: make some special visualization for hypnolog-errors ?
+        var errorMessage = {
+            "type" : "hypnolog-error",
+            "data" : {
+                "message" : "HypnoLog error: Received invalid data from the Server: It is not a valid HypnoLog-data object. See console output.",
+                "receivedData" : data
+            }
         }
+        data = errorMessage;
     }
 
-    // TODO: push only valid data
     // TODO: use this variable to allow users filter/modify the received data
     allRecivedData.push(data);
 

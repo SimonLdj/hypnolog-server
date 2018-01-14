@@ -30,8 +30,8 @@ let SimpleTypeVisualizer = (function() {
         let element = document.createElement("pre");
         element.classList.add("simple-type");
 
-        // append value as simple text node
-        element.appendChild(document.createTextNode(obj.value));
+        // append data as simple text node
+        element.appendChild(document.createTextNode(obj.data));
 
         // pass the new element to callback
         callback(element);

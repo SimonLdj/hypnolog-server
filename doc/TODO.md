@@ -1,8 +1,9 @@
 HypnoLog server TODO list
 ================================
 
-- Write API documentation (JSON Schema?)
-- Validate JSON requests
+API:
+- Consider adding tags and variable name as part of the API
+- Add session opening message (given name, api version, some other data as application name...) (multi-session debug?)
 
 Visualizers:
 - Let visualizers reuse code: override, call base, inheritance, contain each
@@ -11,6 +12,8 @@ Visualizers:
   elements, append variable name, ... 
 - Load visualizers dynamically form folder (json config file?)
 - let user apply custom CSS for his visualizers
+- handle visualizers errors
+- consider should display() return bool
 
 Windows:
 - Load windows dynamically form folder (json config file?)

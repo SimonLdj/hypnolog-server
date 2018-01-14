@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "HypnoLog Data Object",
+    "description": "A Data which is logged using HypnoLog. HypnoLog server should receive this Object via HTTP API",
+    "type" : "object",
+    "properties" : {
+        "data" : {
+            "description": "The data which is logged",
+        },
+        "type" : {
+            "description": "Type of the data",
+            "type": "string"
+        },
+    },
+    "required": ["data", "type"],
+}

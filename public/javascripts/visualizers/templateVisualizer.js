@@ -44,7 +44,7 @@ let TemplateVisualizer = (function() {
         // TODO: replace this with your own visualization logic
         // some display logic, such as creating new <pre> DOM elements
         let element = document.createElement("pre");
-        element.appendChild(document.createTextNode(obj.value));
+        element.appendChild(document.createTextNode(obj.data));
 
         // pass the new element to the callback
         callback(element);

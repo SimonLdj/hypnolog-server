@@ -27,14 +27,14 @@ let GraphVisualizer = (function() {
         element.classList.add("numbers-array");
 
         // create graph DOM element
-        let gData = convertArrayToGraphData(obj.value);
+        let gData = convertArrayToGraphData(obj.data);
         let graphEl = createGraphElement(gData,
                      (obj.name && obj.name.length) > 0 ? obj.name : "Numbers Array");
         element.appendChild(graphEl);
 
         //// create <pre> DOM element to display values as text
         //var preEl = document.createElement("pre");
-        //let textEl = document.createTextNode(JSON.stringify(obj.value, null, "\t"));
+        //let textEl = document.createTextNode(JSON.stringify(obj.data, null, "\t"));
         //preEl.appendChild(textEl);
         //element.appendChild(preEl);
 

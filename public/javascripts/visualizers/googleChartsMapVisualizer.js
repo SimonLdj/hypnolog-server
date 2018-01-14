@@ -39,7 +39,7 @@ let GoogleChartsMapVisualizer = (function() {
         let mapElement = document.createElement("div");
 
         // convert data to Google's DataTable, and create the map element
-        var dataTable = google.visualization.arrayToDataTable(obj.value);
+        var dataTable = google.visualization.arrayToDataTable(obj.data);
         var map = new google.visualization.Map(mapElement);
         map.draw(dataTable, {
             showTooltip: true,
