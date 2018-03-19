@@ -48,9 +48,8 @@ function connect(){
     // creating a new websocket
     var socket = io.connect('http://localhost:7000');
 
-    // on every message received we print the new data inside the #container div
-    socket.on('notification', function (data) {
-        handleNewData(data);
+    socket.on('notification', function (message) {
+        handleNewData(message);
     });
 
     // TODO: check connection successfully created, log and display to user.
@@ -58,36 +57,48 @@ function connect(){
 };
 connect();
 
-// Handle new data received from the server
-function handleNewData(data){
+// Handle new message received from the server
+function handleNewData(message) {
 
-    // Validate incoming data to be valid HypnoLog-data object according to the schema
-    var valid = hypnologObjValidator(data);
+    // Validate incoming message to be valid HypnoLog-data object according to the schema
+    var valid = hypnologObjValidator(message);
     if (!valid) {
-        console.error("Received invalid data from the Server: It is not a valid HypnoLog-data object. Please make sure the logged object valid according to the schema. See server API documentation.");
-        console.error(hypnologObjValidator.errors)
+        var errorString =
+            "HypnoLog error: Received invalid message from the server, the message is\
+ not a valid HypnoLog-data object. Please make sure the logged object\
+ valid according to the HypnoLog schema. See server API\
+ documentation.";
 
-        // Change data to error instead of the original data,
-        // this will display error message to the user
-        // TODO: make some special visualization for hypnolog-errors ?
-        var errorMessage = {
-            "type" : "hypnolog-error",
+        // Log error to console
+        console.error(errorString);
+        console.log(hypnologObjValidator.errors)
+        console.log(message)
+
+        // Log error as HypnoLog-data object
+        // replace the received message with new message containing error data,
+        // this will display the error message to the user
+        // TODO: make some special visualization for hypnolog-errors (?)
+        message = {
+            "type" : "HypnoLog-error",
             "data" : {
-                "message" : "HypnoLog error: Received invalid data from the Server: It is not a valid HypnoLog-data object. See console output.",
-                "receivedData" : data
+                "errorMessage" : errorString,
+                "validatorErrorMessage" : (hypnologObjValidator.errors[0] ? hypnologObjValidator.errors[0].message : ""),
+                "fullValidatorError" : hypnologObjValidator.errors,
+                "receivedMessage" : message,
             }
         }
-        data = errorMessage;
     }
 
+    // Now, after we validated the incoming message is a valid HypnoLog-data object, use it
+
     // TODO: use this variable to allow users filter/modify the received data
-    allRecivedData.push(data);
+    allRecivedData.push(message);
 
     // update "last update time" in DOM to now
     setLastUpdateTimeNow();
 
-    // let WindowsDispatcher pass the received data to all its windows
-    HL.WindowsDispatcher.display(data);
+    // let WindowsDispatcher pass the received message to all its windows
+    HL.WindowsDispatcher.display(message);
 }
 
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]
