@@ -8,6 +8,7 @@ let DefaultVisualizer = (function() {
     // public functions:
 
     exports.canDisplay = function(obj){
+        // support all
         return true;
     }
 

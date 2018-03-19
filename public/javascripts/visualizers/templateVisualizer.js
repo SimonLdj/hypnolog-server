@@ -37,7 +37,7 @@ let TemplateVisualizer = (function() {
     }
 
     exports.display = function(obj, callback){
-        // return true if we can not visualize the object
+        // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
 

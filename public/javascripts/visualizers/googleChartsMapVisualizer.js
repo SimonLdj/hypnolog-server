@@ -2,10 +2,23 @@
 // Can display coordinates (lat-long pairs) or addresses.
 // see https://developers.google.com/chart/interactive/docs/gallery/map
 //
+// Display types:
+//  "googlemaps", "google-maps"
+//
+// Data example:
+//    [
+//        ['Lat', 'Long', 'Name'],
+//        [37.4232, -122.0853, 'Work'],
+//        [37.4289, -122.1697, 'University'],
+//        [37.6153, -122.3900, 'Airport'],
+//        [37.4422, -122.1731, 'Shopping']
+//    ]
+//
 
 'use strict';
 let GoogleChartsMapVisualizer = (function() {
 
+    let displayTypes = ["googlemaps", "google-maps"];
     let exports = {};
 
     // Call Google charts API to load and display the map
@@ -20,13 +33,14 @@ let GoogleChartsMapVisualizer = (function() {
     // public functions:
 
     exports.canDisplay = function(obj){
-        if (obj.type.toLocaleLowerCase() === "coordinate")
+        // Check if we support given object type
+        if (displayTypes.some(s => s === obj.type.toLocaleLowerCase()))
             return true;
         return false;
     }
 
     exports.display = function(obj, callback){
-        // return true if we can not visualize the object
+        // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
 

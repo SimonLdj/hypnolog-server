@@ -2,24 +2,31 @@
 //
 // Can visualize 2D number array (data.type === "2dNumbersArray")
 //
+// Data example:
+//  [
+//      [1,2,3],
+//      [2,2,2],
+//      [3,2,1]
+//  ]
+//
 
 'use strict';
 let Plotly2dHeatmapsVisualizer = (function() {
 
+    let displayTypes = ["heatmap", "plotlu-heatmap", "2dnumbersarray"];
     let exports = {};
 
     // public functions:
 
     exports.canDisplay = function(obj){
-        // TODO: replace this with your own filtering logic
-        // visualize only HypnoLog objects with type "string"
-        if (obj.type.toLocaleLowerCase() === "2dnumbersarray")
+        // Check if we support given object type
+        if (displayTypes.some(s => s === obj.type.toLocaleLowerCase()))
             return true;
         return false;
     }
 
     exports.display = function(obj, callback){
-        // return true if we can not visualize the object
+        // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
 

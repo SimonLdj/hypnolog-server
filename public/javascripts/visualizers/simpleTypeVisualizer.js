@@ -1,22 +1,23 @@
 // Simple Type Visualizer - Visualizer for simple data types (string, number)
 // will display the data as simple text
+//
+// Display types:
+//  "string", "str", "s", "number", "int", "int32", "double"
+//
+// Data example:
+//  "Hello world"
+//
 'use strict';
 let SimpleTypeVisualizer = (function() {
 
+    let displayTypes = ["string", "str", "s", "number", "int", "int32", "double"];
     let exports = {};
 
     // public functions:
 
     exports.canDisplay = function(obj){
-        // TODO: (?) Do not know about Int32,Double,.. and such, HypnoLog shoudl know them all as 'number'
-        // accept only string and number in this Visualizer.
-        // convert Int32,Double,.. to number in C# (?)
-
-        let type = obj.type.toLocaleLowerCase();
-        if (type === "string"
-            || type === "number"
-            || type === "int32"
-            || type === "double")
+        // Check if we support given object type
+        if (displayTypes.some(s => s === obj.type.toLocaleLowerCase()))
             return true;
         return false;
     }

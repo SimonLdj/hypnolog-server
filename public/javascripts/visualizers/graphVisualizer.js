@@ -1,16 +1,23 @@
-// Visualize data as graphs
+// Visualize data as graph
 // Using metricsgraphics.js library
 //
-// Will Visualize only data type "numbersArray"
+// Display types:
+//  "numbersarray", "numbers", "graph", "plot", "linechart", "metricsgraphics-plot" 
+//
+// Data example:
+//  [1,2,3,4,3,2,1]
+//
 'use strict';
 let GraphVisualizer = (function() {
 
+    let displayTypes = ["numbersarray", "numbers", "graph", "plot", "linechart", "metricsgraphics-plot" ];
     let exports = {};
 
     // public functions:
 
     exports.canDisplay = function(obj){
-        if (obj.type.toLocaleLowerCase() === "numbersarray")
+        // Check if we support given object type
+        if (displayTypes.some(s => s === obj.type.toLocaleLowerCase()))
             return true;
         return false;
     }
@@ -19,6 +26,8 @@ let GraphVisualizer = (function() {
         // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
+
+        // TODO: check if given data is actually collection of numbers (displayable)
 
         // TODO: display type of array (also when we'll support not only numbers array)
 
