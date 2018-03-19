@@ -51,13 +51,16 @@ let GoogleChartsMapVisualizer = (function() {
         // create another div to contain the map, this solve some issues when
         // adding variable name or tags
         let mapElement = document.createElement("div");
+        mapElement.style = "width: 800px; height: 400px;";
 
         // convert data to Google's DataTable, and create the map element
         var dataTable = google.visualization.arrayToDataTable(obj.data);
         var map = new google.visualization.Map(mapElement);
         map.draw(dataTable, {
             showTooltip: true,
-            showInfoWindow: true
+            showInfoWindow: true,
+            width: 800,
+            height: 400
         });
         element.appendChild(mapElement);
 
