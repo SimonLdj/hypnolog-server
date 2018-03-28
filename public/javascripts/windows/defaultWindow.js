@@ -18,6 +18,9 @@ let DefaultWindow = (function() {
     // TODO: use specific visualizer dispatcher for this window
     //let visualizerDispatcher = new VisualizersDispatcher();
     // Set visualizers to use
+    // Note, order matters!
+    // The first suitable visualizer which will be found, will be used
+    // so, most specific come first, most general at last.
     HL.visualizersDispatcher.add(NewSessionVisualizer);
     HL.visualizersDispatcher.add(GraphVisualizer);
     HL.visualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
@@ -32,6 +35,7 @@ let DefaultWindow = (function() {
     // public functions:
 
     exports.createWindowElement = function(callback) {
+        // TODO: rename class ti .defaultWindow
         // create <div class="window"></div>
         // set it as main container
         mainContainerEl = document.createElement("div");
@@ -45,18 +49,21 @@ let DefaultWindow = (function() {
 
         // TODO: check data.tags validity
         // Now we assume tags are array of string, but we should validate it, as this is user input.
+        // (or: validate it using JSON schema, as we already do)
 
         // Add tags to window filter
         if (data.tags && data.tags.length > 0)
             WindowFilter.addTags(data.tags);
 
         // find visualizer to create DOM element to visualize the data
-        HL.visualizersDispatcher.visualize(data, function(element) {
+        HL.visualizersDispatcher.visualize(data, function(visualizerEl) {
+            // callback for when visualizer created its element
 
-            // If data was logged with variable name:
-            // append variable name element, if name was given
-            let nameElement = createVariableNameElement(data);
-            if (nameElement) element.prepend(nameElement);
+            // Create element represent log line in the window
+            let lineEl = document.createElement("div");
+
+            // add the newly created element by the visualizer to the line-element
+            lineEl.appendChild(visualizerEl);
 
             // For Tag filtering: add "line" CSS class to all elements in Default window
             // This will make the Tag filter (WindowFilter) effect the element when filtering
@@ -64,7 +71,12 @@ let DefaultWindow = (function() {
             // Note: "new-session" element are not also filtered by the tag-filtering mechanism.
             // If we want to avoid it, we should not add the "line" CSS class to them,
             // or re-think how the tag filter should work.
-            element.classList.add("line");
+            lineEl.classList.add("line");
+
+            // If data was logged with variable name:
+            // append variable name element as first element in the line-element
+            let nameElement = createVariableNameElement(data);
+            if (nameElement) lineEl.prepend(nameElement);
 
             // If data was logged with tags:
             // Add CSS class to element according to given tags.
@@ -72,14 +84,14 @@ let DefaultWindow = (function() {
             // (We filter elements by CSS class, so each class represent tag)
             let userTagsClass = createTagsClass(data);
             if (userTagsClass.length > 0)
-                element.classList.add(...userTagsClass);
+                lineEl.classList.add(...userTagsClass);
             // append tags element, if given
             let tagsElement = createTagsElement(data);
             if (tagsElement)
-                element.appendChild(tagsElement);
+                lineEl.appendChild(tagsElement);
 
             // append the newly created element window's to main container
-            mainContainerEl.appendChild(element);
+            mainContainerEl.appendChild(lineEl);
         });
 
         // scroll container to bottom (to simulate console scrolling)

@@ -30,9 +30,8 @@ let Plotly2dHeatmapsVisualizer = (function() {
         if (!exports.canDisplay(obj))
             return false;
 
-        // create <div> to hold the 
+        // create <div> to hold the ploty elements
         let element = document.createElement("div");
-        element.classList.add("line");
 
         // prepare the data for Plotly
         var plotlyData = [

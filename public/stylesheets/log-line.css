@@ -2,10 +2,9 @@
 
 
 /* rules for all windows */
-/*TODO: move to other css file (?)*/
+/* TODO: move each windw CSS to its own file */
 .window, .watch-window{
-    display: inline-block;
-    width: 49%;
+    display: block;
     height: 90%;
     padding: 5px;
 }
@@ -14,11 +13,11 @@
         color: #B3970F;
         margin-right:3px;
         font-family: "Menlo", monospace;
-        font-size: 1.0rem;
     }
 
 /*watch window*/
-.watch-window{
+.watch-window {
+    display: inline-block;
     width: 27%;
     overflow-y:scroll;
 }
@@ -28,16 +27,16 @@
         margin: 2px 0px 0px 0px;
     }
 
-/*normal output window*/
+/* default output window*/
+/*TODO: rename .window to .defaultWindow*/
 .window{
-    width: 70%;
     overflow-y:scroll;
 }
     .window .line{
         border-left: 5px solid #ffffff;
         padding-left: 5px;
         margin: 2px 0px 0px 0px;
-        max-width: 95%;
+        max-width: 800px;
     }
     .window .line:hover{
         border-left: 5px solid rgb(201, 206, 243);
@@ -50,7 +49,6 @@
     .window .line .tagElement{
         float: right;
         color: #bbbbbb;
-        font-size: 0.8rem;
         font-family: "menlo", monospace;
     }
 
@@ -58,32 +56,38 @@
         color: rgb(43,145,175);
         margin-right:3px;
         font-family: "Menlo", monospace;
+        display: inline-block;
     }
 
-/* === Rules by data type == */
+/* === Rules by data type (by visualizers) == */
+/* TODO: move each visualizer CSS to its own file */
 
 /* Unknown type */
-.window .line.unknown-type {
-    resize:both;
+.window .line pre.unknown-type {
+    resize: both;
+    background-color: #F1F1F1;
+    margin: 0;
+    padding: 2px;
 }
 
 /* Simple type */
-.window .line.simple-type {
+.window .line .simple-type {
     font-family: "menlo", monospace;
     background-color: inherit;
     max-height: none;
+    margin: 0;
     resize: none;
-    font-size: 1.2rem;
+    font-size: 1.1em;
     white-space: pre-wrap;
 }
 
 /* Numbers Array */
-.window .line.numbers-array {
+.window .line .numbers-array {
 }
-    .window .line.numbers-array .graph{
+    .window .line .numbers-array .graph{
         display: inline-block;
     }
-    .window .line.numbers-array pre {
+    .window .line .numbers-array pre {
         display: inline-block;
         vertical-align: top;
         max-width: 20%;

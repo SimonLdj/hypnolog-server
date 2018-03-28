@@ -24,6 +24,7 @@ HypnoLog Server TODO List
   elements, append variable name, ... 
 - Load visualizers dynamically form folder (json config file?)
 - let user apply custom CSS for his visualizers
+- Each visualizer should use it's own CSS class names, and in its own file
 - handle visualizers errors (also, missing js/css files)
 - consider should display() return bool
 - use nice JSON visualizer for default objects
@@ -31,6 +32,7 @@ HypnoLog Server TODO List
 
 ### Windows:
 - Load windows dynamically form folder (json config file?)
+- Each window should use it's own CSS class names, and in its own file
 - refactor WindowFilter: design wise, see TODOs in code. Rename to Tag filter (?)
 - refactor WindowFilter: think a way tags menu UI will no be depended on DOM
 - add simple console text window (and simple text visualizer?) (?)
@@ -60,7 +62,6 @@ Extra:
 
 ### Bugs:
 CSS Bugs:
-- support adding notes about specific messages
 - Tags element should be top-right aligned in each line (now it's bottom-right)
 
 

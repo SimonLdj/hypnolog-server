@@ -1,12 +1,10 @@
 /* main.css */
 
 /* general stuff */
-* {
-    font-family: sans-serif, serif;
-}
-
 body {
-    font-size: 1.0rem;
+    /*font-family: sans-serif, serif;*/
+    font-family: 'Open Sans', sans-serif, Arial;
+    font-size: 0.8rem;
     margin: 0;
 }
 
@@ -19,18 +17,6 @@ h2{
     font-weight: normal;
     line-height: 35px;
     margin: 0;
-}
-
-pre {
-    background-color: #F1F1F1;
-    max-width: 95%;
-    margin: 0;
-    resize:both;
-    padding: 2px;
-}
-
-p {
-    font-size: 1.0rem;
 }
 
 /* Top navigaton bar */
@@ -51,7 +37,7 @@ nav {
         position: absolute;
         top: 8px;
         right: 8px;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
         nav #lastUpdateTimeLabel #lastUpdateTimeValue {
             font-family: monospace;
@@ -65,7 +51,7 @@ nav {
         nav #filter * {
             display: inline-block;
             vertical-align: middle;
-            font-size: 1.0rem;
+            /*font-size: 1.0rem;*/
             line-height: normal;
         }
         nav #filter label {
