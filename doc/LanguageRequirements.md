@@ -50,8 +50,8 @@ language.
     - Manage some messages queue,  (?)
     - Non-blocking server communication, but maintain synced queue
     - Handle failed requests, resend for X times (?)
-- Explicit type suggestion: will help determine logged object type
-    - for simple language types (string/number/other-object)
+- Auto type suggestion: will help determine logged object type
+    - for simple types like (string/number/other-object)
     - Extensibility for other (and user custom) types
 - Document all advanced features
 

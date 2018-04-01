@@ -13,9 +13,13 @@ HypnoLog Server TODO List
 
 ## MORE
 
-### Server API:
+### Server API / Guidelines:
 - Consider adding tags and variable name as part of the API
 - Add session opening message (given name, api version, some other data as application name...) (multi-session debug?)
+- document about `/status` query
+- write some guidelines for how language-library should behave, for
+  example what to do when server is off (provide alternative method), what to do
+  when error occurred, when to stop logging, etc.
 
 ### Visualizers:
 - Let visualizers reuse code: override, call base, inheritance, contain each
