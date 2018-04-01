@@ -63,6 +63,21 @@ HL.Log(new []{1, 2, 3}, "plot");
 
 No wrapper library for your language? Logging to *HypnoLog* is simply sending HTTP POST request with JSON message. See [server API](/doc/api-doc.md). Develop your own and contribute!
 
+## War stories (as continue to "Why do I need this?") :
+- Debugging Image processing algorithm written in C#  with Emgu CV, running as a service on Windows machine.
+What was possible: viewing color histograms, output image at any step and any other data as graphs.
+Instead of: looking at huge arrays of numbers with Visual Studio DataTip tool, or messy console output.
+- Debugging Localization algorithm running on a remote robot with real time laser sensors, written in Java on Linux.
+What was possible: viewing the map of the room, with robot's laser and algorithm's prediction, all at real time.
+Instead of: wasting time writing java code to draw images of the map, saving each snapshot as a file, deal with folder with hundreds of file and open each one manually.
+- Keep track of communication between Client and multiple distributed Servers. The client sends multiple requests to each server, and needs them all to complete the task. Keeping track of which of the 30 distributed servers failed the task by reading each log file can be nightmare.
+Instead of: missing the single error line in thousands line long console output (which then get lost as the console buffer big enough) or looking for same error message in hundreds of log files.
+What was possible: log all the servers to same HypnoLog, view all output at the same browser window, and just Ctrl+F for the needed message (or filter using tags). 
+- Debugging headless browser bot written in Python on Windows.
+Instead of: writing code to saving browsers snapshots as images, while trying to keep some order by naming each image and fill up some folder with output images.
+What was possible: just log each snapshot directly to HypnoLog, view it one after the other with text notes in the browser.
+- Your war story here...
+
 ##### Notes
 - Web UI tested only on Google Chrome browser.
 

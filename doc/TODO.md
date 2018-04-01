@@ -33,6 +33,8 @@ HypnoLog Server TODO List
 - consider should display() return bool
 - use nice JSON visualizer for default objects
 - Visualization for array of any type (will use sub visualizers?)
+- make submodule for most of the Visualizers (to be as Visualizers store). Keep
+  only the most basic and lightweight visualizer in main repo.
 
 ### Windows:
 - Load windows dynamically form folder (json config file?)
