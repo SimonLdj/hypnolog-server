@@ -21,6 +21,8 @@ let DefaultWindow = (function() {
     // Note, order matters!
     // The first suitable visualizer which will be found, will be used
     // so, most specific come first, most general at last.
+    HL.visualizersDispatcher.add(ImageVisualizer);
+    HL.visualizersDispatcher.add(HighlightjsVisualizer);
     HL.visualizersDispatcher.add(NewSessionVisualizer);
     HL.visualizersDispatcher.add(GraphVisualizer);
     HL.visualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
