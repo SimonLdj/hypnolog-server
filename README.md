@@ -39,13 +39,16 @@ Easy. *HypnoLog* sends the logged data/objects from your application as JSON HTT
 ## Usage
 
 ### Setup HypnoLog server
-- Install [NodeJS](https://nodejs.org/) on your machine
-- Clone hypnolog-server repo: `git clone https://github.com/SimonLdj/hypnolog-server.git`
-- `cd hypnolog-server`
-- Install dependencies: `npm install`
+This is a [Node.js](https://nodejs.org/en/) module available through the [npm registry](https://www.npmjs.com/).  
+Before installing, [download and install Node.js](https://nodejs.org/en/download/).  
+Then, installation via `npm`:
+```bash
+$ npm install -g hypnolog-server
+```
+This will install `hypnolog-server` globally so that it may be run from the command line.
 
 ### Start HypnoLog server
-- Run `npm start` in repo directory
+- Run `hypnolog-server [port]` (default port is `7000`)
 - Open [`http://127.0.0.1:7000/client.html`](http://127.0.0.1:7000/client.html) in your browser (Suggested, Google Chrome)
 - Log from your application
 
