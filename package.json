@@ -1,6 +1,6 @@
 {
   "name": "hypnolog-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "HypnoLog Server - debug/logging tool for visualizing you data",
   "main": "/bin/www",
   "scripts": {
@@ -9,8 +9,8 @@
   },
   "author": "SimonLdj",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/SimonLdj/hypnolog-server.git"
+    "type": "git",
+    "url": "https://github.com/SimonLdj/hypnolog-server.git"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
