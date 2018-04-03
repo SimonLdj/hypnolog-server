@@ -45,8 +45,11 @@ initialize();
 
 // Connect to servers websocket
 function connect(){
+
+    var url = new URL(window.location.href);
+
     // creating a new websocket
-    var socket = io.connect('http://localhost:7000');
+    var socket = io.connect(url.origin);
 
     socket.on('notification', function (message) {
         handleNewData(message);

@@ -9,10 +9,11 @@ var debug = require('debug')('myapp2:server');
 var http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Get port from command line argument and store in Express.
+ * Default port is 7000
  */
+var port = normalizePort(process.argv[2] || '7000');
 
-var port = normalizePort(process.env.PORT || '7000');
 app.set('port', port);
 
 /**
