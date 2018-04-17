@@ -13,7 +13,7 @@
 'use strict';
 let Plotly2dHeatmapsVisualizer = (function() {
 
-    let displayTypes = ["heatmap", "plotlu-heatmap", "2dnumbersarray"];
+    let displayTypes = ["heatmap", "plotly-heatmap", "2dnumbersarray"];
     let exports = {};
 
     // public functions:

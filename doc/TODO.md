@@ -9,6 +9,7 @@ HypnoLog Server TODO List
 - Improve UI
     - Don’t auto scroll down when not on bottom (like in Whatsapp)
     - Add side scroll indication if new lines at bottom (like in Whatsapp)
+- Open browser on server start
 
 
 ## MORE
@@ -72,7 +73,7 @@ CSS Bugs:
 
 
 ## Other Features:
-- TagsFIlter: Treat tags case-insensitive way ("Service" and "service" should be the same) (but think about CamelCase tags)
+- TagsFilter: Treat tags case-insensitive way ("Service" and "service" should be the same) (but think about CamelCase tags)
 - Reorganize project folders. Create folder for user configs, windows,
   visualizer,...
 - support async session logging. Support easy way to debug few running

@@ -28,25 +28,30 @@ HL.visualizersDispatcher = (function() {
         visualizers = newVisualizers;
     }
 
-    // TODO: rename VisualizersDispatcher.visualize to "display" to match all other naming
-    // Call VisualizersDispatcher.visualize 'display' to match all other functions
-    // Visualize given HypnoLog data object using the collection of visualizers
-    // data - Hypnolog data object to visualize
-    //  callback - function which will be called when visualization is ready. First
-    //  parameter is the newly created DOM element which visualize the data. This
-    //  function is the place to add the new element to the DOM.
-    exports.visualize = function(data, callback) {
+    /**
+     * Visualize given HypnoLog data object using the collection of visualizers
+     *
+     * @param {Object} obj  - Object to visualize. This should be a valid `HypnoLog-data` object.
+     * @param {function} callback - Function which will be called when the newly DOM element created
+     * and ready to use. Of signature `(element)`, when first parameter is the newly created DOM
+     * element. This function can be the place to add the new element to the DOM.
+     */
+    exports.visualize = function(obj, callback) {
+        // TODO: consider refactor display return the newly created element, or null (instead of calling callback)
+        // TODO: rename VisualizersDispatcher.visualize to "display" to match all other naming.
+        // TODO: rename it better to "createElement" - as this is what this should do
 
-        // find the first visualizer which can display the data
-        // remember if some visualizer which can display the data was found
-        let foundSome = visualizers.some(function(visualizer) {
-            return visualizer.display(data, callback);
+        // find the first visualizer which can display the object
+        let matchingVisualizer = visualizers.find(function(visualizer) {
+            return visualizer.canDisplay(obj);
         });
 
-        if (foundSome == false) {
-            // warn the user in case no visualizer which can display the data was found
-            console.warn("VisualizersDispatcher couldn't find even one visualizer to display the data. Use `VisualizersDispatcher.add` to add visualizers.");
-            console.dir(data);
+        if (matchingVisualizer) {
+            matchingVisualizer.display(obj, callback);
+        } else {
+            // warn the user in case no visualizer which can display the obj was found
+            console.warn("VisualizersDispatcher couldn't find even one visualizer to display the object. Use `VisualizersDispatcher.add` to add visualizers.");
+            console.dir(obj);
         }
 
     }
