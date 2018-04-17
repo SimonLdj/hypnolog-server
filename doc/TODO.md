@@ -3,8 +3,10 @@ HypnoLog Server TODO List
 
 ## TOP
 - Easy Visualizers adding and managing
-    - Re-think about require/webpackfor Hypnolog client-side
-    - support dependencies (css, json fiels)
+    - support config file both for visualizers and windows
+    - don't crash if some visualizers fail to load / run.
+    - (?) don't block while heavy visualizers loading / creating element
+    - document / write readme
 - handle visualizers errors (also, missing js/css files)
 - Open browser on server start
 
@@ -20,12 +22,8 @@ HypnoLog Server TODO List
   when error occurred, when to stop logging, etc.
 
 ### Visualizers:
-- Let visualizers reuse code: override, call base, inheritance, contain each
-  other, pass element to callback and then reuse the element and modify it,...?
-- In visualizers: avoid repeat on code such: adding tags class, append tags
-  elements, append variable name, ... 
 - Load visualizers dynamically form folder (json config file?)
-- let user apply custom CSS for his visualizers
+- validate visualizers implementation (while loading?)
 - Each visualizer should use it's own CSS class names, and in its own file
 - handle visualizers errors (also, missing js/css files)
 - consider should display() return bool
@@ -42,7 +40,7 @@ HypnoLog Server TODO List
 - add simple console text window (and simple text visualizer?) (?)
 
 ### Client-side Core:
-- use Require.js or something similar to handle all those JS file
+- reorder files/folders (separate user files/core files)
 
 ### UI:
 - Add indication if new lines at bottom, but been unseen (when not scrolled to
