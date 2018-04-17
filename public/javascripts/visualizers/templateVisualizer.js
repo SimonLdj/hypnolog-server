@@ -14,7 +14,7 @@
  * See future code and documentation about those functions.
  *
  */
-let TemplateVisualizer = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -74,4 +74,4 @@ let TemplateVisualizer = (function() {
 
     return exports;
 
-})();
+});

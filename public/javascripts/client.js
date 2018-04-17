@@ -1,3 +1,16 @@
+'use strict';
+
+let $ = require('./lib/jquery-2.2.3.min.js');
+let Ajv = require('./lib/ajv-6.0.1.min.js');
+let io = require('./lib/socket.io.js');
+
+let WindowsDispatcher = require('./WindowsDispatcher.js');
+let DefaultWindow = require('./windows/defaultWindow.js');
+
+//--------------
+// TODO: create a main script
+// implement this file as a module
+
 var lastUpdateTimeElement = $("#lastUpdateTimeValue");
 
 var allRecivedData = [];
@@ -10,10 +23,10 @@ function initialize(){
 
     // TODO: refactor WindowsDispatcher to be object which you create (new)
     // then pass container element to constructor
-    HL.WindowsDispatcher.setContainer(document.getElementById("windowsContainer"));
+    WindowsDispatcher.setContainer(document.getElementById("windowsContainer"));
     // TODO: refactor windows to be objects which you create
     // For example in case we want to use same windows twice
-    HL.WindowsDispatcher.add(DefaultWindow);
+    WindowsDispatcher.add(DefaultWindow);
 
 
     // TODO: load schema dynamically, the same one from /doc folder
@@ -101,7 +114,7 @@ function handleNewData(message) {
     setLastUpdateTimeNow();
 
     // let WindowsDispatcher pass the received message to all its windows
-    HL.WindowsDispatcher.display(message);
+    WindowsDispatcher.display(message);
 }
 
 // ~~~~~~~~~~~~ last Update time ~~~~~~~~~ [start]

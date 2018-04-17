@@ -14,9 +14,23 @@
 //        [37.4422, -122.1731, 'Shopping']
 //    ]
 //
-
 'use strict';
-let GoogleChartsMapVisualizer = (function() {
+
+SystemJS.config({
+    map: {
+        googleCharts: 'https://www.gstatic.com/charts/loader.js',
+    },
+    meta: {
+        googleCharts : {
+            "scriptLoad": true,
+        },
+    },
+});
+
+define(function (require) {
+
+    // load dependencies
+    require('googleCharts');
 
     let displayTypes = ["googlemaps", "google-maps"];
     let exports = {};
@@ -73,4 +87,4 @@ let GoogleChartsMapVisualizer = (function() {
 
     return exports;
 
-})();
+});

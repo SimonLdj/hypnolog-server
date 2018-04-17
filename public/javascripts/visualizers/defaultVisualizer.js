@@ -1,7 +1,7 @@
 // Default Visualizer - can visualize all data types
 // will display the data as simple text
 'use strict';
-let DefaultVisualizer = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -34,4 +34,4 @@ let DefaultVisualizer = (function() {
 
     return exports;
 
-})();
+});

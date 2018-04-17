@@ -10,7 +10,7 @@
 //
 //
 'use strict';
-let ImageVisualizer = (function() {
+define(function (require) {
 
     let displayTypes = ["image", "img", "base64-img"];
     let exports = {};
@@ -42,4 +42,4 @@ let ImageVisualizer = (function() {
 
     return exports;
 
-})();
+});

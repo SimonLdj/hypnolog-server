@@ -1,5 +1,6 @@
 // Visualize data as graph
 // Using metricsgraphics.js library
+// see https://www.metricsgraphicsjs.org/
 //
 // Display types:
 //  "numbersarray", "numbers", "graph", "plot", "linechart", "metricsgraphics-plot" 
@@ -7,8 +8,26 @@
 // Data example:
 //  [1,2,3,4,3,2,1]
 //
+//
 'use strict';
-let GraphVisualizer = (function() {
+// metricsgraphics.js looks for 'd3' dependence so map it for local package
+SystemJS.config({
+    packages: {
+        './javascripts/visualizers/metricsgraphicsjs/': {
+            map: {
+                d3: "./d3.min.js",
+            },
+        },
+    }
+});
+
+define(function (require) {
+
+    // load dependencies
+    // note, `d3` is mapped locally for this package
+    let d3 = require('d3');
+    let MG = require('./metricsgraphics.min.js');
+    require('./metricsgraphics.css');
 
     let displayTypes = ["numbersarray", "numbers", "graph", "plot", "linechart", "metricsgraphics-plot" ];
     let exports = {};
@@ -90,4 +109,4 @@ let GraphVisualizer = (function() {
 
     return exports;
 
-})();
+});

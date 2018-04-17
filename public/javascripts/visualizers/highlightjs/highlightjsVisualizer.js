@@ -4,7 +4,11 @@
 //
 //
 'use strict';
-let HighlightjsVisualizer = (function() {
+define(function (require) {
+
+    // load dependencies
+    var hljs = require('./highlight.pack.js');
+    require('./default.css');
 
     let displayTypes = ["code", "json", "html"];
     let exports = {};
@@ -39,4 +43,4 @@ let HighlightjsVisualizer = (function() {
 
     return exports;
 
-})();
+});

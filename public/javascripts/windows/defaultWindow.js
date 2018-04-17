@@ -5,9 +5,23 @@
 // GraphVisualizer, SimpleTypeVisualizer, DefaultVisualizer.
 // It has a tags filter which can filter logged lines by the attached tag.
 //
-
 'use strict';
-let DefaultWindow = (function() {
+define(function (require) {
+
+    // import
+    let VisualizersDispatcher = require('javascripts/visualizersDispatcher.js');
+    let WindowFilter = require('javascripts/windowFilter.js');
+
+    // load visualizers
+    // TODO: load this dynamically from some configuration file
+    let DefaultVisualizer = require('javascripts/visualizers/defaultVisualizer.js');
+    let SimpleTypeVisualizer = require('javascripts/visualizers/simpleTypeVisualizer.js');
+    let GoogleChartsMapVisualizer = require('javascripts/visualizers/googleCharts/mapVisualizer.js');
+    let Plotly2dHeatmapsVisualizer = require('javascripts/visualizers/plotly/plotly2dHeatmapsVisualizer.js');
+    let MetricsgraphicsVisualizer = require('javascripts/visualizers/metricsgraphicsjs/graphVisualizer.js');
+    let NewSessionVisualizer = require('javascripts/visualizers/newSessionVisualizer.js');
+    let HighlightjsVisualizer = require('javascripts/visualizers/highlightjs/highlightjsVisualizer.js');
+    let ImageVisualizer = require('javascripts/visualizers/imageVisualizer.js');
 
     let exports = {};
 
@@ -17,18 +31,19 @@ let DefaultWindow = (function() {
 
     // TODO: use specific visualizer dispatcher for this window
     //let visualizerDispatcher = new VisualizersDispatcher();
+
     // Set visualizers to use
     // Note, order matters!
     // The first suitable visualizer which will be found, will be used
     // so, most specific come first, most general at last.
-    HL.visualizersDispatcher.add(ImageVisualizer);
-    HL.visualizersDispatcher.add(HighlightjsVisualizer);
-    HL.visualizersDispatcher.add(NewSessionVisualizer);
-    HL.visualizersDispatcher.add(GraphVisualizer);
-    HL.visualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
-    HL.visualizersDispatcher.add(GoogleChartsMapVisualizer);
-    HL.visualizersDispatcher.add(SimpleTypeVisualizer);
-    HL.visualizersDispatcher.add(DefaultVisualizer);
+    VisualizersDispatcher.add(ImageVisualizer);
+    VisualizersDispatcher.add(HighlightjsVisualizer);
+    VisualizersDispatcher.add(NewSessionVisualizer);
+    VisualizersDispatcher.add(MetricsgraphicsVisualizer);
+    VisualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
+    VisualizersDispatcher.add(GoogleChartsMapVisualizer);
+    VisualizersDispatcher.add(SimpleTypeVisualizer);
+    VisualizersDispatcher.add(DefaultVisualizer);
 
     // DOM element which will hold all other elements.
     // Will be created when createWindowElement method called
@@ -58,7 +73,7 @@ let DefaultWindow = (function() {
             WindowFilter.addTags(data.tags);
 
         // find visualizer to create DOM element to visualize the data
-        HL.visualizersDispatcher.visualize(data, function(visualizerEl) {
+        VisualizersDispatcher.visualize(data, function(visualizerEl) {
             // callback for when visualizer created its element
 
             // Create element represent log line in the window
@@ -160,4 +175,4 @@ let DefaultWindow = (function() {
 
     return exports;
 
-})();
+});

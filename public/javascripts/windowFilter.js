@@ -5,7 +5,7 @@
 // don't assume some DOM elements already exist.
 // Also, WindowFilter should be detached from specific window.
 'use strict';
-let WindowFilter = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -166,4 +166,4 @@ let WindowFilter = (function() {
 
     return exports;
 
-})();
+});

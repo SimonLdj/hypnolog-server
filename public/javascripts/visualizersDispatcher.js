@@ -4,10 +4,8 @@
 // VisualizersDispatcher should get collection of visualizers to use,
 // then it can be asked to visualize some HypnoLog data object.
 //
-
 'use strict';
-// TODO: don't assume HL variable exist
-HL.visualizersDispatcher = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -19,6 +17,7 @@ HL.visualizersDispatcher = (function() {
     // Add the given DataVisualizer to the visualizers collection to use
     exports.add = function(visualizer) {
         // TODO: verify somehow the given object is a visualizer
+        // here or while loading visualizers dynamically?
         visualizers.push(visualizer);
     }
 
@@ -61,4 +60,4 @@ HL.visualizersDispatcher = (function() {
     
     return exports;
 
-})();
+});
