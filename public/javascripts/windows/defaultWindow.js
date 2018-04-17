@@ -16,9 +16,9 @@ define(function (require) {
     // TODO: load this dynamically from some configuration file
     let DefaultVisualizer = require('javascripts/visualizers/defaultVisualizer.js');
     let SimpleTypeVisualizer = require('javascripts/visualizers/simpleTypeVisualizer.js');
-    //let GoogleChartsMapVisualizer = require('javascripts/visualizers/googleChartsMapVisualizer.js');
+    let GoogleChartsMapVisualizer = require('javascripts/visualizers/googleCharts/mapVisualizer.js');
     let Plotly2dHeatmapsVisualizer = require('javascripts/visualizers/plotly/plotly2dHeatmapsVisualizer.js');
-    //let GraphVisualizer = 
+    let MetricsgraphicsVisualizer = require('javascripts/visualizers/metricsgraphicsjs/graphVisualizer.js');
     let NewSessionVisualizer = require('javascripts/visualizers/newSessionVisualizer.js');
     let HighlightjsVisualizer = require('javascripts/visualizers/highlightjs/highlightjsVisualizer.js');
     let ImageVisualizer = require('javascripts/visualizers/imageVisualizer.js');
@@ -39,9 +39,9 @@ define(function (require) {
     VisualizersDispatcher.add(ImageVisualizer);
     VisualizersDispatcher.add(HighlightjsVisualizer);
     VisualizersDispatcher.add(NewSessionVisualizer);
-    //VisualizersDispatcher.add(GraphVisualizer);
+    VisualizersDispatcher.add(MetricsgraphicsVisualizer);
     VisualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
-    //VisualizersDispatcher.add(GoogleChartsMapVisualizer);
+    VisualizersDispatcher.add(GoogleChartsMapVisualizer);
     VisualizersDispatcher.add(SimpleTypeVisualizer);
     VisualizersDispatcher.add(DefaultVisualizer);
 

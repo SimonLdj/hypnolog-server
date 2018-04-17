@@ -15,10 +15,22 @@
 //    ]
 //
 'use strict';
+
+SystemJS.config({
+    map: {
+        googleCharts: 'https://www.gstatic.com/charts/loader.js',
+    },
+    meta: {
+        googleCharts : {
+            "scriptLoad": true,
+        },
+    },
+});
+
 define(function (require) {
 
-    // TODO: load dependencies
-    //SystemJS.import('https://www.gstatic.com/charts/loader.js');
+    // load dependencies
+    require('googleCharts');
 
     let displayTypes = ["googlemaps", "google-maps"];
     let exports = {};
