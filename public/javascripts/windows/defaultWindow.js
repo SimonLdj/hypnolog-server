@@ -92,12 +92,19 @@ let DefaultWindow = (function() {
             if (tagsElement)
                 lineEl.appendChild(tagsElement);
 
+            // check if window was scrolled to bottom, before adding the new element
+            let scrollNearBottom = (mainContainerEl.scrollHeight - mainContainerEl.scrollTop -
+                                    mainContainerEl.clientHeight < 50);
+
             // append the newly created element window's to main container
             mainContainerEl.appendChild(lineEl);
-        });
 
-        // scroll container to bottom (to simulate console scrolling)
-        mainContainerEl.scrollTop = mainContainerEl.scrollHeight;
+            // if window was scrolled to bottom, keep scrolling it down.
+            if (scrollNearBottom) {
+                // scroll container to bottom (to simulate console scrolling)
+                mainContainerEl.scrollTop = mainContainerEl.scrollHeight;
+            }
+        });
     }
 
     // private functions:

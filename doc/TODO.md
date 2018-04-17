@@ -6,9 +6,6 @@ HypnoLog Server TODO List
     - Re-think about require/webpackfor Hypnolog client-side
     - support dependencies (css, json fiels)
 - handle visualizers errors (also, missing js/css files)
-- Improve UI
-    - Don’t auto scroll down when not on bottom (like in Whatsapp)
-    - Add side scroll indication if new lines at bottom (like in Whatsapp)
 - Open browser on server start
 
 
@@ -48,9 +45,9 @@ HypnoLog Server TODO List
 - use Require.js or something similar to handle all those JS file
 
 ### UI:
-- Don’t auto scroll down when not on bottom (like in Whatsapp)
-- Add side scroll indication if new lines at bottom (like in Whatsapp)
-- Add Jump to "session start" button (on side scroll)
+- Add indication if new lines at bottom, but been unseen (when not scrolled to
+  bottom, like in Whatsapp)
+- Add Jump to "session start" button (with the new-unseen-lines indication)
 - Display warning when pressing F5 "Are you sure? you will lose your log data"
 - Add reset button (with keyboard Ctrl-C shortcut, and "Are you sure?")
 - Dark theme (and theme selection option)
