@@ -8,7 +8,7 @@
 //  "Hello world"
 //
 'use strict';
-let SimpleTypeVisualizer = (function() {
+define(function (require) {
 
     let displayTypes = ["string", "str", "s", "number", "int", "int32", "double"];
     let exports = {};
@@ -43,4 +43,4 @@ let SimpleTypeVisualizer = (function() {
 
     return exports;
 
-})();
+});

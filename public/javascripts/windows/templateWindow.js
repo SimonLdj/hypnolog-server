@@ -25,7 +25,7 @@
 //
 
 'use strict';
-let TemplateWindow = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -58,4 +58,4 @@ let TemplateWindow = (function() {
 
     return exports;
 
-})();
+});

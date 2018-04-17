@@ -1,11 +1,6 @@
 <html>
 	<head>
 		<title>HypnoLog</title>
-        <!--CSS-->
-        <link href='stylesheets/main.css' rel='stylesheet' type='text/css'>
-        <link href='stylesheets/log-line.css' rel='stylesheet' type='text/css'>
-
-
 	</head>
 	<body>
         <nav>
@@ -23,52 +18,26 @@
             <!--Here Windows will be created-->
         </section>
 
-        <script src="javascripts/lib/socket.io.js"></script>
-        <script src="javascripts/lib/jquery-2.2.3.min.js"></script>
-        <script src="javascripts/lib/d3-4.4.0.min.js" charset="utf-8"></script>
-        <script src="javascripts/lib/metricsgraphics-2.11.0.min.js"></script>
-        <script src="javascripts/lib/ajv-6.0.1.min.js"></script>
-
-
-        <!-- TODO: use require.js or somehthing to load all script files -->
-        <!-- then we can avoid declearing some global variable as HL -->
-        <script type="text/javascript">
+        <script src="javascripts/systemjs/system.js"></script>
+        <script>
             'use strict';
-            let HL = {};
+
+            // Set SystemJS configuration
+            SystemJS.config({
+                map: {
+                    css: 'javascripts/systemjs/css.js',
+                },
+                meta: {
+                    '*.css': { loader: 'css' },
+                },
+            });
+
+            // start main script
+            SystemJS.import('./javascripts/client.js');
+
+            // load CSS files
+            SystemJS.import('../stylesheets/main.css');
+            SystemJS.import('../stylesheets/log-line.css');
         </script>
-
-        <!-- TODO: load all visualizers dynamicly -->
-        <!--load all visualizers-->
-        <script src="javascripts/visualizers/defaultVisualizer.js"></script>
-        <script src="javascripts/visualizers/simpleTypeVisualizer.js"></script>
-        <script src="javascripts/visualizers/newSessionVisualizer.js"></script>
-        <script src="javascripts/visualizers/imageVisualizer.js"></script>
-        <!--metricsgraphics-->
-        <link href='stylesheets/metricsgraphics/metricsgraphics.css' rel='stylesheet' type='text/css'>
-        <link href='stylesheets/metricsgraphics/highlightjs-default.css' rel='stylesheet' type='text/css'>
-        <script src="javascripts/visualizers/graphVisualizer.js"></script>
-        <!--plotly-->
-        <script src="javascripts\visualizers\plotly\plotly-v1.31.2.min.js"></script>
-        <script src="javascripts\visualizers\plotly\plotly2dHeatmapsVisualizer.js"></script>
-        <!--google maps-->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="javascripts\visualizers\googleChartsMapVisualizer.js"></script>
-        <!--highlightjs-->
-        <link rel="stylesheet" href="javascripts/visualizers/highlightjs/default.css">
-        <script src="javascripts/visualizers/highlightjs/highlight.pack.js"></script>
-        <script src="javascripts/visualizers/highlightjs/highlightjsVisualizer.js"></script>
-        <!--load visualizers framework files-->
-        <script src="javascripts/visualizersDispatcher.js"></script>
-
-        <!-- TODO: load all windows dynamicly -->
-        <!--load all windows-->
-        <script src="javascripts/windowFilter.js"></script>
-        <script src="javascripts/windows/defaultWindow.js"></script>
-        <script src="javascripts/windows/watchWindow.js"></script>
-        <!--load windows framework files-->
-        <script src="javascripts/windowsDispatcher.js"></script>
-
-        <! -- core files -->
-        <script src="javascripts/client.js"></script>
 	</body>
 </html>

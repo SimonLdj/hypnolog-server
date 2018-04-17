@@ -1,7 +1,7 @@
 // New Session message visualizers
 // Display title for new session message
 'use strict';
-let NewSessionVisualizer = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -36,4 +36,4 @@ let NewSessionVisualizer = (function() {
 
     return exports;
 
-})();
+});

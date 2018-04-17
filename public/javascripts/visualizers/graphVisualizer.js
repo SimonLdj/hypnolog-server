@@ -8,7 +8,14 @@
 //  [1,2,3,4,3,2,1]
 //
 'use strict';
-let GraphVisualizer = (function() {
+define(function (require) {
+
+    // TODO: import dependencies
+    //"javascripts/lib/d3-4.4.0.min.js"
+    //"javascripts/lib/metricsgraphics-2.11.0.min.js
+    //'stylesheets/metricsgraphics/metricsgraphics.css'
+    //'stylesheets/metricsgraphics/highlightjs-default.css'
+    //"javascripts/visualizers/graphVisualizer.js"
 
     let displayTypes = ["numbersarray", "numbers", "graph", "plot", "linechart", "metricsgraphics-plot" ];
     let exports = {};
@@ -90,4 +97,4 @@ let GraphVisualizer = (function() {
 
     return exports;
 
-})();
+});

@@ -9,9 +9,12 @@
 //      [3,2,1]
 //  ]
 //
-
 'use strict';
-let Plotly2dHeatmapsVisualizer = (function() {
+define(function (require) {
+
+    // import dependencies
+    var Plotly = require('./plotly-v1.31.2.min.js');
+
 
     let displayTypes = ["heatmap", "plotly-heatmap", "2dnumbersarray"];
     let exports = {};
@@ -53,4 +56,4 @@ let Plotly2dHeatmapsVisualizer = (function() {
 
     return exports;
 
-})();
+});

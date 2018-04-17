@@ -8,8 +8,7 @@
 //
 
 'use strict';
-// TODO: don't assume HL variable exist
-HL.WindowsDispatcher = (function() {
+define(function (require) {
 
     let exports = {};
 
@@ -70,4 +69,4 @@ HL.WindowsDispatcher = (function() {
     
     return exports;
 
-})();
+});
