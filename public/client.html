@@ -25,10 +25,12 @@
             // Set SystemJS configuration
             SystemJS.config({
                 map: {
-                    css: 'javascripts/systemjs/css.js',
+                    'plugin-css':   'javascripts/systemjs/css.js',
+                    'plugin-json':  'javascripts/systemjs/json.js',
                 },
                 meta: {
-                    '*.css': { loader: 'css' },
+                    '*.css':    { loader: 'plugin-css' },
+                    '*.json':   { loader: 'plugin-json' },
                 },
             });
 
