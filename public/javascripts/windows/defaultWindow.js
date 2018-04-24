@@ -12,44 +12,55 @@ define(function (require) {
     let VisualizersDispatcher = require('javascripts/visualizersDispatcher.js');
     let WindowFilter = require('javascripts/windowFilter.js');
 
-    // load visualizers
-    // TODO: load this dynamically from some configuration file
-    let DefaultVisualizer = require('javascripts/visualizers/defaultVisualizer.js');
-    let SimpleTypeVisualizer = require('javascripts/visualizers/simpleTypeVisualizer.js');
-    let GoogleChartsMapVisualizer = require('javascripts/visualizers/googleCharts/mapVisualizer.js');
-    let Plotly2dHeatmapsVisualizer = require('javascripts/visualizers/plotly/plotly2dHeatmapsVisualizer.js');
-    let MetricsgraphicsVisualizer = require('javascripts/visualizers/metricsgraphicsjs/graphVisualizer.js');
-    let NewSessionVisualizer = require('javascripts/visualizers/newSessionVisualizer.js');
-    let HighlightjsVisualizer = require('javascripts/visualizers/highlightjs/highlightjsVisualizer.js');
-    let ImageVisualizer = require('javascripts/visualizers/imageVisualizer.js');
-
-    let exports = {};
-
-    // TODO: better design for WindowFilter - not global, create instance. Call it TagsFilter?
-    // initialize window filter
-    WindowFilter.initialize();
-
-    // TODO: use specific visualizer dispatcher for this window
-    //let visualizerDispatcher = new VisualizersDispatcher();
-
-    // Set visualizers to use
-    // Note, order matters!
-    // The first suitable visualizer which will be found, will be used
-    // so, most specific come first, most general at last.
-    VisualizersDispatcher.add(ImageVisualizer);
-    VisualizersDispatcher.add(HighlightjsVisualizer);
-    VisualizersDispatcher.add(NewSessionVisualizer);
-    VisualizersDispatcher.add(MetricsgraphicsVisualizer);
-    VisualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
-    VisualizersDispatcher.add(GoogleChartsMapVisualizer);
-    VisualizersDispatcher.add(SimpleTypeVisualizer);
-    VisualizersDispatcher.add(DefaultVisualizer);
+    // Private members
+    var dispatcher = new VisualizersDispatcher();
 
     // DOM element which will hold all other elements.
     // Will be created when createWindowElement method called
     let mainContainerEl = null;
 
     // public functions:
+    let exports = {};
+
+    exports.initialize = function() {
+
+        // TODO: better design for WindowFilter - not global, create instance. Call it TagsFilter?
+        // initialize window filter
+        WindowFilter.initialize();
+
+        // load visualizers dynamically from configuration file
+
+        // TODO: search first for user config file, and then only read default
+        // TODO: handle when bad config file
+        // TODO: allow less strict json file? allow comments, and trailing comma (,)
+        var configs = require("default-config.json");
+        console.log("config file loaded");
+        console.dir(configs);
+
+        // load all visualizers from configuration file
+        // TODO: show some UI indication while visualizers still loading
+        // TODO: BUG! visualizers are loaded async and order loss it's effect!
+        dispatcher.addMany(...Object.values(configs.visualizers))
+        .then(r => {
+            console.log("All Visualizers loaded: " + r.length);
+        },
+        e => {
+            console.log("error while loading some visualizers")
+        });
+
+        // TODO: fix order problem, should be like this
+        // Note, order matters!
+        // The first suitable visualizer which will be found, will be used
+        // so, most specific come first, most general at last.
+        //VisualizersDispatcher.add(ImageVisualizer);
+        //VisualizersDispatcher.add(HighlightjsVisualizer);
+        //VisualizersDispatcher.add(NewSessionVisualizer);
+        //VisualizersDispatcher.add(MetricsgraphicsVisualizer);
+        //VisualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
+        //VisualizersDispatcher.add(GoogleChartsMapVisualizer);
+        //VisualizersDispatcher.add(SimpleTypeVisualizer);
+        //VisualizersDispatcher.add(DefaultVisualizer);
+    }
 
     exports.createWindowElement = function(callback) {
         // TODO: rename class ti .defaultWindow
@@ -73,7 +84,7 @@ define(function (require) {
             WindowFilter.addTags(data.tags);
 
         // find visualizer to create DOM element to visualize the data
-        VisualizersDispatcher.visualize(data, function(visualizerEl) {
+        dispatcher.visualize(data, function(visualizerEl) {
             // callback for when visualizer created its element
 
             // Create element represent log line in the window
