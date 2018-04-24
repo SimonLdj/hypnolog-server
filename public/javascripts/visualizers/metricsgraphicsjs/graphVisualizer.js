@@ -33,6 +33,7 @@ define(function (require) {
     let exports = {};
 
     // public functions:
+    exports.name = "Metricsgraphics Graph Visualizer";
 
     exports.canDisplay = function(obj){
         // Check if we support given object type

@@ -6,6 +6,7 @@ define(function (require) {
     let exports = {};
 
     // public functions:
+    exports.name = "Default Visualizer";
 
     exports.canDisplay = function(obj){
         // support all

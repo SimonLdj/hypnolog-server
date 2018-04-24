@@ -6,6 +6,7 @@ define(function (require) {
     let exports = {};
 
     // public functions:
+    exports.name = "New Session Visualizer";
 
     exports.canDisplay = function(obj){
         if (obj.type.toLocaleLowerCase() === "newsession")

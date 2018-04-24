@@ -15,6 +15,8 @@ define(function (require) {
 
     // public functions:
 
+    exports.name = "Simple Type Visualizer";
+
     exports.canDisplay = function(obj){
         // Check if we support given object type
         if (displayTypes.some(s => s === obj.type.toLocaleLowerCase()))

@@ -45,6 +45,7 @@ define(function (require) {
 
 
     // public functions:
+    exports.name = "Google Maps Visualizer";
 
     exports.canDisplay = function(obj){
         // Check if we support given object type

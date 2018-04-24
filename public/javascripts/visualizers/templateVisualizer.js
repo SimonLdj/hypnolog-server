@@ -21,6 +21,11 @@ define(function (require) {
     // public functions:
 
     /**
+     * Visualizer name. Mostly for debugging, Optional.
+     */
+    exports.name = "Template Visualizer";
+
+    /**
      * Check if this Visualizer can/should visualize the given object.
      * This should be a quick check, and mainly based on objects type (`obj.type`).
      *

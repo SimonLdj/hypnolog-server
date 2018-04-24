@@ -16,6 +16,7 @@ define(function (require) {
     let exports = {};
 
     // public functions:
+    exports.name = "Image Visualizer";
 
     exports.canDisplay = function(obj){
         // Check if we support given object type
