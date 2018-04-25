@@ -36,7 +36,7 @@ define(function (require) {
             // Note, visualizers order does matters!
             // The first suitable visualizer which will be found, will be used
             // so, most specific come first, most general at last.
-            return dispatcher.addMany(...Object.values(visualizers));
+            return dispatcher.add(...Object.values(visualizers));
         })
         .then(r => {
             // TODO: show some UI indication while visualizers still loading, and when done.

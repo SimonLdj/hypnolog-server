@@ -26,10 +26,11 @@ define(function (require) {
          * @param {...*} toAddVisualizers - Visualizer like objects. Should be `object` already a
          * valid Visualizer or `string` represent path to script file.
          * @return {Promise} Single Promise when all visualizers loaded (or failed to load). Result
-         * is an array contain successfully loaded visualizers and null as failed to load
+         * is an array contain successfully loaded visualizers and `null` as failed to load
          * visualizers. Note array order is the same as order of given visualizers.
+         * Note: Promise will be marked as resolve even when if some visualizers failed to load!
          */
-        exports.addMany = function(toAddVisualizers) {
+        exports.add = function(toAddVisualizers) {
             // will hold all promises
             let promsArr = [];
 
@@ -87,32 +88,6 @@ define(function (require) {
          */
         exports.get = function() {
             return _that.visualizers;
-        }
-
-        /**
-         * Try to add the given object as Visualizer to the visualizers collection for use.
-         * Note, this adds the Visualizer to the collection of Visualizer to use when loading is
-         * done. As this is async operation and load time is unknown, the moment the visualizer will
-         * be add to the collection is also unknown. Therefor adding 2 or more Visualizer using this
-         * method can result in nondeterministic order in the collection and therefor
-         * nondeterministic visualizations.
-         * TODO: merge add and addMany to only 'add'
-         *
-         * @return {Promise} which will be resolved if add successfully
-         */
-        exports.add = function(obj) {
-            // try to add the given object as a Visualizer
-            return loadVisualizer(obj)
-            .then(function(vis) {
-                console.log("Visualizer " + vis.name + " loaded successfully");
-                _that.visualizers.push(vis);
-                Promise.resolve(vis);
-            },
-            function(e) {
-                console.error("Failed loading visualizer: ");
-                console.log(e);
-                Promise.reject(e);
-            });
         }
 
         /**
