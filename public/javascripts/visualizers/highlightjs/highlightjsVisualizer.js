@@ -10,7 +10,7 @@ define(function (require) {
     var hljs = require('./highlight.pack.js');
     require('./default.css');
 
-    let displayTypes = ["code", "json", "html"];
+    let displayTypes = ["object", "string", "code", "json", "html"];
     let exports = {};
 
     // public functions:

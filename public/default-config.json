@@ -1,12 +1,12 @@
 {
     "visualizers": {
         "ImageVisualizer": "javascripts/visualizers/imageVisualizer.js",
-        "HighlightjsVisualizer": "javascripts/visualizers/highlightjs/highlightjsVisualizer.js",
         "GoogleChartsMapVisualizer": "javascripts/visualizers/googleCharts/mapVisualizer.js",
         "Plotly2dHeatmapsVisualizer": "javascripts/visualizers/plotly/plotly2dHeatmapsVisualizer.js",
         "MetricsgraphicsVisualizer": "javascripts/visualizers/metricsgraphicsjs/graphVisualizer.js",
-        "NewSessionVisualizer": "javascripts/visualizers/newSessionVisualizer.js",
         "SimpleTypeVisualizer": "javascripts/visualizers/simpleTypeVisualizer.js",
+        "HighlightjsVisualizer": "javascripts/visualizers/highlightjs/highlightjsVisualizer.js",
+        "NewSessionVisualizer": "javascripts/visualizers/newSessionVisualizer.js",
         "DefaultVisualizer": "javascripts/visualizers/defaultVisualizer.js"
     },
     "not-in-use-visualizers": {
