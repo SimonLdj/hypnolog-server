@@ -21,6 +21,9 @@ var hypnologObjValidator = null;
 function initialize(){
     initializeLastUpdateTime();
 
+    // TODO: create a new DefaultWindow (and not one static)
+    DefaultWindow.initialize();
+
     // TODO: refactor WindowsDispatcher to be object which you create (new)
     // then pass container element to constructor
     WindowsDispatcher.setContainer(document.getElementById("windowsContainer"));

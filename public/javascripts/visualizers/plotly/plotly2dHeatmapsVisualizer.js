@@ -20,6 +20,7 @@ define(function (require) {
     let exports = {};
 
     // public functions:
+    exports.name = "Plotly Heatmap Visualizer";
 
     exports.canDisplay = function(obj){
         // Check if we support given object type

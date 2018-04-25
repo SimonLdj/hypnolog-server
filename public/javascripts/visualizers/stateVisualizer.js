@@ -9,6 +9,7 @@ let StateVisualizer = (function() {
     let sum = 0;
 
     // public functions:
+    exports.name = "State Visualizer";
 
     exports.canDisplay = function(obj){
         // TODO: replace this with your own filtering logic

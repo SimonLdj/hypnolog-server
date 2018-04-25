@@ -14,6 +14,7 @@ define(function (require) {
     let exports = {};
 
     // public functions:
+    exports.name = "Highlight.js Visualizer";
 
     exports.canDisplay = function(obj){
         // Check if we support given object type
