@@ -3,13 +3,8 @@ HypnoLog Server TODO List
 
 ## TOP
 - Easy Visualizers adding and managing
-    - support config file both for visualizers and windows
-    - don't crash if some visualizers fail to load / run.
-    - (?) don't block while heavy visualizers loading / creating element
-    - document / write readme
-- handle visualizers errors (also, missing js/css files)
+    - write readme about how to add Visualizers
 - Open browser on server start
-
 
 ## MORE
 
@@ -22,25 +17,32 @@ HypnoLog Server TODO List
   when error occurred, when to stop logging, etc.
 
 ### Visualizers:
-- Load visualizers dynamically form folder (json config file?)
-- validate visualizers implementation (while loading?)
-- Each visualizer should use it's own CSS class names, and in its own file
-- handle visualizers errors (also, missing js/css files)
+- handle visualizers run time errors (fall back to next visualizer, report to
+  user)
+- Don't block while heavy visualizers creating elements (but maintain log order,
+  create place-holder element?)
+- all system-core visualizers CSS class should be separated form main css file.
+  also make sure css-class do not override each other.
 - consider should display() return bool
-- use nice JSON visualizer for default objects
 - Visualization for array of any type (will use sub visualizers?)
 - make submodule for most of the Visualizers (to be as Visualizers store). Keep
   only the most basic and lightweight visualizer in main repo.
 
 ### Windows:
-- Load windows dynamically form folder (json config file?)
-- Each window should use it's own CSS class names, and in its own file
+- Load windows dynamically form config file (like visualizer)
+- make the config be both for windows and Visualizers
+- Each window should use it's own CSS class names, and in its own file (like
+  Visualizers)
 - refactor WindowFilter: design wise, see TODOs in code. Rename to Tag filter (?)
 - refactor WindowFilter: think a way tags menu UI will no be depended on DOM
 - add simple console text window (and simple text visualizer?) (?)
+- add template window and maybe some other examples of what can be done with
+  windows.
+
 
 ### Client-side Core:
 - reorder files/folders (separate user files/core files)
+- rename `javascripts` folder name.
 
 ### UI:
 - Add indication if new lines at bottom, but been unseen (when not scrolled to
