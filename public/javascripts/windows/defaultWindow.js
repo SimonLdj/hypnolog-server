@@ -11,6 +11,7 @@ define(function (require) {
     // import
     let VisualizersDispatcher = require('javascripts/visualizersDispatcher.js');
     let WindowFilter = require('javascripts/windowFilter.js');
+    let Config = require('./../configFactory.js');
 
     // Private members
     var dispatcher = new VisualizersDispatcher();
@@ -28,24 +29,21 @@ define(function (require) {
         // initialize window filter
         WindowFilter.initialize();
 
-        // load visualizers dynamically from configuration file
+        // load visualizers dynamically from configuration
 
-        // TODO: search first for user config file, and then only read default
-        // TODO: handle when bad config file
-        // TODO: allow less strict json file? allow comments, and trailing comma (,)
-        var configs = require("default-config.json");
-        console.log("config file loaded");
-        console.dir(configs);
-
-        // load all visualizers from configuration file
         // TODO: show some UI indication while visualizers still loading
         // TODO: BUG! visualizers are loaded async and order loss it's effect!
-        dispatcher.addMany(...Object.values(configs.visualizers))
+
+        Config.getVisualizers()
+        .then(visualizers => {
+            return dispatcher.addMany(...Object.values(visualizers));
+        })
         .then(r => {
             console.log("All Visualizers loaded: " + r.length);
         },
         e => {
-            console.log("error while loading some visualizers")
+            console.warn("error while loading some visualizers")
+            console.warn(e);
         });
 
         // TODO: fix order problem, should be like this
