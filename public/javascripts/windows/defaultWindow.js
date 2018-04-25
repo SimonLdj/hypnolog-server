@@ -29,35 +29,19 @@ define(function (require) {
         // initialize window filter
         WindowFilter.initialize();
 
-        // load visualizers dynamically from configuration
 
-        // TODO: show some UI indication while visualizers still loading
-        // TODO: BUG! visualizers are loaded async and order loss it's effect!
-
+        // load visualizers dynamically according to the configuration
         Config.getVisualizers()
         .then(visualizers => {
+            // Note, visualizers order does matters!
+            // The first suitable visualizer which will be found, will be used
+            // so, most specific come first, most general at last.
             return dispatcher.addMany(...Object.values(visualizers));
         })
         .then(r => {
-            console.log("All Visualizers loaded: " + r.length);
-        },
-        e => {
-            console.warn("error while loading some visualizers")
-            console.warn(e);
+            // TODO: show some UI indication while visualizers still loading, and when done.
+            console.log("Done loading Visualizers");
         });
-
-        // TODO: fix order problem, should be like this
-        // Note, order matters!
-        // The first suitable visualizer which will be found, will be used
-        // so, most specific come first, most general at last.
-        //VisualizersDispatcher.add(ImageVisualizer);
-        //VisualizersDispatcher.add(HighlightjsVisualizer);
-        //VisualizersDispatcher.add(NewSessionVisualizer);
-        //VisualizersDispatcher.add(MetricsgraphicsVisualizer);
-        //VisualizersDispatcher.add(Plotly2dHeatmapsVisualizer);
-        //VisualizersDispatcher.add(GoogleChartsMapVisualizer);
-        //VisualizersDispatcher.add(SimpleTypeVisualizer);
-        //VisualizersDispatcher.add(DefaultVisualizer);
     }
 
     exports.createWindowElement = function(callback) {

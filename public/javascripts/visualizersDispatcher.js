@@ -18,29 +18,85 @@ define(function (require) {
         let exports = {};
 
         /**
-         * Try to add the given objects as Visualizer to the visualizers collection for use
+         * Try to add the given objects as Visualizer to the visualizers collection to use.
+         * Note, the visualizers will be added only once all visualizers loaded (or failed to load),
+         * this means until the Promise is not resolved, even the successfully loaded visualizers
+         * can not be assumed as add.
          *
-         * @return {Promise} when all given visualizers loaded
+         * @param {...*} toAddVisualizers - Visualizer like objects. Should be `object` already a
+         * valid Visualizer or `string` represent path to script file.
+         * @return {Promise} Single Promise when all visualizers loaded (or failed to load). Result
+         * is an array contain successfully loaded visualizers and null as failed to load
+         * visualizers. Note array order is the same as order of given visualizers.
          */
-        exports.addMany = function() {
+        exports.addMany = function(toAddVisualizers) {
             // will hold all promises
             let promsArr = [];
 
-            // go over all given visualizers and try to load each one of them
+            // go over all given function arguments,
+            // and make a promise which try to load it as a Visualizer
             for(let i = 0; i < arguments.length; i++) {
-                promsArr.push(exports.add(arguments[i]));
+                promsArr.push(
+                    // the promise which try to add the Visualizer
+                    loadVisualizer(arguments[i])
+                    .then(v => {
+                        console.log("Visualizer " + v.name + " loaded successfully");
+                        return Promise.resolve(v);
+                    })
+                    // Note, we catch all errors while loading visualizers, so the ones which loaded
+                    // successfully will be added (don't break the `Promise.all`).
+                    // For those who fail to load, set result as null, and ignore it later.
+                    .catch(e => {
+                        console.error("Error while loading Visualizer: " + arguments[i]);
+                        console.error(e);
+                        return Promise.resolve(null);
+                    })
+                );
             }
 
-            // return single Promise when all promises resolved
-            return Promise.all(promsArr);
+            // TODO: Try to improve: add successfully loaded visualizers immediately to the
+            // collection, don't wait for others. The problem is to do this while keeping the
+            // original order of the given visualizers.
+
+            // Wait for all visualizers to load.
+            return Promise.all(promsArr)
+            .then(visualizersArr => {
+                // add all successfully loaded visualizers
+                // Note, the result given by Promise.all maintain the original order, regardless of
+                // which Visualizer loaded first.
+                // "Returned values will be in order of the Promises passed, regardless of
+                // completion order."
+                // This is important, as visualizer order in the collection matters.
+                visualizersArr.forEach(v => {
+                    // skip failed-to-load visualizers
+                    if (!v) return;
+                    _that.visualizers.push(v);
+                });
+                // return single Promise when all visualizers loaded. Result contain loaded and
+                // unloaded visualizers
+                return Promise.resolve(visualizersArr);
+            });
         }
 
+        /**
+         * Get visualizers collection.
+         * Note: this is the same copy as used, and therefor shouldn't be modified.
+         * TODO: return a copy to avoid modifications.
+         *
+         * @return {Array} Collection of visualizers used
+         */
         exports.get = function() {
             return _that.visualizers;
         }
 
         /**
-         * Try to add the given object as Visualizer to the visualizers collection for use
+         * Try to add the given object as Visualizer to the visualizers collection for use.
+         * Note, this adds the Visualizer to the collection of Visualizer to use when loading is
+         * done. As this is async operation and load time is unknown, the moment the visualizer will
+         * be add to the collection is also unknown. Therefor adding 2 or more Visualizer using this
+         * method can result in nondeterministic order in the collection and therefor
+         * nondeterministic visualizations.
+         * TODO: merge add and addMany to only 'add'
          *
          * @return {Promise} which will be resolved if add successfully
          */
@@ -50,7 +106,7 @@ define(function (require) {
             .then(function(vis) {
                 console.log("Visualizer " + vis.name + " loaded successfully");
                 _that.visualizers.push(vis);
-                Promise.resolve(obj);
+                Promise.resolve(vis);
             },
             function(e) {
                 console.error("Failed loading visualizer: ");
