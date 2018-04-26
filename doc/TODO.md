@@ -4,7 +4,6 @@ HypnoLog Server TODO List
 ## TOP
 - Easy Visualizers adding and managing
     - write readme about how to add Visualizers
-- Open browser on server start
 
 ## MORE
 
