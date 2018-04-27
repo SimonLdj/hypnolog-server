@@ -4,6 +4,10 @@ HypnoLog
 
 *HypnoLog* allows you to fast and easily visualize your application data/objects while debugging from any environment, in any language. Forget about those black text-based console debug-printing back from the 70's.
 
+## Features:
+- **Log from any language**/technology/environment (all you need is HTTP support). See [Language wrappers](documentation#language-wrappers).
+- **Visualize any data**. Use existing or customize and add your own visualization. It's a web application: do everything possible in a web browser and use any existing visualization library. Read more about [Visualizers](documentation#Visualizers).  
+
 ## Why do I need this?
 - You're developing an application with reach data and while debugging you want to view you data as image/graph/map/whatever and not as long-unreadable-block-of-text. 
 - You don't want to waste precious time on developing your own debugging tools.
@@ -30,11 +34,7 @@ See this:
 ![alt text](/doc/images/screenshot_hypnolog-python-example.png "HypnoLog UI screenshot")
 
 ## How does it work
-Easy. *HypnoLog* sends the logged data/objects from your application as JSON HTTP requests to HypnoLog server. HypnoLog server sends it to the web browser. Web browser displays the data as you wish. You see your logged data - visualized and shining as you want. Read more about [Architecture](/doc/architecture.md).
-
-## Features:
-- Log from any language/technology/environment (all you need is HTTP support).
-- Customize and add your own visualization. It's a web application: use any existing tool or write your own. Read more about [Visualizers and Windows](/doc/visualizersAndWindows.md).
+Easy. *HypnoLog* sends the logged data/objects from your application as JSON HTTP requests to HypnoLog server. HypnoLog server sends it to the web browser. Web browser displays the data as you wish. You see your logged data - visualized and shining as you want. Read more in the full [Documentation](documentation).
 
 ## Usage
 
@@ -83,4 +83,7 @@ No wrapper library for your language? Logging to *HypnoLog* is simply sending HT
 
 ##### Notes
 - Web UI tested only on Google Chrome browser.
+
+
+[documentation]: doc/HypnoLog-documentation.md
 
