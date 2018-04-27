@@ -5,8 +5,8 @@ HypnoLog
 *HypnoLog* allows you to fast and easily visualize your application data/objects while debugging from any environment, in any language. Forget about those black text-based console debug-printing back from the 70's.
 
 ## Features:
-- **Log from any language**/technology/environment (all you need is HTTP support). See [Language wrappers](documentation#language-wrappers).
-- **Visualize any data**. Use existing or customize and add your own visualization. It's a web application: do everything possible in a web browser and use any existing visualization library. Read more about [Visualizers](documentation#Visualizers).  
+- **Log from any language**/technology/environment (all you need is HTTP support). See [Language wrappers][documentation#language-wrappers].
+- **Visualize any data**. Use existing or customize and add your own visualization. It's a web application: do everything possible in a web browser and use any existing visualization library. Read more about [Visualizers][documentation#Visualizers].  
 
 ## Why do I need this?
 - You're developing an application with reach data and while debugging you want to view you data as image/graph/map/whatever and not as long-unreadable-block-of-text. 
@@ -34,7 +34,7 @@ See this:
 ![alt text](/doc/images/screenshot_hypnolog-python-example.png "HypnoLog UI screenshot")
 
 ## How does it work
-Easy. *HypnoLog* sends the logged data/objects from your application as JSON HTTP requests to HypnoLog server. HypnoLog server sends it to the web browser. Web browser displays the data as you wish. You see your logged data - visualized and shining as you want. Read more in the full [Documentation](documentation).
+Easy. *HypnoLog* sends the logged data/objects from your application as JSON HTTP requests to HypnoLog server. HypnoLog server sends it to the web browser. Web browser displays the data as you wish. You see your logged data - visualized and shining as you want. Read more in the full [Documentation].
 
 ## Usage
 
@@ -64,7 +64,7 @@ HL.Log(new []{1, 2, 3}, "plot");
 - For **NodeJS** use [HypnoLog-NodeJS](https://github.com/SimonLdj/hypnolog-nodejs)
 - For **Python** use [HypnoLog-Python ](https://github.com/SimonLdj/hypnolog-python)
 
-No wrapper library for your language? Logging to *HypnoLog* is simply sending HTTP POST request with JSON message. See [server API](/doc/api-doc.md). Develop your own and contribute!
+No wrapper library for your language? Logging to *HypnoLog* is simply sending HTTP POST request with JSON message. See [server API]. Develop your own and contribute!
 
 ## War stories (as continue to "Why do I need this?") :
 - Debugging image processing algorithm written in C# with Emgu CV, running as a service on Windows machine.  
@@ -85,5 +85,6 @@ No wrapper library for your language? Logging to *HypnoLog* is simply sending HT
 - Web UI tested only on Google Chrome browser.
 
 
-[documentation]: doc/HypnoLog-documentation.md
+[documentation]:    doc/HypnoLog-documentation.md
+[server api]:       doc/api-doc.md
 

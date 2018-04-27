@@ -75,8 +75,8 @@ Logging in *HypnoLog* done by sending JSON HTTP requests to HypnoLog server. To 
 
 No wrapper library for your language? Logging to *HypnoLog* is simply sending HTTP POST request with JSON message. See [server API](/doc/api-doc.md). Develop your own and contribute!
 
-See [Language Requirements](Language Requirements) as a guideline.
+See [Language Requirements] as a guideline.
 
 
-[Adding Visualizers and Windows]: #
+[Adding Visualizers and Windows]: AddingVisualizersAndWindows.md
 [Language Requirements]: LanguageRequirements.md
