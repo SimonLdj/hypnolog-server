@@ -1,8 +1,7 @@
 Language Requirements List
 ===================================
 
-Guide lines and requirements for when implementing HypnoLog library for a new
-language.
+Guide lines and requirements for when implementing HypnoLog library for a new language.
 
 ## Basic Requirements
 
