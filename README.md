@@ -8,7 +8,7 @@ while debugging from any environment, in any language. Forget about those black
 
 ## Features:
 - **Log from any language**/technology/environment (all you need is HTTP
-  support). See [Language wrappers][#language wrappers documentation].
+  support). See [Language wrappers][language wrappers documentation].
 - **Visualize any data**. Use existing or customize and add your own
   visualization. It's a web application: do everything possible in a web browser
   and use any existing visualization library. Read more about
@@ -125,7 +125,7 @@ contribute!
 - Web UI tested only on Google Chrome browser.
 
 
-[documentation]:    doc/HypnoLog-documentation.md
-[visualizers documentation]: HypnoLog-documentation.md#visualizers
+[documentation]:                    doc/HypnoLog-documentation.md
+[visualizers documentation]:        doc/HypnoLog-documentation.md#visualizers
 [languages wrappers documentation]: doc/HypnoLog-documentation.md#languages-wrappers
-[server api]:       doc/api-doc.md
+[server api]:                       doc/api-doc.md

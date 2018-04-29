@@ -113,7 +113,7 @@ implement and wrap all this logic into super simple functions.
 - For **Python** use [HypnoLog-Python ](https://github.com/SimonLdj/hypnolog-python)
 
 No wrapper library for your language? Logging to *HypnoLog* is simply sending
-HTTP POST request with JSON message. See [server API]. Develop
+an HTTP POST request with JSON message. See [server API]. Develop
 your own and contribute!
 
 See [Language Requirements] as a guideline for developing new Language Wrapper.
