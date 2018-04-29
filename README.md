@@ -5,8 +5,8 @@ HypnoLog
 *HypnoLog* allows you to fast and easily visualize your application data/objects while debugging from any environment, in any language. Forget about those black text-based console debug-printing back from the 70's.
 
 ## Features:
-- **Log from any language**/technology/environment (all you need is HTTP support). See [Language wrappers][documentation#language-wrappers].
-- **Visualize any data**. Use existing or customize and add your own visualization. It's a web application: do everything possible in a web browser and use any existing visualization library. Read more about [Visualizers][documentation#Visualizers].  
+- **Log from any language**/technology/environment (all you need is HTTP support). See [Language wrappers][#language wrappers documentation].
+- **Visualize any data**. Use existing or customize and add your own visualization. It's a web application: do everything possible in a web browser and use any existing visualization library. Read more about [Visualizers][visualizers documentation].  
 
 ## Why do I need this?
 - You're developing an application with reach data and while debugging you want to view you data as image/graph/map/whatever and not as long-unreadable-block-of-text. 
@@ -86,5 +86,6 @@ No wrapper library for your language? Logging to *HypnoLog* is simply sending HT
 
 
 [documentation]:    doc/HypnoLog-documentation.md
+[visualizers documentation]: HypnoLog-documentation.md#visualizers
+[languages wrappers documentation]: doc/HypnoLog-documentation.md#languages-wrappers
 [server api]:       doc/api-doc.md
-
