@@ -6,13 +6,13 @@ HypnoLog
 while debugging from any environment, in any language. Forget about those black
     text-based console debug-printing back from the 70's.
 
-## Features:
+## Features
 - **Log from any language**/technology/environment (all you need is HTTP
-  support). See [Language wrappers][language wrappers documentation].
-- **Visualize any data**. Use existing or customize and add your own
-  visualization. It's a web application: do everything possible in a web browser
-  and use any existing visualization library. Read more about
-  [Visualizers][visualizers documentation].  
+  support). See [Language wrappers].
+- **Visualize any data**. Use existing or add your own visualization. It's a web
+  application, do everything possible in a web browser and use any existing
+  visualization libraries. Read more about [Visualizers][visualizers
+  documentation].  
 
 ## Why do I need this?
 - You're developing an application with reach data and while debugging you want
@@ -86,7 +86,7 @@ HL.Log(new []{1, 2, 3}, "plot");
 - For **Python** use [HypnoLog-Python ](https://github.com/SimonLdj/hypnolog-python)
 
 No wrapper library for your language? Logging to *HypnoLog* is simply sending
-HTTP POST request with JSON message. See [server API]. Develop your own and
+an HTTP POST request with JSON message. See [Language wrappers]. Develop your own and
 contribute!
 
 ## War stories (as continue to "Why do I need this?") :
@@ -127,5 +127,5 @@ contribute!
 
 [documentation]:                    doc/HypnoLog-documentation.md
 [visualizers documentation]:        doc/HypnoLog-documentation.md#visualizers
-[languages wrappers documentation]: doc/HypnoLog-documentation.md#languages-wrappers
+[language wrappers]:                doc/HypnoLog-documentation.md#language-wrappers
 [server api]:                       doc/api-doc.md
