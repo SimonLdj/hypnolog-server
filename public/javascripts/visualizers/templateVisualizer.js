@@ -35,7 +35,7 @@ define(function (require) {
      *
      * @return {Boolean} `true` if can visualize the given object, `false` otherwise.
      */
-    exports.canDisplay = function(obj){
+    exports.canDisplay = function(obj) {
         // TODO: replace this with your own filtering logic
         // visualize only HypnoLog objects with type "string"
         if (obj.type.toLocaleLowerCase() === "string")
@@ -60,7 +60,7 @@ define(function (require) {
      *
      * @return {Boolean} `true` if visualization was done successfully, `false` otherwise.
      */
-    exports.display = function(obj, callback){
+    exports.display = function(obj, callback) {
         // return false if we can not visualize the object
         if (!exports.canDisplay(obj))
             return false;
