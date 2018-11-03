@@ -1,34 +1,23 @@
 HypnoLog
 ==========================
-*Get Hypnotized While Logging*
+*~ Get Hypnotized While Logging ~*
 
-*HypnoLog* allows you to fast and easily visualize your application data/objects
-while debugging from any environment, in any language. Forget about those black
-    text-based console debug-printing back from the 70's.
+*HypnoLog* is a modern output console which helps you visualize your application
+  data while debugging or logging. From any environment, in any languages.
+
+Forget about those black text-based console debug-printing like in the 70's:
+![alt text](/doc/images/hypnolog-compared-to-cmd.png "HypnoLog UI screenshot")
 
 ## Features
 - **Log from any language**/technology/environment (all you need is HTTP
   support). See [Language wrappers].
-- **Visualize any data**. Use existing or add your own visualization. It's a web
-  application, do everything possible in a web browser and use any existing
-  visualization libraries. Read more about [Visualizers][visualizers
+- **Visualize any data in any way**. Use existing or add your own visualization.
+  It's a web application, do everything possible in a web browser and use any
+  existing visualization libraries. Read more about [Visualizers][visualizers
   documentation].  
 
-## Why do I need this?
-- You're developing an application with reach data and while debugging you want
-  to view you data as image/graph/map/whatever and not as
-  long-unreadable-block-of-text. 
-- You don't want to waste precious time on developing your own debugging tools.
-- You're working with multiple end points and you need to see all of their
-  output in one clear place.
-- You're working with multiple languages/technologies and you want one
-  debug/logging visualization tool to rule them all.
-- You're tired of those boring black and white text consoles with a buffer
-  memory of a fish, which close in your face just when you need them, and
-  generally speaking, have a user experience of a cave man...
-
 ## Example
-Write this (this is Python, but see [how to log](#how-to-log) in any other
+Code example (this is Python, but see [how to log](#how-to-log) in any other
 language):
 ```python
 import hypnolog as HL
@@ -37,14 +26,26 @@ HL.log('Hello HypnoLog from Pyhton!');
 
 import numpy
 npArray = 1 + numpy.sin(2 * numpy.pi * numpy.arange(0.0, 2.0, 0.01))
+# log numbers array as plot
 HL.log(npArray.tolist(), 'plot');
 
-locations = [ ['Lat', 'Long', 'Name'], [37.4232, -122.0853, 'Work'], [37.4289, -122.1697, 'University'], [37.6153, -122.3900, 'Airport'], [37.4422, -122.1731, 'Shopping'] ];
-HL.log(locations, 'GoogleMaps');
+np2dArray = numpy.arange(-50, 50, 1).reshape(10,10);
+# log 2d array as heatmap
+HL.log(np2dArray.tolist(), 'heatmap');
 ```
 
-See this:
-![alt text](/doc/images/screenshot_hypnolog-python-example.png "HypnoLog UI screenshot")
+## Why do I need this?
+- You're developing an application with rich data and while debugging you want
+  to view you data as image/graph/map/whatever and not as
+  long-unreadable-block-of-text.
+- You don't want to waste precious time on developing your own debugging tools.
+- You're working with multiple end points and you need to see all of their
+  output in one centralized place.
+- You're working with multiple languages/technologies and you want one
+  debug/logging visualization tool to rule them all.
+- You're tired of those boring black and white text consoles with a buffer
+  memory of a fish, which close in your face just when you need them, and
+  generally speaking, have a user experience of a cave man...
 
 ## How does it work
 Easy. *HypnoLog* sends the logged data/objects from your application as JSON
