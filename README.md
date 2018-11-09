@@ -3,10 +3,19 @@ HypnoLog
 *~ Get Hypnotized While Logging ~*
 
 *HypnoLog* is a modern output console which helps you visualize your application
-  data while debugging or logging. From any environment, in any languages.
+  data while debugging or logging. *From any environment, in any language*.
 
 Forget about those black text-based console debug-printing like in the 70's:
 ![alt text](/doc/images/hypnolog-compared-to-cmd.png "HypnoLog UI screenshot")
+
+## The Goal
+Make it easy for developers to display data graphically while debugging or
+logging. Think about tools like Matlab `plot` or `imshow` and Python
+`matplotlib`, but in any language.  
+We believe the browser is the ultimate place to display data and that it should
+replace the old text output consoles. HypnoLog doesn't aim to provide
+visualizations for any data but to be a framework which make it easy to use
+already existing tools.
 
 ## Features
 - **Log from any language**/technology/environment (all you need is HTTP
@@ -48,10 +57,12 @@ HL.log(np2dArray.tolist(), 'heatmap');
   generally speaking, have a user experience of a cave man...
 
 ## How does it work
-Easy. *HypnoLog* sends the logged data/objects from your application as JSON
+*HypnoLog* sends the logged data/objects from your application as JSON
 HTTP requests to HypnoLog server. HypnoLog server sends it to the web browser.
 Web browser displays the data as you wish. You see your logged data - visualized
 and shining as you want. Read more in the full [Documentation].
+
+![alt text](/doc/images/hypnolog-architecture.png "HypnoLog Architecture")
 
 ## Usage
 
@@ -90,7 +101,7 @@ No wrapper library for your language? Logging to *HypnoLog* is simply sending
 an HTTP POST request with JSON message. See [Language wrappers]. Develop your own and
 contribute!
 
-## War stories (as continue to "Why do I need this?") :
+## Use Cases
 - Debugging image processing algorithm written in C# with Emgu CV, running as a
   service on Windows machine.  
   Without HypnoLog: looking at huge arrays of numbers with Visual Studio DataTip
