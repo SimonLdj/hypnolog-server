@@ -21,6 +21,11 @@ h2{
 
 /* Top navigaton bar */
 nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    width: -webkit-fill-available;
+    z-index: 100;
     padding: 8px;
     background-color: #dcd0dc;
 }
@@ -57,3 +62,8 @@ nav {
         nav #filter label {
             font-family: monospace;
         }
+
+#windowsContainer {
+    margin-top: 40px;
+
+}

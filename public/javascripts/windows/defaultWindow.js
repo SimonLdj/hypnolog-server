@@ -65,7 +65,7 @@ define(function (require) {
         if (data.tags && data.tags.length > 0)
             WindowFilter.addTags(data.tags);
 
-        // find visualizer to create DOM element to visualize the data
+        // let dispatcher find visualizer to create DOM element to visualize the data
         dispatcher.visualize(data, function(visualizerEl) {
             // callback for when visualizer created its element
 
@@ -124,11 +124,19 @@ define(function (require) {
         if (!data.tags)
             return null;
 
-        let tagsString = convertTagsArrayToHashTagString(data.tags || []);
-        let element = document.createElement("div");
-        element.classList.add("tagElement");
-        element.appendChild(document.createTextNode(tagsString));
-        return element;
+        let containerElement = document.createElement("div");
+        containerElement.classList.add("tagsElementContainer");
+
+        let tags = data.tags || [];
+        for (let i = 0; i < tags.length; i++) {
+            let tagElement = document.createElement("div");
+            tagElement.classList.add("tagElement");
+            let tagString = "#"+tags[i];
+            tagElement.appendChild(document.createTextNode(tagString));
+            containerElement.appendChild(tagElement);
+        }
+
+        return containerElement;
     }
 
     // For given HypnoLog data object create <span> element with
@@ -155,15 +163,6 @@ define(function (require) {
             return ["user-tag_untaged"];
 
         return Array.from(data.tags, x => "user-tag_"+x);
-    }
-
-    // Convert given array of string to single string
-    // formated as hash tags: "#tagA #tagB"
-    function convertTagsArrayToHashTagString (tagsArray) {
-        if (!tagsArray || tagsArray.length < 1)
-            return "";
-
-        return "#" + tagsArray.join(" #");
     }
 
     return exports;

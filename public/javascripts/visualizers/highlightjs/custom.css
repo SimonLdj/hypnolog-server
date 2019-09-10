@@ -1,0 +1,9 @@
+.hljs {
+    font-size: 1.5em;
+    padding-bottom: 0px;
+    max-height: 75%;
+    max-width: 95%;
+    border: 1px #cdcdcd;
+    border-style: dashed;
+    background: none;
+}

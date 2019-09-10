@@ -2,7 +2,7 @@
 // will display the data as simple text
 //
 // Display types:
-//  "string", "str", "s", "number", "int", "int32", "double"
+//  "string", "text", "number", "int", "int32", "double"
 //
 // Data example:
 //  "Hello world"
@@ -10,7 +10,7 @@
 'use strict';
 define(function (require) {
 
-    let displayTypes = ["string", "str", "s", "number", "int", "int32", "double"];
+    let displayTypes = ["string", "text", "number", "int", "int32", "double"];
     let exports = {};
 
     // public functions:
