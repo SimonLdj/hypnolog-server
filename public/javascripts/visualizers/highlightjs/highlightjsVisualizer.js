@@ -8,7 +8,8 @@ define(function (require) {
 
     // load dependencies
     var hljs = require('./highlight.pack.js');
-    require('./default.css');
+    // require('./default.css');
+    require('./androidstudio.css');
     require('./custom.css');
 
     let displayTypes = ["object", "code", "json", "html"];

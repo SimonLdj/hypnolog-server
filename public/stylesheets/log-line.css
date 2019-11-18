@@ -32,8 +32,8 @@
     overflow-y:scroll;
 }
     .window .line{
-        border-left: 5px solid #ffffff;
-        padding-left: 5px;
+        border-left: 5px solid transparent;
+        padding-left: 35px;
         margin: 1em 0px;
         position: relative;
         min-height: 1.25em;
@@ -64,7 +64,6 @@
             display: inline-block;
             margin: 0 1px;
             padding: 2;
-            background-color: white;
         }
 
     .window .line span.variable-type {

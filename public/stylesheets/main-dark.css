@@ -1,0 +1,24 @@
+/* Dark theme */
+
+body {
+    background-color: #282b2e;
+    color: #b7bec6;
+
+}
+
+nav {
+    color: black;
+}
+
+
+
+
+    .window .line:nth-child(2n){
+        background: #313131;
+    }
+
+
+    .window .line:hover{
+        border-color: #757596;
+    }
+
