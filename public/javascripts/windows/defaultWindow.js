@@ -15,6 +15,7 @@ define(function (require) {
 
     // Private members
     var dispatcher = new VisualizersDispatcher();
+    var lineNumberCounter = 0;
 
     // DOM element which will hold all other elements.
     // Will be created when createWindowElement method called
@@ -100,9 +101,13 @@ define(function (require) {
             if (tagsElement)
                 lineEl.appendChild(tagsElement);
 
+            // line number
+            lineEl.appendChild(createLineNumberElement());
+
             // check if window was scrolled to bottom, before adding the new element
-            let scrollNearBottom = (mainContainerEl.scrollHeight - mainContainerEl.scrollTop -
-                                    mainContainerEl.clientHeight < 50);
+            var bodyElement = document.getElementsByTagName("BODY")[0];
+            let scrollNearBottom = (bodyElement.scrollHeight - bodyElement.scrollTop -
+                                    bodyElement.clientHeight < 50);
 
             // append the newly created element window's to main container
             mainContainerEl.appendChild(lineEl);
@@ -110,7 +115,7 @@ define(function (require) {
             // if window was scrolled to bottom, keep scrolling it down.
             if (scrollNearBottom) {
                 // scroll container to bottom (to simulate console scrolling)
-                mainContainerEl.scrollTop = mainContainerEl.scrollHeight;
+                bodyElement.scrollTop = bodyElement.scrollHeight;
             }
         });
     }
@@ -163,6 +168,14 @@ define(function (require) {
             return ["user-tag_untaged"];
 
         return Array.from(data.tags, x => "user-tag_"+x);
+    }
+
+    function createLineNumberElement() {
+        lineNumberCounter++;
+        let element = document.createElement("span");
+        element.classList.add("lineNumber");
+        element.appendChild(document.createTextNode(lineNumberCounter));
+        return element;
     }
 
     return exports;

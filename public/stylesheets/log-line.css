@@ -73,6 +73,16 @@
         font-family: "Menlo", monospace;
         display: inline-block;
     }
+    .window .line .lineNumber{
+        position: absolute;
+        float: left;
+        top: 0px;
+        left: 3px;
+        color: #bbbbbb;
+        font-size: 0.8em;
+        font-family: "Menlo", monospace;
+        display: inline-block;
+    }
 
 /* === Rules by data type (by visualizers) == */
 /* TODO: move each visualizer CSS to its own file */
