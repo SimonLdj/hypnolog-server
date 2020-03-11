@@ -70,12 +70,25 @@ define(function (require) {
         dispatcher.visualize(data, function(visualizerEl) {
             // callback for when visualizer created its element
 
+            // If data was logged with variable name:
+            // append variable name element as first element in the line-element
+            let nameElement = createVariableNameElement(data);
+
+            // If data was logged with tags:
+            // Add CSS class to element according to given tags.
+            // This is to allow log filtering with Window filter
+            // (We filter elements by CSS class, so each class represent tag)
+            let userTagsClass = createTagsClass(data);
+            // append tags element, if given
+            let tagsElement = createTagsElement(data);
+
+            // check if window was scrolled to bottom, before adding the new element
+            var bodyElement = document.getElementsByTagName("BODY")[0];
+            let scrollNearBottom = (bodyElement.scrollHeight - bodyElement.scrollTop -
+                                    bodyElement.clientHeight < 50);
+
             // Create element represent log line in the window
             let lineEl = document.createElement("div");
-
-            // add the newly created element by the visualizer to the line-element
-            lineEl.appendChild(visualizerEl);
-
             // For Tag filtering: add "line" CSS class to all elements in Default window
             // This will make the Tag filter (WindowFilter) effect the element when filtering
             // TODO: decide, is new-session info is also a line in a window
@@ -83,31 +96,16 @@ define(function (require) {
             // If we want to avoid it, we should not add the "line" CSS class to them,
             // or re-think how the tag filter should work.
             lineEl.classList.add("line");
-
-            // If data was logged with variable name:
-            // append variable name element as first element in the line-element
-            let nameElement = createVariableNameElement(data);
-            if (nameElement) lineEl.prepend(nameElement);
-
-            // If data was logged with tags:
-            // Add CSS class to element according to given tags.
-            // This is to allow log filtering with Window filter
-            // (We filter elements by CSS class, so each class represent tag)
-            let userTagsClass = createTagsClass(data);
             if (userTagsClass.length > 0)
                 lineEl.classList.add(...userTagsClass);
-            // append tags element, if given
-            let tagsElement = createTagsElement(data);
+
             if (tagsElement)
                 lineEl.appendChild(tagsElement);
-
-            // line number
+            // add the newly created element by the visualizer to the line-element
+            lineEl.appendChild(visualizerEl);
+            if (nameElement)
+                lineEl.prepend(nameElement);
             lineEl.appendChild(createLineNumberElement());
-
-            // check if window was scrolled to bottom, before adding the new element
-            var bodyElement = document.getElementsByTagName("BODY")[0];
-            let scrollNearBottom = (bodyElement.scrollHeight - bodyElement.scrollTop -
-                                    bodyElement.clientHeight < 50);
 
             // append the newly created element window's to main container
             mainContainerEl.appendChild(lineEl);
