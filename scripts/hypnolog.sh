@@ -10,6 +10,7 @@
 # usage exmaple:
 # echo "Hello using bash pipe" | hl
 # echo "Hello using bash pipe" | hl string from_terminal
+# Note, this command using jq tool. Install it using `brew install jq` on mac
 function hl {
     local input=$(</dev/stdin)
     local data_type=${1:-string}
